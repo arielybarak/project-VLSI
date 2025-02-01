@@ -9,7 +9,6 @@ Supervisor: Gil Stoler (Amazon)
 
 Features
 ✔️ Supports AXI3 INCR Transactions
-
 ✔️ Handles Narrow Transactions (correctness guaranteed)
 ✔️ Supports Up to 8 Outstanding Transactions
 ✔️ Configurable Burst Size (default: 256 bytes)
