@@ -33,11 +33,12 @@ Layout Design: Cadence/Synopsys
 Implementation Details
 
 
-The module behaves like a highway traffic system. 
-Using Traffic Flow Analogy 🚦 The module consists of the following key components:
+The module behaves like a highway traffic system using Traffic Flow Analogy 🚦 
+The module consists of the following key components:
 🔹 Process Memory ("The Camera")
 FIFO structure for transaction tracking.
-Monitor when to release diverted transactions.
+Monitor transactions in the system
+Decide when to release transactions from "Pull-off Area".
 🔹 Routers ("Exit & Merge Lanes")
 Dynamically directs transactions.
 Merges or diverts traffic as needed.
