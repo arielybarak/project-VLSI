@@ -68,6 +68,7 @@ The module classifies write transactions into three main types:
 
 1. **Regular Transactions** – Can proceed without restrictions.  
 2. **Blocked Transactions** – Blocks incoming transactions **until completion**.  
-3. **Special Transactions** – Delayed **until all previous transactions end**.  
-🔹 **Unlucky Transactions** – A none - Special transaction from the same master as a Special Transaction. Delays are required to preserve AXI protocol correctness (maintaining order of transactions from the same master).  
+3. **Special Transactions** – Delayed **until all previous transactions end**.
+   
+🔹 **Unlucky Transactions** – A none - Special transaction from the same master as a Special Transaction. **Delays** are required to preserve AXI protocol correctness (maintaining order of transactions from the same master).  
 
