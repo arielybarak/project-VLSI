@@ -30,29 +30,29 @@ import pkg::*;
 	
 	
 );
-spec_slot [SPEC_SLOT_AMOUNT-1:0]  spec_mem 		  ;
-logic  	  [SPEC_SLOT_AMOUNT-1:0]  spec_mem_unluck ;
+spec_slot [SPEC_SLOT_AMOUNT-1:0]  spec_mem 		  	;
+logic  	  [SPEC_SLOT_AMOUNT-1:0]  spec_mem_unluck 	;
 logic	  [SPEC_SLOT_AMOUNT-1:0]  one_hot_slot_zero ;
-reg	  	  [INDEX_WIDTH-1:0] 	  spec_count 	  ;
-logic  	  [INDEX_WIDTH-1:0]		  cur_index    	  ;
-logic  	  [SPEC_SLOT_AMOUNT-1:0][INDEX_WIDTH-1:0] cur_index_bus ; //TODO think about more efficient solution
-logic 	  [PID_WIDTH-1:0] 		  cur_id 		  ;
-reg 	  [PID_WIDTH-1:0] 		  d_cur_id 		  ;
-logic		  [SPEC_SLOT_AMOUNT-1:0]  cur_data_i 	  ;
+reg	  	  [INDEX_WIDTH-1:0] 	  spec_count 	  	;
+logic  	  [INDEX_WIDTH-1:0]		  cur_index    	  	; 
+logic 	  [PID_WIDTH-1:0] 		  cur_id 		  	;
+reg 	  [PID_WIDTH-1:0] 		  d_cur_id 		  	;
+logic		  [SPEC_SLOT_AMOUNT-1:0]  cur_data_i 	;
+logic  	  [SPEC_SLOT_AMOUNT-1:0][INDEX_WIDTH-1:0] cur_index_bus ;
 
 burst_slot complete_tran ;
-reg	mem_full 	;
-wire  found_unluck ;
-logic tran_valid ;
-wire  ready_fall ;
-logic tran_ready ;
-logic first_done ;
-logic first_unluck ;
-logic temp ;
+reg	mem_full 			 ;
+wire  found_unluck 		 ;
+logic tran_valid 		 ;
+wire  ready_fall 		 ;
+logic tran_ready 		 ;
+logic first_done 		 ;
+logic first_unluck 		 ;
+logic temp 				 ;
 
 reg [SPEC_SLOT_AMOUNT-1:0] prior_coder_in 			;
 wire [SPEC_SLOT_AMOUNT-1:0] prior_coder_out 		;
-reg [SPEC_SLOT_AMOUNT-1:0] reverse_prior_coder_out ;
+reg [SPEC_SLOT_AMOUNT-1:0] reverse_prior_coder_out 	;
 wire zeros ;
 
 
@@ -74,11 +74,12 @@ box_master send_burst (
 
 																										
 assign mem_full = (SPEC_SLOT_AMOUNT == spec_count) ;																
-assign found_unluck = |(spec_mem_unluck & reverse_prior_coder_out) ;
 assign ready_fall = temp & ~tran_ready ;
+assign first_unluck = spec_mem_unluck[0] ; 									
+assign cur_index = ^cur_index_bus ; 
+assign found_unluck = |(spec_mem_unluck & reverse_prior_coder_out) ;
 assign tran_valid = tran_ready & (release_ready | found_unluck | (first_unluck & first_done)) & (spec_count > 0) ;	
-assign first_unluck = spec_mem_unluck[0] ; 									//5.25
-assign cur_index = ^cur_index_bus ; 										//TODO think about more efficient solution
+										
 																								/* communication related */
 assign release_ready = tran_ready & spec_release & ~found_unluck & (spec_count > 0) & first_done ;					
 assign spec2router = (tran_valid & tran_ready) | ~tran_ready ;																
@@ -96,7 +97,7 @@ end
 // synthesis translate_on
 
 always_comb begin
-	first_done = 1'b0 ;														//5.25
+	first_done = 1'b0 ;														
 	s_data.wready = 1'b0 ;
 	unluck = 1'b0 ;
 	cur_id = '0 ;
@@ -106,7 +107,7 @@ always_comb begin
 	prior_coder_in = '0 ;
 	
 	for(int j=0; j<SPEC_SLOT_AMOUNT; j++) begin : xxxx
-		cur_index_bus[j] = '0 ;												//5.25
+		cur_index_bus[j] = '0 ;											
 		one_hot_slot_zero[j] = (spec_mem[j].index == 0) ? 1'b1 : 1'b0 ;		
 																									/* Interleaving data channel */																		
 		if(s_data.wvalid  & (~|(spec_mem[j].awid^s_data.wid)) & (~spec_mem[j].done)) begin
