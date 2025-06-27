@@ -191,25 +191,38 @@ assign top_master_data.wvalid = ~s_data_fifo_empty ;
 assign top_slave_resp.bvalid = ~m_resp_fifo_empty  ;
 
 
-/*Master side FIFO's instantiation*/
-DW_asymfifo_s1_sf m_add_fifo (.clk(clk), .rst_n(rst_n), .push_req_n(~m_add_fifo_push), .pop_req_n(~m_add_fifo_pop), .data_in(master2fifo_add),
+
+										/*Master side FIFO's instantiation*/
+DW_asymfifo_s1_sf #(.data_in_width(tot_add), .data_out_width(tot_add), .depth(depth), .af_level(af_level), .ae_level(1)) m_add_fifo
+(
+	.clk(clk), .rst_n(rst_n), .push_req_n(~m_add_fifo_push), .pop_req_n(~m_add_fifo_pop), .data_in(master2fifo_add), 
 	.empty(m_add_fifo_empty), .full(m_add_fifo_full), .data_out(fifo2module_add)
 );
-DW_asymfifo_s1_sf m_data_fifo (.clk(clk), .rst_n(rst_n), .push_req_n(~m_data_fifo_push), .pop_req_n(~m_data_fifo_pop), .data_in(master2fifo_data),
+DW_asymfifo_s1_sf #(.data_in_width(tot_data), .data_out_width(tot_data), .depth(depth), .af_level(af_level), .ae_level(1)) m_data_fifo
+(
+	.clk(clk), .rst_n(rst_n), .push_req_n(~m_data_fifo_push), .pop_req_n(~m_data_fifo_pop), .data_in(master2fifo_data),
 	.empty(m_data_fifo_empty), .full(m_data_fifo_full), .data_out(fifo2module_data)
 );
-DW_asymfifo_s1_sf m_resp_fifo (.clk(clk), .rst_n(rst_n), .push_req_n(~m_resp_fifo_push), .pop_req_n(~m_resp_fifo_pop), .data_in(fifo2module_resp),
+DW_asymfifo_s1_sf #(.data_in_width(tot_resp), .data_out_width(tot_resp), .depth(depth), .af_level(af_level), .ae_level(1)) m_resp_fifo
+(
+	.clk(clk), .rst_n(rst_n), .push_req_n(~m_resp_fifo_push), .pop_req_n(~m_resp_fifo_pop), .data_in(fifo2module_resp),
 	.empty(m_resp_fifo_empty), .full(m_resp_full), .data_out(master2fifo_resp)
 );
 
-/*Slave side FIFO's instantiation*/
-DW_asymfifo_s1_sf s_add_fifo (.clk(clk), .rst_n(rst_n), .push_req_n(~s_add_fifo_push), .pop_req_n(~s_add_fifo_pop), .data_in(module2fifo_add),
+										/*Slave side FIFO's instantiation*/
+DW_asymfifo_s1_sf #(.data_in_width(tot_add), .data_out_width(tot_add), .depth(depth), .af_level(af_level), .ae_level(1)) s_add_fifo
+(
+	.clk(clk), .rst_n(rst_n), .push_req_n(~s_add_fifo_push), .pop_req_n(~s_add_fifo_pop), .data_in(module2fifo_add),
 	.empty(s_add_fifo_empty), .full(s_add_fifo_full), .data_out(fifo2slave_add)
 );
-DW_asymfifo_s1_sf s_data_fifo (.clk(clk), .rst_n(rst_n), .push_req_n(~s_data_fifo_push), .pop_req_n(~s_data_fifo_pop), .data_in(module2fifo_data),
+DW_asymfifo_s1_sf #( .data_in_width(tot_data), .data_out_width(tot_data), .depth(depth), .af_level(af_level), .ae_level(1)) s_data_fifo
+(
+	.clk(clk), .rst_n(rst_n), .push_req_n(~s_data_fifo_push), .pop_req_n(~s_data_fifo_pop), .data_in(module2fifo_data),
 	.empty(s_data_fifo_empty), .full(s_data_fifo_full), .data_out(fifo2slave_data)
 );
-DW_asymfifo_s1_sf s_resp_fifo (.clk(clk), .rst_n(rst_n), .push_req_n(~s_resp_fifo_push), .pop_req_n(~s_resp_fifo_pop), .data_in(fifo2slave_resp),
+DW_asymfifo_s1_sf #( .data_in_width(tot_resp), .data_out_width(tot_resp), .depth(depth), .af_level(af_level), .ae_level(1)) s_resp_fifo 
+(
+	.clk(clk), .rst_n(rst_n), .push_req_n(~s_resp_fifo_push), .pop_req_n(~s_resp_fifo_pop), .data_in(fifo2slave_resp),
 	.empty(s_resp_fifo_empty), .full(s_resp_fifo_full), .data_out(module2fifo_resp)
 );
 

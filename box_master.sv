@@ -19,6 +19,7 @@ import pkg::*;
 	axi_if.master_add  m_add,
 	axi_if.master_data m_data
 );
+
 burst_slot slot ;
 logic [PLENGTH_WIDTH-1:0] sent_transfer ;
 logic d_awvalid ;
@@ -36,8 +37,8 @@ always_comb begin
 		m_add.awsize  = in_slot.awsize  ;
 		m_add.awuser  = in_slot.awuser  ;
 		m_add.other   = in_slot.other	;
-		m_data.wdata[0 +: PDATA_WIDTH]  <=  in_slot.data[0 +: PDATA_WIDTH] ;
-		m_data.wstrb[0 +: PDATA_WIDTH]  <=  in_slot.strb[0 +: PDATA_WIDTH] ;
+		m_data.wdata[0 +: PDATA_WIDTH]  =  in_slot.data[0 +: PDATA_WIDTH] ;
+		m_data.wstrb[0 +: PDATA_WIDTH]  =  in_slot.strb[0 +: PDATA_WIDTH] ;
 		m_data.wid = in_slot.awid ;
 	end
 	else begin
@@ -70,8 +71,8 @@ always_comb begin
 			m_data.wid = slot.awid ;
 		end
 		else begin
-			m_data.wdata[0 +: PDATA_WIDTH]  = 0 ;
-			m_data.wstrb[0 +: PDATA_WIDTH]  = 0 ;
+			m_data.wdata[0 +: PDATA_WIDTH] = 0 ;
+			m_data.wstrb[0 +: PDATA_WIDTH] = 0 ;
 			m_data.wid = 0 ;
 		end
 	end

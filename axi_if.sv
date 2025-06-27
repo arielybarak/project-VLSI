@@ -11,7 +11,7 @@ import pkg::*;
 ();
 logic [1:0]				  awburst ;					// "01" for INCR							/////Address Channel//////
 logic [PID_WIDTH-1:0]  	  awid;
-logic [PADDR_WIDTH-1:0]   awaddr;
+logic [PADDR_WIDTH-1:0]   awaddr; 
 logic [PLENGTH_WIDTH-1:0] awlen;
 logic [PSIZE_WIDTH-1:0]	  awsize;				//number of bytes in each transfer
 logic [PAWUSER_WIDTH-1:0] awuser;
@@ -19,7 +19,7 @@ logic					  awvalid;
 logic 	    			  awready; 
 logic [POTHER-1:0]		  other ;				//AWREGION, AWQOS(only axi4) [2:0]AWPROT [3:0]AWCACHE [1:0]AWLOCK
 													
-logic [PID_WIDTH-1:0]		 wid;																/////Data Channel//////
+logic [PID_WIDTH-1:0]		 wid;															/////Data Channel//////
 logic [PDATA_WIDTH-1:0][7:0] wdata;
 logic [PDATA_WIDTH-1:0] 	 wstrb;
 logic 						 wlast;				//PID_WIDTH + 2
