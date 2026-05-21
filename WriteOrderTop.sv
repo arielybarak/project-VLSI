@@ -65,6 +65,7 @@ assign axi.other   = t_s_add.other   ;
 assign axi.wid 	   = t_s_data.wid 	 ;
 assign axi.wdata   = t_s_data.wdata  ;
 assign axi.wstrb   = t_s_data.wstrb  ;
+assign axi.wuser   = t_s_data.wuser  ;
 assign axi.wlast   = t_s_data.wlast  ;
 
 
@@ -165,6 +166,7 @@ always_comb begin
 			t_m_data.wid    = t_s_data.wid    ;
 			t_m_data.wdata  = t_s_data.wdata  ;
 			t_m_data.wstrb  = t_s_data.wstrb  ;
+			t_m_data.wuser  = t_s_data.wuser  ;
 			t_m_data.wlast  = t_s_data.wlast  ;
 			t_m_data.wvalid = t_s_data.wvalid ;
 			t_s_data.wready = t_m_data.wready ;
@@ -175,6 +177,7 @@ always_comb begin
 			t_m_data.wid	= axiOut.wid     ;
 			t_m_data.wdata  = axiOut.wdata   ;
 			t_m_data.wstrb  = axiOut.wstrb   ;
+			t_m_data.wuser  = axiOut.wuser   ;
 			t_m_data.wlast  = axiOut.wlast   ;
 			t_m_data.wvalid = axiOut.wvalid  ;
 			axiOut.wready = t_m_data.wready  ;
