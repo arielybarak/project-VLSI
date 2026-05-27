@@ -33,16 +33,15 @@ import pkg::*;
 spec_slot [SPEC_SLOT_AMOUNT-1:0]  spec_mem 		    ;
 logic  	  [SPEC_SLOT_AMOUNT-1:0]  spec_mem_unluck   ;
 logic	  [SPEC_SLOT_AMOUNT-1:0]  one_hot_slot_zero ;
-reg	  	  [INDEX_WIDTH:0] 	  	  spec_count 	    ;
+reg	  	  [INDEX_WIDTH:0] 	  spec_count 		;
 
-logic	  [$clog2(SPEC_SLOT_AMOUNT)-1:0]  		  wr_slot_idx 	   ;
-logic  	  [SPEC_SLOT_AMOUNT-1:0][INDEX_WIDTH-1:0] rd_slot_next_bus ; 	// TODO think about more efficient solution
-logic  	  [INDEX_WIDTH-1:0]		  rd_slot_next     ;
-logic  	  [INDEX_WIDTH-1:0]		  rd_slot_curr     ; 
-logic  	  [INDEX_WIDTH-1:0]		  rd_slot_addr     ; 
-logic  	  [INDEX_WIDTH-1:0]		  tmp2     		   ;
-logic 	  [PID_WIDTH-1:0] 		  cur_id 		   ;
-reg 	  [PID_WIDTH-1:0] 		  d_cur_id 		   ;
+logic	  [INDEX_WIDTH-1:0]  	  wr_slot_idx   ;
+logic  	  [INDEX_WIDTH-1:0]		  rd_slot_next  ;
+logic  	  [INDEX_WIDTH-1:0]		  rd_slot_curr  ; 
+logic  	  [INDEX_WIDTH-1:0]		  rd_slot_addr  ; 
+logic  	  [INDEX_WIDTH-1:0]		  next_slot_idx ;
+logic 	  [PID_WIDTH-1:0] 		  cur_id 		;
+reg 	  [PID_WIDTH-1:0] 		  d_cur_id 		;
 
 reg	mem_full 	   ;
 wire  found_unluck ;
@@ -97,54 +96,54 @@ assign first_unluck = spec_mem_unluck[0] ;
 //--------communication----
 assign release_ready = tran_ready & spec_release & ~found_unluck & (spec_count > '0) & first_done ;					
 assign spec2router = (tran_valid & tran_ready) | ~tran_ready ;																
-assign s_add.awready = s_add.awvalid & ~to_block & ~mem_full & ~proc_full & ~proc_empty & ((s_add.awuser === DIVERT) | unluck) ;
+assign s_add.awready = s_add.awvalid & ~to_block & ~mem_full & ~proc_full & ~proc_empty & ((s_add.awuser === DIVERT) | unluck) ; 	
 assign in_awshake = s_add.awvalid & s_add.awready ;
 //---------Project B-------
 assign m_data.wvalid = ~tran_ready ; 
 assign transfer_done = m_data.wvalid & m_data.wready & m_data.wlast ;
 assign rd_slot_addr = tran_ready ? rd_slot_next : rd_slot_curr ;			// Look-Ahead Mux/Address Bypass logic
-assign tmp2 = ^rd_slot_next_bus ;								 			//TODO think about more efficient solution
+
 
 always_comb begin
-	first_done = 1'b0 ;														//5.25
+	first_done = 1'b0 ;														
 	s_data.wready = 1'b0 ;
 	unluck = 1'b0 ;
 	cur_id = '0 ;
 	wr_slot_idx = 0 ;
-	spec_mem_unluck = '0 ;	//default outside of for loop because the assignment is not by j - but by spec_mem[j].index ('0' might overrun non '0' value)
+	spec_mem_unluck = '0 ;	
 	prior_coder_in = '0 ;
+	next_slot_idx = '0 ;
+	rd_slot_next = '0 ;
 	
-	for(int j=0; j<SPEC_SLOT_AMOUNT; j++) begin : x1
-		rd_slot_next_bus[j] = '0 ;												//5.25
+	for(int j=0; j<SPEC_SLOT_AMOUNT; j++) begin : x1											
 		one_hot_slot_zero[j] = (spec_mem[j].index == '0) ? 1'b1 : 1'b0 ;		
-																									/* Interleaving data channel */
+																									//-----Interleaving data channel-----//
 		if(s_data.wvalid  & (~|(spec_mem[j].awid^s_data.wid)) & (~spec_mem[j].done)) begin
-			s_data.wready = 1 ;
-			wr_slot_idx = j ;
+			s_data.wready = 1'b1 ;
+			wr_slot_idx = INDEX_WIDTH'(j) ;
 		end
 																								///// transaction train operator /////
-		spec_mem_unluck[spec_mem[j].index] = spec_mem[j].unluck ;										/* unlucky search mechanism */
+		spec_mem_unluck[spec_mem[j].index] = spec_mem[j].unluck ;										//-----unlucky search mechanism-----//
 		reverse_prior_coder_out[j] = prior_coder_out[SPEC_SLOT_AMOUNT-1-j] ;
 		prior_coder_in[SPEC_SLOT_AMOUNT-1-spec_mem[j].index] = (~|(spec_mem[j].awid^d_cur_id)) & (spec_mem[j].index < spec_count) & spec_mem[j].done ;
 		
 		if(found_unluck) begin
 			if(reverse_prior_coder_out[j]) begin
-				rd_slot_next_bus[j] = j ;
+				next_slot_idx = INDEX_WIDTH'(j) ;
 			end
 		end 
-		else if(one_hot_slot_zero === (1<<j) && ((first_unluck & first_done) || release_ready)) begin		/* Special release */
+		else if(one_hot_slot_zero === (1<<j) && ((first_unluck & first_done) || release_ready)) begin		//-----Special release-----//
 			cur_id = spec_mem[j].awid ;
 		end
-																									  	/* new burst: luck check */
+																									  	//-----new burst: luck check-----//
 		if(s_add.awvalid && (spec_mem[j].awid === s_add.awid)
 			&& (|(s_add.awuser^DIVERT)) && (spec_mem[j].index < spec_count)) begin
 			unluck = 1 ;
-		end
-																										
+		end																				
 		if(one_hot_slot_zero === (1<<j)) begin	
 			first_done = spec_mem[j].done ;
 		end
-		if(spec_mem[j].index === tmp2) begin		// TODO possible source of problem is the dimension of tmp2
+		if(spec_mem[j].index === next_slot_idx) begin	
 			rd_slot_next = j ;
 		end
 	end
@@ -166,14 +165,14 @@ always_comb begin
 		calcOut_parity[i] = ^(m_data.wdata[i*(batchZize/8) +: (batchZize/8)] /*& Omask*/) ;
 	end
 	wr_isRuined = calcIn_parity ^ s_data.wuser;	
-	m_data.wuser = (origin_parity & ~rd_isRuined) | (~calcOut_parity & rd_isRuined); //output
+	m_data.wuser = (origin_parity & ~rd_isRuined) | (~calcOut_parity & rd_isRuined) ; //output
 end
 
 //--------------Transmit-start----------------------
 
 always_comb begin
 	m_add.awvalid = (tran_valid & tran_ready) ? 1'b1 : d_awvalid ;
-	m_data.wlast = (sent_transfer == spec_mem[rd_slot_addr].awlen) & (sent_transfer != '0) ;								
+	m_data.wlast = (sent_transfer == spec_mem[rd_slot_addr].awlen) ;								
 	
 	m_add.awburst = spec_mem[rd_slot_addr].awburst ;
 	m_add.awid    = spec_mem[rd_slot_addr].awid    ;
@@ -208,7 +207,7 @@ always_ff @(posedge clk or negedge rst_n) begin
 		end
 		else if (~tran_ready || (tran_valid & tran_ready)) begin
 			if(m_data.wready) begin
-				sent_transfer <= sent_transfer + 1 ;
+				sent_transfer <= sent_transfer + PLENGTH_WIDTH'(1) ;
 			end
 			if(m_data.wlast & m_data.wready) begin
 				sent_transfer <= 0 ;
@@ -226,17 +225,17 @@ generate
 		always_ff @(posedge clk or negedge rst_n) begin
 			
 			if(!rst_n) begin
-				spec_mem[i].index <= i   ;
-				spec_mem[i].awburst <= 0 ;
-				spec_mem[i].awid <= 0    ;
-				spec_mem[i].awaddr <= 0  ;
-				spec_mem[i].awlen <= 0   ;
-				spec_mem[i].awsize <= 0  ;
-				spec_mem[i].awuser <= 0  ;
-				spec_mem[i].unluck <= 0  ;
-				spec_mem[i].other <= 0   ;
-				spec_mem[i].done <= 1    ;
-				spec_mem[i].cur_len <= 0 ;
+				spec_mem[i].index <= INDEX_WIDTH'(i) ;
+				spec_mem[i].awburst <= '0 ;
+				spec_mem[i].awid <= '0    ;
+				spec_mem[i].awaddr <= '0  ;
+				spec_mem[i].awlen <= '0   ;
+				spec_mem[i].awsize <= '0  ;
+				spec_mem[i].awuser <= '0  ;
+				spec_mem[i].unluck <= '0  ;
+				spec_mem[i].other <= '0   ;
+				spec_mem[i].done <= '1    ;
+				spec_mem[i].cur_len <= '0 ;
 			end
 			else begin
 																				//-----new incoming transaction-----//
@@ -260,17 +259,17 @@ generate
 						spec_mem[i].done <= 1'b1 ;
 					end
 					else if(s_data.wready) begin
-						spec_mem[i].cur_len <= spec_mem[i].cur_len + 1 ;
+						spec_mem[i].cur_len <= spec_mem[i].cur_len + PLENGTH_WIDTH'(1) ;
 					end
 				end
 																				//-----delete operator-----//
 				if(transfer_done) begin											
-					if((i === rd_slot_addr) & (spec_count > 0)) begin
-						spec_mem[i].index <= spec_count-1 ;
-						spec_mem[i].cur_len <= 0 ;
+					if((i === rd_slot_addr) & (spec_count > '0)) begin
+						spec_mem[i].index <= spec_count - 1 ;
+						spec_mem[i].cur_len <= '0 ;
 					end
 					if((spec_mem[i].index > spec_mem[rd_slot_addr].index) & (spec_mem[i].index < spec_count)) begin
-						spec_mem[i].index <= spec_mem[i].index-1 ;
+						spec_mem[i].index <= spec_mem[i].index - INDEX_WIDTH'(1) ;
 					end
 				end			
 			end

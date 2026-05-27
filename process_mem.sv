@@ -40,15 +40,13 @@ module process_mem
 	);
 
 slot 	[SLOT_AMOUNT-1:0] memory ;
-logic 	[SLOT_AMOUNT-1:0] proc_count ;
+logic 	[$clog2(SLOT_AMOUNT):0] proc_count ;
 
 /// Inner logic ///
 logic new_tran   ; 
 logic bshake ;
 logic d_spec_release ;
-
-logic [SLOT_AMOUNT-1:0] cur_index_done ;
-logic [SLOT_AMOUNT-1:0] cur_index_data_in ;
+logic [$clog2(SLOT_AMOUNT)-1:0] cur_index_done ;
 
 /////////// priority coder delete///////////////////////////
 logic [SLOT_AMOUNT-1:0] priority_coder_in_d ;
@@ -98,7 +96,7 @@ always_ff @(posedge clk or negedge rst_n) begin
 	
 	if (!rst_n) begin
 		for (int i = 0; i < SLOT_AMOUNT; i++) begin
-			memory[i].id 		<= 4'b000 ;
+			memory[i].id 		<= '0 ;
 			memory[i].tran_type <= 2'b00 ;
 			memory[i].done 		<= 1'b0 ;
 		end

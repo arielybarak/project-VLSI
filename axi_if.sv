@@ -22,6 +22,7 @@ logic [POTHER-1:0]		  other ;				//AWREGION, AWQOS(only axi4) [2:0]AWPROT [3:0]A
 logic [PID_WIDTH-1:0]		 wid;															/////Data Channel//////
 logic [PDATA_WIDTH-1:0][7:0] wdata;
 logic [PDATA_WIDTH-1:0] 	 wstrb;
+logic [PWUSER_WIDTH-1:0] 	 wuser; 
 logic 						 wlast;				//PID_WIDTH + 2
 logic 						 wvalid;
 logic 						 wready;
@@ -64,6 +65,7 @@ modport slave_data (
 	input  wid,
 	       wdata,
 	       wstrb,
+		   wuser,
 	       wlast,
 	       wvalid,
 	
@@ -76,6 +78,7 @@ modport master_data (
 	output wid,
 	       wdata,
 	       wstrb,
+		   wuser,
 	       wlast,
 	       wvalid
 );

@@ -48,7 +48,7 @@ module special_mem_dpbank (
 //	localparam SRAM_CNT = DATA_WIDTH/64;
 //	for (int i=0; i<SRAM_CNT = i+1) begin
 
-	dpram128x72 u_ram_128x72_0 (
+	dpram72x128_cb u_ram_128x72_0 (
 		// Port 1: Writer
 		.A1(wr_addr), .I1({wr_strb[7:0], wr_data[63:0]}), .O1(), 
 		.CEB1(clk), .WEB1(web1), .CSB1(csb1), .OEB1(oeb1),
@@ -58,7 +58,7 @@ module special_mem_dpbank (
 	);
 
 
-	dpram128x72 u_ram_128x72_1 (
+	dpram72x128_cb u_ram_128x72_1 (
 		.A1(wr_addr), .I1({wr_strb[15:8], wr_data[127:64]}), .O1(), 
 		.CEB1(clk), .WEB1(web1), .CSB1(csb1), .OEB1(oeb1),
 		.A2(rd_addr), .I2(72'b0), .O2({rd_strb[15:8], rd_data[127:64]}), 
@@ -66,7 +66,7 @@ module special_mem_dpbank (
 	);
 
 	
-	dpram128x72 u_ram_128x72_2 (
+	dpram72x128_cb u_ram_128x72_2 (
 		.A1(wr_addr), .I1({wr_strb[23:16], wr_data[191:128]}), .O1(), 
 		.CEB1(clk), .WEB1(web1), .CSB1(csb1), .OEB1(oeb1),
 		.A2(rd_addr), .I2(72'b0), .O2({rd_strb[23:16], rd_data[191:128]}), 
@@ -74,7 +74,7 @@ module special_mem_dpbank (
 	);
 
 	
-	dpram128x72 u_ram_128x72_3 (
+	dpram72x128_cb u_ram_128x72_3 (
 		.A1(wr_addr), .I1({wr_strb[31:24], wr_data[255:192]}), .O1(), 
 		.CEB1(clk), .WEB1(web1), .CSB1(csb1), .OEB1(oeb1),
 		.A2(rd_addr), .I2(72'b0), .O2({rd_strb[31:24], rd_data[255:192]}), 
@@ -86,7 +86,7 @@ module special_mem_dpbank (
 	// -------------------------------------------------------------------------
 	
 	
-	dpram256x16 u_ram_256x16_parity (
+	dpram16x256_cb u_ram_256x16_parity (
 		// Port 1: Writer
 		.A1({1'b0, wr_addr}),   .I1({wr_isRuined, wr_parity}),    .O1(), 			//1'b0 pads the MSB to match the port width (128 instead of 256
 		.CEB1(clk), .WEB1(web1), .CSB1(csb1), .OEB1(oeb1),
