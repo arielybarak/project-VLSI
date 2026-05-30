@@ -210,7 +210,7 @@ DW_asymfifo_s1_sf #(.data_in_width(8*PDATA_WIDTH), .data_out_width(8*PDATA_WIDTH
 );
 DW_asymfifo_s1_sf #( .data_in_width(tot_metadata), .data_out_width(tot_metadata), .depth(depth), .af_level(af_level), .ae_level(1)) m_data_fifo_meta
 (
-	.clk(clk), .rst_n(rst_n), .push_req_n(~m_data_fifo_push), .pop_req_n(~m_data_fifo_pop), .empty(s_data_fifo_empty), .full(s_data_fifo_full),
+	.clk(clk), .rst_n(rst_n), .push_req_n(~m_data_fifo_push), .pop_req_n(~m_data_fifo_pop), .empty(), .full(),
 	.data_in({master2fifo_data.wid, master2fifo_data.wstrb, master2fifo_data.wuser, master2fifo_data.wlast}),
 	.data_out({fifo2module_data.wid, fifo2module_data.wstrb, fifo2module_data.wuser, fifo2module_data.wlast})
 );
@@ -234,7 +234,7 @@ DW_asymfifo_s1_sf #( .data_in_width(8*PDATA_WIDTH), .data_out_width(8*PDATA_WIDT
 );
 DW_asymfifo_s1_sf #( .data_in_width(tot_metadata), .data_out_width(tot_metadata), .depth(depth), .af_level(af_level), .ae_level(1)) s_data_fifo_meta
 (
-	.clk(clk), .rst_n(rst_n), .push_req_n(~s_data_fifo_push), .pop_req_n(~s_data_fifo_pop), .empty(s_data_fifo_empty), .full(s_data_fifo_full),
+	.clk(clk), .rst_n(rst_n), .push_req_n(~s_data_fifo_push), .pop_req_n(~s_data_fifo_pop), .empty(), .full(),
 	.data_in({module2fifo_data.wid, module2fifo_data.wstrb, module2fifo_data.wuser, module2fifo_data.wlast}),
 	.data_out({fifo2slave_data.wid, fifo2slave_data.wstrb, fifo2slave_data.wuser, fifo2slave_data.wlast})
 );

@@ -70,6 +70,16 @@ package pkg;
 //		reg [PCOMPLETE_DATA-1:0]      strb 	  ;			//256 bits.					
 	} spec_slot ;										//total data channel 2,304
 	
+	// AXI Data Channel metadata (used in pipeline skid buffers)
+	typedef struct packed {
+		logic [PID_WIDTH-1:0]       wid;
+		logic [(PDATA_WIDTH*8)-1:0] wdata;
+		logic [PDATA_WIDTH-1:0]     wstrb;
+		logic [PWUSER_WIDTH-1:0]    wuser;
+		logic                       wlast;
+	} skid_data_t;
+	
+	
 	
 endpackage
 
