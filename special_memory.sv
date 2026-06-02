@@ -30,6 +30,7 @@ import pkg::*;
 	
 	
 );
+
 // 1. Core State & Control Signals
 //=========================================
 spec_slot [SPEC_SLOT_AMOUNT-1:0]  spec_mem 		    ;
@@ -53,7 +54,6 @@ logic first_unluck  ;
 // logic d_awvalid removed
 logic in_awshake    ;
 logic transfer_done ;
-
 
 // --- Unlucky early-fire (Phase 1): registered m_add payload + FSM ---
 typedef enum logic [0:0] {
@@ -100,16 +100,7 @@ logic [PDATA_WIDTH*8-1:0] rd_stg2_data ;
 logic [PDATA_WIDTH-1:0]   rd_stg2_strb ;
 logic [PWUSER_WIDTH-1:0]  rd_stg2_user ;
 
-typedef struct packed {
-    logic [PID_WIDTH-1:0]       wid;
-    logic [(PDATA_WIDTH*8)-1:0] wdata;
-    logic [PDATA_WIDTH-1:0]     wstrb;
-    logic [PWUSER_WIDTH-1:0]    origin_parity;
-    logic [PWUSER_WIDTH-1:0]    rd_isRuined;
-    logic                       wlast;
-} raw_rd_data_t;
-
-raw_rd_data_t pipe_raw_in, pipe_raw_out;
+raw_rd_data_t pipe_raw_in, pipe_raw_out;   // raw_rd_data_t now defined in pkg.sv
 logic       rd_pipe_up_ready;
 logic       rd_skid_valid  ;
 logic       rd_skid_ready  ;
@@ -240,7 +231,6 @@ end
 
 // 6. Continuous Assignments
 //=========================================
-
 logic [SPEC_SLOT_AMOUNT-1:0] bitmap_val_next;
 always_comb begin
     bitmap_val_next = bitmap_val_q;
@@ -273,7 +263,6 @@ assign m_data.wlast = rd_axi_buf.wlast;
 
 // 7. Combinational Search & Match Logic
 //=========================================
-
 logic [SPEC_SLOT_AMOUNT-1:0] done_vec, unluck_vec;
 always_comb begin
     for (int j = 0; j < SPEC_SLOT_AMOUNT; j++) begin
@@ -366,10 +355,6 @@ always_comb begin
 						load_release = 1'b1     ;
 						eu_next      = EU_ARMED ;
 					end
-		// Return to IDLE the moment the address is accepted. Pacing to the data
-		// stream is handled by tran_ready (can't re-arm until the next release is
-		// selected) + m_add_vld_q backpressure -- NOT by waiting on transfer_done,
-		// which is one cycle too slow for the 1-cycle idle gap left by the prefetch.
 		EU_ARMED   : if (m_add.awready) eu_next = EU_IDLE;
 		default    : eu_next = EU_IDLE;
 	endcase
@@ -390,13 +375,8 @@ always_ff @(posedge clk or negedge rst_n) begin
 		if(tran_ready) begin
 			rd_curr <= rd_next ;
 		end
-		
-		// d_awvalid removed (handled by m_add_vld_q logic)
-		
 		if(tran_valid & tran_ready) begin
 			tran_ready <= 0 ;
-			// Phase 2: if we prefetched beat-0 this same cycle, skip it so the
-			// normal sequence starts at beat-1 instead of re-reading beat-0.
 			if (prefetch_now) sent_transfer <= PLENGTH_WIDTH'(1) ;
 		end
 		else if (~tran_ready) begin
@@ -592,6 +572,36 @@ as24_rd_done: assert property (@(posedge clk) disable iff (!rst_n)
 as25_train_id: assert property (@(posedge clk) disable iff (!rst_n)
 	(found_unluck & tran_ready) |-> (spec_mem[rd_next].awid == d_cur_id))
 	else $fatal("unlucky-train release slot %0d id (%0h) != d_cur_id (%0h)", rd_next, spec_mem[rd_next].awid, d_cur_id);
+
+// ---- Parity / wuser X-localization battery (debug for t_axiOut wuser=X) ----
+// The data and parity SRAMs are driven with identical wr_en/addr/timing, so a
+// wuser-only X must originate at ONE of these three boundaries. Whichever fires
+// first points at the root:
+//   as26 -> X was STORED  (s_data.wuser / wr_isRuined_in undefined at write)
+//   as27 -> SRAM returned X for a written cell (parity-bank model / addressing)
+//   as28 -> egress recompute introduced X (origin_parity/rd_isRuined/calcOut)
+as26_wr_parity_x: assert property (@(posedge clk) disable iff (!rst_n)
+	(wr_skid_valid & wr_skid_ready) |-> !$isunknown({wr_axi_buf.wuser, wr_axi_buf.wr_isRuined}))
+	else $fatal("STORE parity X: slot=%0d off=%0d wuser=%b isRuined=%b (root is write-side / s_data.wuser)",
+		wr_axi_buf.wr_idx, wr_axi_buf.cur_len_stg1, wr_axi_buf.wuser, wr_axi_buf.wr_isRuined);
+
+as27_rd_parity_x: assert property (@(posedge clk) disable iff (!rst_n)
+	rd_stg1_en_q |-> !$isunknown({origin_parity, rd_isRuined}))
+	else $fatal("READ parity X from SRAM: rd_addr=%h origin_parity=%b rd_isRuined=%b (cell read but not written, or parity-bank model)",
+		rd_stg1_addr_q, origin_parity, rd_isRuined);
+
+as28_out_wuser_x: assert property (@(posedge clk) disable iff (!rst_n)
+	rd_skid_valid |-> !$isunknown(rd_stg2_user))
+	else $fatal("EGRESS wuser X: origin_parity=%b rd_isRuined=%b calcOut=%b (recompute introduced X)",
+		pipe_raw_out.origin_parity, pipe_raw_out.rd_isRuined, calcOut_parity);
+
+//   as29 -> done set before all awlen+1 beats landed: later reads over-run into
+//           never-written cells (data reads as 0, parity reads as X -> wuser=X).
+as29_done_complete: assert property (@(posedge clk) disable iff (!rst_n)
+	(wr_skid_valid & wr_skid_ready & wr_axi_buf.wlast)
+		|-> (wr_axi_buf.cur_len_stg1 == spec_mem[wr_axi_buf.wr_idx].awlen))
+	else $fatal("done set early: slot %0d wlast at off %0d but awlen %0d -> read over-runs into X",
+		wr_axi_buf.wr_idx, wr_axi_buf.cur_len_stg1, spec_mem[wr_axi_buf.wr_idx].awlen);
 
 // age-matrix invariants
 genvar a_i, a_j;

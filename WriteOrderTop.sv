@@ -45,6 +45,37 @@ wire block_data ;
 logic s_wready ;
 assign s_wready = t_s_data.wready ;
 
+/*--- Phase 1: s_add AW boundary skid -------------------------------------------
+ * One skid_buffer decouples the backward awready path from the external m_add_fifo.
+ * up_ready (=t_s_add.awready) is a registered output -> severs FIFO.pop combinationally.
+ * All AW consumers (special_memory via axi.*, process_mem, rout, regular t_m_add mux)
+ * read the skid OUTPUT (s_add_buf/awvalid_buf); the single unified downstream awready
+ * (aw_dn_ready) is the existing add_cur_state mux, now feeding the skid's dn_ready. */
+add_t s_add_in_bus, s_add_buf ;
+logic awvalid_buf ;
+logic aw_dn_ready ;
+
+assign s_add_in_bus = '{
+	awid    : t_s_add.awid    ,
+	awlen   : t_s_add.awlen   ,
+	awburst : t_s_add.awburst ,
+	awaddr  : t_s_add.awaddr  ,
+	awsize  : t_s_add.awsize  ,
+	awuser  : t_s_add.awuser  ,
+	other   : t_s_add.other
+};
+
+skid_buffer #($bits(add_t)) s_add_skid (
+	.clk     (clk            ),
+	.rst_n   (rst_n          ),
+	.up_valid(t_s_add.awvalid),
+	.up_ready(t_s_add.awready),
+	.up_data (s_add_in_bus   ),
+	.dn_valid(awvalid_buf    ),
+	.dn_ready(aw_dn_ready    ),
+	.dn_data (s_add_buf      )
+);
+
 /*Connecting 2 sides of module's respond channel */
 assign t_s_resp.bvalid = t_m_resp.bvalid ;
 assign t_m_resp.bready = t_s_resp.bready ;
@@ -53,15 +84,15 @@ assign t_s_resp.bresp = t_m_resp.bresp   ;
 
 
 /*Connecting internal AXI bus to the FIFO from Master's side (Slave's modports)*/
-assign axi.awvalid = t_s_add.awvalid ;
-assign axi.wvalid  = t_s_data.wvalid ;
-assign axi.awid    = t_s_add.awid    ;
-assign axi.awaddr  = t_s_add.awaddr  ;
-assign axi.awburst = t_s_add.awburst ;
-assign axi.awlen   = t_s_add.awlen   ;
-assign axi.awsize  = t_s_add.awsize  ;
-assign axi.awuser  = t_s_add.awuser  ;
-assign axi.other   = t_s_add.other   ;
+assign axi.awvalid = awvalid_buf      ;
+assign axi.wvalid  = t_s_data.wvalid  ;
+assign axi.awid    = s_add_buf.awid   ;
+assign axi.awaddr  = s_add_buf.awaddr ;
+assign axi.awburst = s_add_buf.awburst;
+assign axi.awlen   = s_add_buf.awlen  ;
+assign axi.awsize  = s_add_buf.awsize ;
+assign axi.awuser  = s_add_buf.awuser ;
+assign axi.other   = s_add_buf.other  ;
 assign axi.wid 	   = t_s_data.wid 	 ;
 assign axi.wdata   = t_s_data.wdata  ;
 assign axi.wstrb   = t_s_data.wstrb  ;
@@ -74,10 +105,10 @@ process_mem monitor (
 	.rst_n        (rst_n          ),
 	.full         (proc_full      ),
 	.empty        (proc_empty     ),
-	.awvalid      (t_s_add.awvalid),
-	.awready      (t_s_add.awready),
-	.awid         (t_s_add.awid   ),
-	.awuser       (t_s_add.awuser ),
+	.awvalid      (awvalid_buf    ),
+	.awready      (aw_dn_ready    ),
+	.awid         (s_add_buf.awid ),
+	.awuser       (s_add_buf.awuser),
 	.wvalid       (t_s_data.wvalid),
 	.wready       (s_wready       ),
 	.wid          (t_s_data.wid   ),
@@ -116,9 +147,9 @@ rout router (
 	.proc_empty    (proc_empty     ),
 	.spec2router   (spec2router    ),
 	.unluck        (unluck         ),
-	.s_awvalid     (t_s_add.awvalid),
-	.block_fin     (block_fin      ),
-	.s_awuser      (t_s_add.awuser ),
+	.s_awvalid     (awvalid_buf     ),
+	.block_fin     (block_fin       ),
+	.s_awuser      (s_add_buf.awuser),
 	.id_in_spec    (axi.wready     ),
 	.to_block      (to_block       ),
 	.add_cur_state (add_cur_state  ),
@@ -133,17 +164,17 @@ always_comb begin
 	case (add_cur_state)
 		
 		ADD_REG_FLOW: begin
-			t_m_add.awburst = t_s_add.awburst ;
-			t_m_add.awid    = t_s_add.awid    ;
-			t_m_add.awaddr  = t_s_add.awaddr  ;
-			t_m_add.awlen   = t_s_add.awlen   ;
-			t_m_add.awsize  = t_s_add.awsize  ;
-			t_m_add.awuser  = t_s_add.awuser  ;
-			t_m_add.other   = t_s_add.other   ;
-			t_m_add.awvalid = t_s_add.awvalid ;
-			t_s_add.awready = t_m_add.awready ;
+			t_m_add.awburst = s_add_buf.awburst ;
+			t_m_add.awid    = s_add_buf.awid    ;
+			t_m_add.awaddr  = s_add_buf.awaddr  ;
+			t_m_add.awlen   = s_add_buf.awlen   ;
+			t_m_add.awsize  = s_add_buf.awsize  ;
+			t_m_add.awuser  = s_add_buf.awuser  ;
+			t_m_add.other   = s_add_buf.other   ;
+			t_m_add.awvalid = awvalid_buf       ;
+			aw_dn_ready     = t_m_add.awready   ;
 			axiOut.awready  = 1'b0 ;
-			
+
 		end
 		ADD_MERGE:	begin
 			t_m_add.awburst = axiOut.awburst ;
@@ -155,7 +186,7 @@ always_comb begin
 			t_m_add.other   = axiOut.other   ;
 			t_m_add.awvalid = axiOut.awvalid ;
 			axiOut.awready  = t_m_add.awready ;
-			t_s_add.awready = axi.awready	 ;
+			aw_dn_ready     = axi.awready	 ;
 		end
 		
 	endcase

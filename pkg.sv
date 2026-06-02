@@ -89,8 +89,18 @@ package pkg;
 		logic [PWUSER_WIDTH-1:0]    wr_isRuined;
 	} wr_skid_data_t;
 
+	// Raw SRAM-read payload (pre egress-parity recompute), carried across the read pipe_reg
 	typedef struct packed {
-  		logic [PID_WIDTH-1:0]     awid	  ; 
+		logic [PID_WIDTH-1:0]       wid;
+		logic [(PDATA_WIDTH*8)-1:0] wdata;
+		logic [PDATA_WIDTH-1:0]     wstrb;
+		logic [PWUSER_WIDTH-1:0]    origin_parity;
+		logic [PWUSER_WIDTH-1:0]    rd_isRuined;
+		logic                       wlast;
+	} raw_rd_data_t;
+
+	typedef struct packed {
+  		logic [PID_WIDTH-1:0]     awid	  ;
 		logic [PLENGTH_WIDTH-1:0] awlen	  ;
 		logic [1:0]               awburst ;
 		logic [PADDR_WIDTH-1:0]   awaddr  ; 
