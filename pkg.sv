@@ -46,28 +46,28 @@ package pkg;
 	
 	
 	typedef struct packed {
-		reg [PID_WIDTH-1:0]     id 		  ;
-		reg [PAWUSER_WIDTH-1:0] tran_type ;
-		reg 					done	  ;
+		logic [PID_WIDTH-1:0]     id 		  ;
+		logic [PAWUSER_WIDTH-1:0] tran_type ;
+		logic 					done	  ;
 	} slot ;	//size 11 bits
 	
 	
 	typedef struct packed { 	
-		reg [INDEX_WIDTH-1:0]   index   ;				//6 for 32 slots
-		reg                     unluck  ;
-		reg [PLENGTH_WIDTH-1:0] cur_len ; 									
-		reg                     done 	;				//11 bits total.
+		logic [INDEX_WIDTH-1:0]   index   ;				//6 for 32 slots
+		logic                     unluck  ;
+		logic [PLENGTH_WIDTH-1:0] cur_len ; 									
+		logic                     done 	;				//11 bits total.
 		
-		reg [PID_WIDTH-1:0]           awid	  ; //4       should be regs for cur perf
-		reg [PLENGTH_WIDTH-1:0]       awlen	  ; //3
-		reg [1:0]                     awburst ; //2
-		reg [PADDR_WIDTH-1:0]         awaddr  ; //32
-		reg [PSIZE_WIDTH-1:0]         awsize  ; //3
-		reg [PAWUSER_WIDTH-1:0]       awuser  ;	//2		// should be regs for cur perf			  
-		reg [POTHER-1:0]			  other   ; //9, 55 total
+		logic [PID_WIDTH-1:0]     awid	  ; //4       should be logics for cur perf
+		logic [PLENGTH_WIDTH-1:0] awlen	  ; //3
+		logic [1:0]               awburst ; //2
+		logic [PADDR_WIDTH-1:0]   awaddr  ; //32
+		logic [PSIZE_WIDTH-1:0]   awsize  ; //3
+		logic [PAWUSER_WIDTH-1:0] awuser  ;	//2		// should be logics for cur perf			  
+		logic [POTHER-1:0]		  other   ; //9, 55 total
 														//66 bits for address channel. 17 of them multiple reading.
-//		reg [PCOMPLETE_DATA-1:0][7:0] data    ;			//256 bytes (2K bits)
-//		reg [PCOMPLETE_DATA-1:0]      strb 	  ;			//256 bits.					
+//		logic [PCOMPLETE_DATA-1:0][7:0] data    ;			//256 bytes (2K bits)
+//		logic [PCOMPLETE_DATA-1:0]      strb 	  ;			//256 bits.					
 	} spec_slot ;										//total data channel 2,304
 	
 	// AXI Data Channel metadata (used in pipeline skid buffers)
@@ -78,6 +78,27 @@ package pkg;
 		logic [PWUSER_WIDTH-1:0]    wuser;
 		logic                       wlast;
 	} skid_data_t;
+
+	typedef struct packed {
+		logic [PID_WIDTH-1:0]       wid;
+		logic [(PDATA_WIDTH*8)-1:0] wdata;
+		logic [PDATA_WIDTH-1:0]     wstrb;
+		logic [PWUSER_WIDTH-1:0]    wuser;
+		logic                       wlast;
+		logic [INDEX_WIDTH-1:0]     wr_idx;
+		logic [PLENGTH_WIDTH-1:0]   cur_len_stg1;
+		logic [PWUSER_WIDTH-1:0]    wr_isRuined;
+	} wr_skid_data_t;
+
+	typedef struct packed {
+  		logic [PID_WIDTH-1:0]     awid	  ; 
+		logic [PLENGTH_WIDTH-1:0] awlen	  ;
+		logic [1:0]               awburst ;
+		logic [PADDR_WIDTH-1:0]   awaddr  ; 
+		logic [PSIZE_WIDTH-1:0]   awsize  ;
+		logic [PAWUSER_WIDTH-1:0] awuser  ;		  
+		logic [POTHER-1:0]		  other   ;
+	} add_t;
 	
 	
 	

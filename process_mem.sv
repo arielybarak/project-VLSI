@@ -149,6 +149,47 @@ always_ff @(posedge clk or negedge rst_n) begin
 end
 
 
+// synthesis translate_off
+//==============================================================================
+// DEADLOCK WATCHDOG + RELEASE-PATH TRACE  (debug instrumentation)
+//==============================================================================
+always @(posedge clk) begin
+	if (rst_n) begin
+		if (new_tran & ~bshake)
+			$display("[PROCMEM @%0t] ADD   id=%0d type=%b -> proc_count(next)=%0d", $time, awid, awuser, proc_count + 1);
+		if (bshake)
+			$display("[PROCMEM @%0t] BRESP bid=%0d cur_index_done=%0d block_fin=%b proc_count=%0d mem1.type=%b",
+				$time, bid, cur_index_done, block_fin, proc_count, memory[1].tran_type);
+		if (spec_release)
+			$display("[PROCMEM @%0t] SPEC_RELEASE=1 (mem1.type=%b proc_count=%0d release_ready=%b d_spec_release=%b)",
+				$time, memory[1].tran_type, proc_count, release_ready, d_spec_release);
+	end
+end
+
+wire pm_progress = new_tran | bshake | spec_release | release_ready;
+integer pm_idle_cnt;
+always @(posedge clk or negedge rst_n) begin
+	if (!rst_n)                                pm_idle_cnt <= 0;
+	else if (pm_progress | (proc_count == 0)) pm_idle_cnt <= 0;
+	else                                       pm_idle_cnt <= pm_idle_cnt + 1;
+end
+
+always @(posedge clk) begin
+	if (rst_n && pm_idle_cnt == 450) begin
+		$display("==========================================================================");
+		$display("[PROCMEM WATCHDOG @%0t] STUCK with proc_count=%0d -> who owes a move?", $time, proc_count);
+		$display("  full=%b empty=%b to_block=%b block_data=%b block_fin=%b", full, empty, to_block, block_data, block_fin);
+		$display("  spec_release=%b d_spec_release=%b release_ready=%b cur_index_done=%0d", spec_release, d_spec_release, release_ready, cur_index_done);
+		$display("  bvalid=%b bready=%b bid=%0d  awvalid=%b awready=%b awid=%0d  wvalid=%b wready=%b wlast=%b wid=%0d",
+			bvalid, bready, bid, awvalid, awready, awid, wvalid, wready, wlast, wid);
+		for (int k = 0; (k < 18) && (k < proc_count); k++)
+			$display("    pmem[%0d] id=%0d type=%b done=%b", k, memory[k].id, memory[k].tran_type, memory[k].done);
+		$display("==========================================================================");
+	end
+end
+// synthesis translate_on
+
+
 endmodule
 
 
