@@ -53,7 +53,6 @@ package pkg;
 	
 	
 	typedef struct packed { 	
-		logic [INDEX_WIDTH-1:0]   index   ;				//6 for 32 slots
 		logic                     unluck  ;
 		logic [PLENGTH_WIDTH-1:0] cur_len ; 									
 		logic                     done 	;				//11 bits total.
@@ -100,7 +99,25 @@ package pkg;
 		logic [POTHER-1:0]		  other   ;
 	} add_t;
 	
+	// One row of the age matrix: bit k = "slot k is older than this row's slot".
+	typedef logic [SPEC_SLOT_AMOUNT-1:0] age_row_t ;
 	
+	// Oldest member of `mask`, returned one-hot. One-hot whenever mask != 0.
+	//   slot j wins iff it is in the set AND no still-present older slot is in the set.
+	function automatic logic [SPEC_SLOT_AMOUNT-1:0] oldest
+	    (input logic [SPEC_SLOT_AMOUNT-1:0] mask,
+	     input age_row_t age [SPEC_SLOT_AMOUNT]);
+	    for (int j = 0; j < SPEC_SLOT_AMOUNT; j++)
+	        oldest[j] = mask[j] & ~|(age[j] & mask);
+	endfunction
+	
+	// One-hot -> binary slot index.
+	function automatic logic [INDEX_WIDTH-1:0] enc_oh
+	    (input logic [SPEC_SLOT_AMOUNT-1:0] oh);
+	    enc_oh = '0;
+	    for (int j = 0; j < SPEC_SLOT_AMOUNT; j++)
+	        if (oh[j]) enc_oh = INDEX_WIDTH'(j);
+	endfunction
 	
 endpackage
 

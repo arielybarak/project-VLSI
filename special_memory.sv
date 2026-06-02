@@ -33,15 +33,14 @@ import pkg::*;
 // 1. Core State & Control Signals
 //=========================================
 spec_slot [SPEC_SLOT_AMOUNT-1:0]  spec_mem 		    ;
-logic  	  [SPEC_SLOT_AMOUNT-1:0]  spec_mem_unluck   ;
-logic	  [SPEC_SLOT_AMOUNT-1:0]  one_hot_slot_zero ;
+logic [SPEC_SLOT_AMOUNT-1:0] bitmap_val_q ;
+age_row_t                    age_q [SPEC_SLOT_AMOUNT] ;
 reg	  	  [INDEX_WIDTH:0] 	      spec_count 		;
 
 logic	  [INDEX_WIDTH-1:0]  	  wr_idx_in   ;
 logic  	  [INDEX_WIDTH-1:0]		  rd_next  ;
 logic  	  [INDEX_WIDTH-1:0]		  rd_curr  ; 
 logic  	  [INDEX_WIDTH-1:0]		  rd_addr  ; 
-logic  	  [INDEX_WIDTH-1:0]		  next_slot_idx ;
 logic 	  [PID_WIDTH-1:0] 		  cur_id 		;
 reg 	  [PID_WIDTH-1:0] 		  d_cur_id 		;
 
@@ -54,8 +53,7 @@ logic first_unluck  ;
 // logic d_awvalid removed
 logic in_awshake    ;
 logic transfer_done ;
-logic tran_done_q;
-logic [INDEX_WIDTH-1:0] tran_done_addr_q;
+
 
 // --- Unlucky early-fire (Phase 1): registered m_add payload + FSM ---
 typedef enum logic [0:0] {
@@ -121,34 +119,6 @@ skid_data_t rd_axi_buf     ;       // Output of read-path skid buffer
 // 4. Aux Logic & Parity Signals
 //=========================================
 
-logic [INDEX_WIDTH-1:0] effective_index [0:SPEC_SLOT_AMOUNT-1];
-logic [INDEX_WIDTH:0]   spec_occ;
-
-always_comb begin
-    // Live occupancy this cycle: registered count minus the deferred delete.
-    // NEVER folds in in_awshake -> input accept path stays combinational-loop-free,
-    // and is more correct (a just-accepted slot is not written until the next edge).
-    spec_occ = tran_done_q ? (spec_count - 1'b1) : spec_count;
-
-    for (int j=0; j<SPEC_SLOT_AMOUNT; j++) begin
-        if (tran_done_q) begin
-            if (j == tran_done_addr_q)
-                effective_index[j] = spec_count - 1;
-            else if ((spec_mem[j].index > spec_mem[tran_done_addr_q].index) && (spec_mem[j].index < spec_count))
-                effective_index[j] = spec_mem[j].index - 1;
-            else
-                effective_index[j] = spec_mem[j].index;
-        end else begin
-            effective_index[j] = spec_mem[j].index;
-        end
-    end
-end
-
-reg [SPEC_SLOT_AMOUNT-1:0] prior_coder_in 		   ;
-wire [SPEC_SLOT_AMOUNT-1:0] prior_coder_out 	   ;
-reg [SPEC_SLOT_AMOUNT-1:0] reverse_prior_coder_out ;
-wire zeros ;
-
 parameter batchZize = PDATA_WIDTH*8/PWUSER_WIDTH;
 logic [PWUSER_WIDTH-1:0] calcIn_parity_in ;
 logic [PWUSER_WIDTH-1:0] calcOut_parity ;
@@ -176,10 +146,19 @@ special_mem_dpbank memory (
 	.rd_isRuined(rd_isRuined)
 );
 
-DW_pricod #(SPEC_SLOT_AMOUNT) priority_decoder (
-	.a   (prior_coder_in ),
-	.cod (prior_coder_out),
-	.zero(zeros          )
+// --- free-slot pick ---
+logic [SPEC_SLOT_AMOUNT-1:0] alloc_oh, del_oh;
+logic [SPEC_SLOT_AMOUNT-1:0] free_mask;
+
+assign free_mask = ~bitmap_val_q;
+assign alloc_oh = in_awshake   ? (free_mask & -free_mask) : '0;
+assign del_oh   = transfer_done ? (SPEC_SLOT_AMOUNT'(1) << rd_curr)      : '0;
+
+age_order #(SPEC_SLOT_AMOUNT) order (
+    .clk(clk), .rst_n(rst_n),
+    .alloc_en(in_awshake),   .alloc_oh(alloc_oh),
+    .del_en  (transfer_done), .del_oh (del_oh),
+    .bitmap_val_q (bitmap_val_q),       .age_q(age_q)
 );
 
 assign wr_bus_in = '{
@@ -262,27 +241,23 @@ end
 // 6. Continuous Assignments
 //=========================================
 
-// mem_full is REGISTERED off the registered count (mirrors process_mem's full/empty).
-// awready therefore gates on a flop -> the in_awshake->mem_full->awready combinational
-// loop is impossible by construction, and the compare leaves the awready critical path.
-wire spec_inc = in_awshake & ~tran_done_q ;   // same terms as the spec_count update
-wire spec_dec = tran_done_q & ~in_awshake ;
-always_ff @(posedge clk or negedge rst_n) begin
-	if (!rst_n) mem_full <= 1'b0 ;
-	else        mem_full <= ((spec_count + spec_inc - spec_dec) == SPEC_SLOT_AMOUNT) ;
+logic [SPEC_SLOT_AMOUNT-1:0] bitmap_val_next;
+always_comb begin
+    bitmap_val_next = bitmap_val_q;
+    if (in_awshake) bitmap_val_next = bitmap_val_next | alloc_oh;
+    if (transfer_done) bitmap_val_next = bitmap_val_next & ~del_oh;
 end
-// ~zeros gate: when prior_coder_in is all-zero DW_pricod leaves `cod` undefined.
-// Without this gate a stale ghost `unluck` bit in spec_mem_unluck ANDs with the
-// X cod -> found_unluck X -> rd_en/OEB2 X -> self-sustaining X churn (test-6 hang).
-assign found_unluck = ~zeros & |(spec_mem_unluck & reverse_prior_coder_out) ;
-assign tran_valid = (release_ready | found_unluck | (first_unluck & first_done)) & (spec_occ > '0) ;
-assign first_unluck = spec_mem_unluck[0] ;
+always_ff @(posedge clk or negedge rst_n) begin
+    if (!rst_n) mem_full <= 1'b0;
+    else        mem_full <= &bitmap_val_next;
+end
+
+wire spec_nonempty = |bitmap_val_q;
 
 // --- Communication ----
-assign release_ready = tran_ready & spec_release & ~found_unluck & (spec_occ > '0) & first_done ;
-assign spec2router = (tran_valid & tran_ready) | ~tran_ready ;
-assign s_add.awready = s_add.awvalid & ~to_block & ~mem_full & ~proc_full & ~proc_empty & ((s_add.awuser === DIVERT) | unluck) ;
-assign in_awshake = s_add.awvalid & s_add.awready ;
+assign spec2router = (tran_valid & tran_ready) | ~tran_ready;
+assign s_add.awready = s_add.awvalid & ~to_block & ~mem_full & ~proc_full & ~proc_empty & ((s_add.awuser === DIVERT) | unluck);
+assign in_awshake = s_add.awvalid & s_add.awready;
 assign s_data.wready = pipe_up_ready & wr_id_match;
 
 // --- Read Path Flow ---
@@ -299,57 +274,54 @@ assign m_data.wlast = rd_axi_buf.wlast;
 // 7. Combinational Search & Match Logic
 //=========================================
 
+logic [SPEC_SLOT_AMOUNT-1:0] done_vec, unluck_vec;
 always_comb begin
-	wr_id_match = 1'b0;
-	wr_idx_in = 0 ;
-	for(int j=0; j<SPEC_SLOT_AMOUNT; j++) begin
-		// Match logic (Front of wr pipe): Asserts wr_id_match if incoming ID matches a special transaction.
-		// This gates the pipe input and asserts s_data.wready to claim data from the router.
-		if ((~|(spec_mem[j].awid^s_data.wid)) & (~spec_mem[j].done) & (effective_index[j] < spec_occ)) begin
-			wr_id_match = 1'b1;
-			wr_idx_in = INDEX_WIDTH'(j) ;
-		end
-	end
-	// SRAM is always ready to receive data from the skid buffer.
-	wr_skid_ready = 1'b1 ;
+    for (int j = 0; j < SPEC_SLOT_AMOUNT; j++) begin
+        done_vec[j]   = spec_mem[j].done;
+        unluck_vec[j] = spec_mem[j].unluck;
+    end
 end
 
+logic [SPEC_SLOT_AMOUNT-1:0] wr_match_cand, wr_oh;
 always_comb begin
-	first_done = 1'b0 ;														
-	unluck = 1'b0 ;
-	cur_id = '0 ;
-	spec_mem_unluck = '0 ;	
-	prior_coder_in = '0 ;
-	next_slot_idx = '0 ;
-	rd_next = '0 ;
-	
-	for(int j=0; j<SPEC_SLOT_AMOUNT; j++) begin : x1											
-		one_hot_slot_zero[j] = (effective_index[j] == '0) ? 1'b1 : 1'b0 ;		
-																								///// transaction train operator /////
-		spec_mem_unluck[effective_index[j]] = spec_mem[j].unluck ;										//-----unlucky search mechanism-----//
-		reverse_prior_coder_out[j] = prior_coder_out[SPEC_SLOT_AMOUNT-1-j] ;
-		prior_coder_in[SPEC_SLOT_AMOUNT-1-effective_index[j]] = (~|(spec_mem[j].awid^d_cur_id)) & (effective_index[j] < spec_occ) & spec_mem[j].done & ~(tran_done_q & (j == tran_done_addr_q)) ;
-		
-		if(found_unluck) begin
-			if(reverse_prior_coder_out[j]) begin
-				next_slot_idx = INDEX_WIDTH'(j) ;
-			end
-		end 
-		else if(one_hot_slot_zero === (1<<j) && ((first_unluck & first_done) || release_ready)) begin		//-----Special release-----//
-			cur_id = spec_mem[j].awid ;
-		end
-																									  	//-----new burst: luck check-----//
-		if(s_add.awvalid && (spec_mem[j].awid === s_add.awid)
-			&& (|(s_add.awuser^DIVERT)) && (effective_index[j] < spec_occ) && ~(tran_done_q & (j == tran_done_addr_q))) begin
-			unluck = 1 ;
-		end																				
-		if(one_hot_slot_zero === (1<<j)) begin	
-			first_done = spec_mem[j].done ;
-		end
-		if(effective_index[j] === next_slot_idx) begin	
-			rd_next = j ;
-		end
-	end
+    for (int j = 0; j < SPEC_SLOT_AMOUNT; j++)
+        wr_match_cand[j] = bitmap_val_q[j] & ~spec_mem[j].done
+                         & (spec_mem[j].awid == s_data.wid);
+    wr_oh       = oldest(wr_match_cand, age_q);
+    wr_id_match = |wr_match_cand;
+    wr_idx_in   = enc_oh(wr_oh);
+    wr_skid_ready = 1'b1;
+end
+
+logic [SPEC_SLOT_AMOUNT-1:0] unluck_cand, unluck_oh;
+always_comb begin
+    for (int j = 0; j < SPEC_SLOT_AMOUNT; j++)
+        unluck_cand[j] = bitmap_val_q[j] & spec_mem[j].done
+                       & (spec_mem[j].awid == d_cur_id);
+    unluck_oh = oldest(unluck_cand, age_q);
+end
+assign found_unluck = |unluck_cand & unluck_vec[enc_oh(unluck_oh)];
+
+logic [SPEC_SLOT_AMOUNT-1:0] head_oh;
+logic [INDEX_WIDTH-1:0]      head_idx;
+
+assign head_oh     = oldest(bitmap_val_q, age_q);
+assign head_idx    = enc_oh(head_oh);
+assign first_done  = |(head_oh & done_vec);
+assign first_unluck = |(head_oh & unluck_vec);
+assign rd_next     = found_unluck ? enc_oh(unluck_oh) : head_idx;
+assign cur_id      = spec_mem[head_idx].awid;
+
+assign release_ready = tran_ready & spec_release & ~found_unluck & spec_nonempty & first_done;
+assign tran_valid    = (release_ready | found_unluck | (first_unluck & first_done)) & spec_nonempty;
+
+always_comb begin
+    unluck = 1'b0;
+    for (int j = 0; j < SPEC_SLOT_AMOUNT; j++)
+        if (s_add.awvalid & bitmap_val_q[j]
+            & (spec_mem[j].awid == s_add.awid)
+            & (|(s_add.awuser ^ DIVERT)))
+            unluck = 1'b1;
 end
 
 //----------parity-start--------------------
@@ -476,60 +448,29 @@ end
 
 genvar i;
 generate
-	for (i = 0; i < SPEC_SLOT_AMOUNT; i++) begin	: For_Spec_Mem
+	for (i = 0; i < SPEC_SLOT_AMOUNT; i++) begin : For_Spec_Mem
 		always_ff @(posedge clk or negedge rst_n) begin
-			
-			if(!rst_n) begin
-				spec_mem[i].index <= INDEX_WIDTH'(i) ;
-				spec_mem[i].awburst <= '0 ;
-				spec_mem[i].awid <= '0    ;
-				spec_mem[i].awaddr <= '0  ;
-				spec_mem[i].awlen <= '0   ;
-				spec_mem[i].awsize <= '0  ;
-				spec_mem[i].awuser <= '0  ;
-				spec_mem[i].unluck <= '0  ;
-				spec_mem[i].other <= '0   ;
-				spec_mem[i].done <= '1    ;
-				spec_mem[i].cur_len <= '0 ;
-			end
-			else begin
-				// --- Deferred Delete + Allocate (3-way mux) ---
-				// Determine if this slot is the allocation target
-				if (in_awshake) begin
-					if (( tran_done_q && (i === tran_done_addr_q)) ||
-					    (~tran_done_q && (spec_mem[i].index === spec_count))) begin
-						spec_mem[i].awburst <= s_add.awburst ;
-						spec_mem[i].awid    <= s_add.awid    ;
-						spec_mem[i].awaddr  <= s_add.awaddr  ;
-						spec_mem[i].awlen   <= s_add.awlen   ;
-						spec_mem[i].awsize  <= s_add.awsize  ;
-						spec_mem[i].awuser  <= s_add.awuser  ;
-						spec_mem[i].unluck  <= unluck        ;
-						spec_mem[i].other   <= s_add.other   ;
-						spec_mem[i].done    <= 1'b0          ;
-						spec_mem[i].cur_len <= '0            ;
-						if (tran_done_q) spec_mem[i].index <= spec_count - 1 ;
-					end
+			if (!rst_n) begin
+				spec_mem[i].awburst <= '0; spec_mem[i].awid  <= '0;
+				spec_mem[i].awaddr  <= '0; spec_mem[i].awlen <= '0;
+				spec_mem[i].awsize  <= '0; spec_mem[i].awuser<= '0;
+				spec_mem[i].unluck  <= '0; spec_mem[i].other <= '0;
+				spec_mem[i].done    <= '1; spec_mem[i].cur_len <= '0;
+			end else begin
+				// allocate (free slot chosen by alloc_oh)
+				if (in_awshake & alloc_oh[i]) begin
+					spec_mem[i].awburst <= s_add.awburst; spec_mem[i].awid  <= s_add.awid;
+					spec_mem[i].awaddr  <= s_add.awaddr;  spec_mem[i].awlen <= s_add.awlen;
+					spec_mem[i].awsize  <= s_add.awsize;  spec_mem[i].awuser<= s_add.awuser;
+					spec_mem[i].unluck  <= unluck;        spec_mem[i].other <= s_add.other;
+					spec_mem[i].done    <= 1'b0;          spec_mem[i].cur_len <= '0;
 				end
-				// --- Deferred Delete: shift indices (runs for both alloc+delete and delete-only) ---
-				if (tran_done_q && (i !== tran_done_addr_q)) begin
-					if ((spec_mem[i].index > spec_mem[tran_done_addr_q].index) && (spec_mem[i].index < spec_count))
-						spec_mem[i].index <= spec_mem[i].index - INDEX_WIDTH'(1) ;
-				end
-				// --- Delete-only: recycle the deleted slot's index ---
-				if (tran_done_q && ~in_awshake && (i === tran_done_addr_q)) begin
-					spec_mem[i].index   <= spec_count - 1 ;
-					spec_mem[i].cur_len <= '0 ;
-				end
-																				//-----Live transaction update-----//
-				// 1. Increment cur_len when beat enters the pipe (front of pipe)
-				if(pipe_up_ready & s_data.wvalid & wr_id_match & (i == wr_idx_in)) begin
-					spec_mem[i].cur_len <= spec_mem[i].cur_len + PLENGTH_WIDTH'(1) ;
-				end
-				// 2. Set done when the final beat is written to SRAM (back of pipe)
-				if(wr_skid_ready & wr_skid_valid & wr_axi_buf.wlast & (i == wr_axi_buf.wr_idx)) begin
-					spec_mem[i].done <= 1'b1 ;
-				end
+				// cur_len bump when a beat enters the write pipe (front of pipe)
+				if (pipe_up_ready & s_data.wvalid & wr_id_match & (i == wr_idx_in))
+					spec_mem[i].cur_len <= spec_mem[i].cur_len + PLENGTH_WIDTH'(1);
+				// done set when the final beat is written to SRAM (back of pipe)
+				if (wr_skid_ready & wr_skid_valid & wr_axi_buf.wlast & (i == wr_axi_buf.wr_idx))
+					spec_mem[i].done <= 1'b1;
 			end
 		end
 	end
@@ -537,26 +478,18 @@ endgenerate
 
 
 always_ff @(posedge clk or negedge rst_n) begin
-	
 	if (!rst_n) begin
 		spec_count <= 0 ;
 		d_cur_id <= 0 ;
-		tran_done_q <= 0 ;
-		tran_done_addr_q <= 0 ;
 	end
 	else begin
-		
 		if(release_ready) begin
 			d_cur_id <= cur_id ;
 		end
-		
-		tran_done_q <= transfer_done;
-		if(transfer_done) tran_done_addr_q <= rd_addr;
-
-		if(in_awshake & ~tran_done_q) begin
+		if(in_awshake & ~transfer_done) begin
 			spec_count <= spec_count + 1 ;
 		end
-		if(tran_done_q & ~in_awshake) begin
+		else if(transfer_done & ~in_awshake) begin
 			spec_count <= spec_count - 1 ;
 		end
 	end
@@ -567,52 +500,27 @@ end
 
 // synthesis translate_off
 
-// 1. Count Bounds: spec_count never exceeds max slots.
+// 1. Count Bounds: occupancy bitmap count <= max slots.
 as1_count_bounds: assert property (@(posedge clk) disable iff (!rst_n)
-	spec_count <= SPEC_SLOT_AMOUNT)
-	else $fatal("Violation: spec_count (%0d) > SPEC_SLOT_AMOUNT", spec_count);
-
-// 2. Index Bounds: while a release transfer is in progress (~tran_ready),
-//    the slot being read (rd_curr) must hold a valid in-range index.
-//    Re-anchored from m_data.wvalid (now pipelined two stages downstream)
-//    to the internal control signal that gates the read.
-as2_rd_bounds: assert property (@(posedge clk) disable iff (!rst_n)
-	(~tran_ready) |-> (spec_mem[rd_curr].index < spec_count))
-	else $fatal("Violation: rd_curr slot index (%0d) >= spec_count (%0d)", spec_mem[rd_curr].index, spec_count);
+	$countones(bitmap_val_q) <= SPEC_SLOT_AMOUNT)
+	else $fatal("Violation: bitmap count (%0d) > SPEC_SLOT_AMOUNT", $countones(bitmap_val_q));
 
 // 3. Full Protection: do not accept a new burst when memory is full.
 as3_full_prot: assert property (@(posedge clk) disable iff (!rst_n)
-	(spec_count == SPEC_SLOT_AMOUNT) |-> !s_add.awready)
+	mem_full |-> !s_add.awready)
 	else $fatal("Violation: s_add.awready is High while memory is Full");
 
 // 4. Empty Protection: cannot start a new release transfer when memory is empty.
-//    Re-anchored from m_data.wvalid (now downstream of the read pipeline + skid)
-//    to the actual start-of-transfer condition.
 as4_empty_prot: assert property (@(posedge clk) disable iff (!rst_n)
-	(spec_count == '0) |-> !(tran_valid & tran_ready))
+	~|bitmap_val_q |-> !(tran_valid & tran_ready))
 	else $fatal("Violation: new transfer launched while memory is Empty");
 
-// 5. Double Index: no two slots share the same index.
-always @(posedge clk) begin
-	if (rst_n) begin
-		for (int i = 0; i < SPEC_SLOT_AMOUNT; i++) begin
-			for (int j = i + 1; j < SPEC_SLOT_AMOUNT; j++) begin
-				as5_doule_idx: assert (spec_mem[i].index !== spec_mem[j].index)
-					else $fatal("Duplicate index collision: Slot %0d and Slot %0d", i, j);
-			end
-		end
-	end
-end
-
 // 6. Data Validity: a slot can only be read after its write side is complete.
-//    Re-anchored to ~tran_ready (matches the read-enable lifetime); the old
-//    check at m_data.wvalid no longer aligns now that reads are pipelined.
 as6_read_done: assert property (@(posedge clk) disable iff (!rst_n)
 	(~tran_ready) |-> spec_mem[rd_curr].done)
 	else $fatal("Violation: rd_curr slot %0d marked not 'done'", rd_curr);
 
 // 7. Write ID Matching: incoming write must match the target slot's ID.
-//    Checked at the skid output (the point where the SRAM write actually fires).
 as7_id_match: assert property (@(posedge clk) disable iff (!rst_n)
 	(wr_skid_valid & wr_skid_ready) |-> (spec_mem[wr_axi_buf.wr_idx].awid == wr_axi_buf.wid))
 	else $fatal("Violation: wr_axi_buf.wid (%h) does not match target slot ID (%h)", wr_axi_buf.wid, spec_mem[wr_axi_buf.wr_idx].awid);
@@ -623,8 +531,6 @@ as8_no_wr_done: assert property (@(posedge clk) disable iff (!rst_n)
 	else $fatal("Violation: Writing data to slot %0d already marked 'done'", wr_axi_buf.wr_idx);
 
 // 9. wlast Accuracy: the latched wlast at the SRAM-read stage must correspond
-//    to the awlen of the slot being read. The address bus rd_stg1_addr_q is
-//    {slot_idx, transfer_offset}; when wlast is set, the offset must equal awlen.
 as9_wlast_acc: assert property (@(posedge clk) disable iff (!rst_n)
 	(rd_stg1_en_q & rd_stg1_wlast_q) |->
 		(rd_stg1_addr_q[PLENGTH_WIDTH-1:0]
@@ -633,91 +539,48 @@ as9_wlast_acc: assert property (@(posedge clk) disable iff (!rst_n)
 		rd_stg1_addr_q[PLENGTH_WIDTH-1:0],
 		spec_mem[rd_stg1_addr_q[INDEX_WIDTH+PLENGTH_WIDTH-1:PLENGTH_WIDTH]].awlen);
 
-// 10. One-Hot Integrity: one_hot_slot_zero must be one-hot (or all-zero).
+// 10. One-Hot Integrity
 as10_one_hot: assert property (@(posedge clk) disable iff (!rst_n)
-	$onehot0(one_hot_slot_zero))
-	else $fatal("Violation: one_hot_slot_zero is not One-Hot (Value: %b)", one_hot_slot_zero);
+	$onehot0(head_oh) && $onehot0(wr_oh) && $onehot0(unluck_oh))
+	else $fatal("Violation: one-hot vectors are not one-hot");
 
-// 11. Release Validity (input contract from process_mem): spec_release should
-//     only pulse when there is something to release. Kept as 'assume' — this
-//     is an input constraint, not a DUT property.
-//as11_valid_release: assume property (@(posedge clk) disable iff (!rst_n)
-//	spec_release |-> (spec_count > 0))
-//	else $fatal("Violation: spec_release asserted while memory is empty");
-
-// 12. Skid/pipe no-data-loss: if the write skid presents a beat downstream
-//     and the consumer is not ready, the same beat must persist next cycle.
+// 13. Skid/pipe no-data-loss
 as13_wr_skid_stable: assert property (@(posedge clk) disable iff (!rst_n)
 	(wr_skid_valid & ~wr_skid_ready) |=> (wr_skid_valid && $stable(wr_axi_buf)))
 	else $fatal("Violation: write skid lost or mutated a stalled beat");
 
-// 14. EU FSM liveness: an armed address must get accepted (never hang in ARMED).
+// 14. EU FSM liveness
 as14_eu_progress: assert property (@(posedge clk) disable iff (!rst_n)
 	(eu_state == EU_ARMED) |-> ##[1:$] (eu_state == EU_IDLE))
 	else $fatal("EU FSM stuck in EU_ARMED: m_add never accepted");
 
-// 15. Address issue: every armed release eventually issues its m_add beat.
-//     Catches address/data desync (released data with no matching address beat).
+// 15. Address issue
 as15_addr_issued: assert property (@(posedge clk) disable iff (!rst_n)
 	load_release |-> ##[1:$] (m_add.awvalid & m_add.awready))
 	else $fatal("Released transaction never issued its address on m_add");
 
-// 16. sent_transfer never overruns the current burst length while transferring.
+// 16. sent_transfer never overruns
 as16_sent_bound: assert property (@(posedge clk) disable iff (!rst_n)
 	(~tran_ready) |-> (sent_transfer <= spec_mem[rd_curr].awlen))
 	else $fatal("sent_transfer (%0d) overran awlen (%0d) of slot %0d", sent_transfer, spec_mem[rd_curr].awlen, rd_curr);
 
-//==============================================================================
-// X-DETECTION BATTERY -- localizes the OEB2/rd_en-unknown cascade.
-// These fire on the FIRST X seen on each control net, so the earliest-firing
-// assert points at the root. (rd_en = rd_stg1_en_q; OEB2 = ~rd_en in dpbank.)
-//==============================================================================
-
-// 17. Read-port enable feeding the SRAM (drives OEB2) must never be X.
+// 17-19. X-DETECTION BATTERY
 as17_rden_x: assert property (@(posedge clk) disable iff (!rst_n)
 	!$isunknown(rd_stg1_en_q))
 	else $fatal("rd_stg1_en_q (SRAM rd_en / OEB2) is X");
 
-// 18. Read address must be defined whenever a read is issued.
 as18_rdaddr_x: assert property (@(posedge clk) disable iff (!rst_n)
 	rd_stg1_en_q |-> !$isunknown(rd_stg1_addr_q))
 	else $fatal("rd_stg1_addr_q is X while rd_en asserted");
 
-// 19. Core read-select control plane must never be X (upstream of rd_en).
 as19_sel_x: assert property (@(posedge clk) disable iff (!rst_n)
-	!$isunknown({tran_ready, tran_done_q, found_unluck, prefetch_now, rd_next, rd_curr, rd_addr}))
-	else $fatal("read-select control net is X (tr=%b td=%b fu=%b pf=%b)", tran_ready, tran_done_q, found_unluck, prefetch_now);
+	!$isunknown({tran_ready, found_unluck, prefetch_now, rd_next, rd_curr, rd_addr, bitmap_val_q}))
+	else $fatal("read-select control net is X (tr=%b fu=%b pf=%b)", tran_ready, found_unluck, prefetch_now);
 
-// 20. Priority-coder input must be clean -- the most likely X seed, since
-//     effective_index[] is used as a bit-select index to build it.
-as20_pcoder_x: assert property (@(posedge clk) disable iff (!rst_n)
-	!$isunknown(prior_coder_in))
-	else $fatal("prior_coder_in is X (value %b) -> DW_pricod will emit X -> found_unluck X", prior_coder_in);
-
-// 21. Counters must be clean (spec_count-1 underflow / spec_occ).
+// 21. Counters clean
 as21_count_x: assert property (@(posedge clk) disable iff (!rst_n)
-	!$isunknown({spec_count, spec_occ, d_cur_id}))
-	else $fatal("count/id net is X (spec_count=%b eff=%b d_cur_id=%b)", spec_count, spec_occ, d_cur_id);
-
-// 22. effective_index[] entries must be clean -- each is used as an index, so an
-//     X here silently corrupts spec_mem_unluck / prior_coder_in.
-always @(posedge clk) begin
-	if (rst_n) begin
-		for (int k = 0; k < SPEC_SLOT_AMOUNT; k++) begin
-			as22_effidx_x: assert (!$isunknown(effective_index[k]))
-				else $fatal("effective_index[%0d] is X", k);
-		end
-	end
-end
-
-//==============================================================================
-// FUNCTIONAL GUARDS -- catch a desync even if it does not manifest as X.
-//==============================================================================
-
-// 23. spec_occ stays in [0 .. SPEC_SLOT_AMOUNT] (no underflow wrap).
-as23_eff_bound: assert property (@(posedge clk) disable iff (!rst_n)
-	(spec_occ <= SPEC_SLOT_AMOUNT))
-	else $fatal("spec_occ (%0d) out of range -> spec_count-1 underflow?", spec_occ);
+	!$isunknown({spec_count, d_cur_id}))
+	else $fatal("count/id net is X");
 
 // 24. A read is only issued against a slot whose write side is complete.
 as24_rd_done: assert property (@(posedge clk) disable iff (!rst_n)
@@ -730,18 +593,33 @@ as25_train_id: assert property (@(posedge clk) disable iff (!rst_n)
 	(found_unluck & tran_ready) |-> (spec_mem[rd_next].awid == d_cur_id))
 	else $fatal("unlucky-train release slot %0d id (%0h) != d_cur_id (%0h)", rd_next, spec_mem[rd_next].awid, d_cur_id);
 
-//==============================================================================
-// DEADLOCK WATCHDOG + RELEASE-PATH TRACE  (debug instrumentation)
-// No-X, no assert -> pure liveness hang. This dumps WHY the release side is
-// stuck and traces every insert / release-start / release-done event.
-//==============================================================================
+// age-matrix invariants
+genvar a_i, a_j;
+generate for (a_i=0; a_i<SPEC_SLOT_AMOUNT; a_i++)
+  for (a_j=0; a_j<SPEC_SLOT_AMOUNT; a_j++) if (a_i!=a_j) begin
+    asA_antisym: assert property (@(posedge clk) disable iff (!rst_n)
+      (bitmap_val_q[a_i] & bitmap_val_q[a_j] & age_q[a_i][a_j]) |-> ~age_q[a_j][a_i])
+      else $fatal("age antisymmetry violated: %0d,%0d", a_i, a_j);
+  end
+endgenerate
 
-// "progress" = any forward motion on any channel; "pending" = work outstanding.
+always @(posedge clk) if (rst_n)
+  for (int k=0;k<SPEC_SLOT_AMOUNT;k++)
+    if (!bitmap_val_q[k])
+      for (int j=0;j<SPEC_SLOT_AMOUNT;j++)
+        asB_freecol: assert (age_q[j][k]==1'b0)
+          else $fatal("freed slot %0d still in row %0d", k, j);
+
+asC_alloc_snapshot: assert property (@(posedge clk) disable iff (!rst_n)
+  (in_awshake) |=> (age_q[$past(enc_oh(alloc_oh))] == $past(bitmap_val_q & ~del_oh)))
+  else $fatal("alloc snapshot wrong");
+
+
 wire dbg_progress = in_awshake | transfer_done | release_ready
                   | (m_add.awvalid  & m_add.awready)
                   | (m_data.wvalid  & m_data.wready)
                   | (s_data.wvalid  & s_data.wready);
-wire dbg_pending  = (spec_occ > 0) | ~tran_ready | spec_release;
+wire dbg_pending  = (|bitmap_val_q) | ~tran_ready | spec_release;
 
 integer dbg_idle_cnt;
 always @(posedge clk or negedge rst_n) begin
@@ -754,32 +632,31 @@ always @(posedge clk) begin
 	if (rst_n && dbg_idle_cnt == 400) begin
 		$display("==========================================================================");
 		$display("[SPECMEM WATCHDOG @%0t] NO PROGRESS 400 cyc while work pending -> DEADLOCK", $time);
-		$display("  spec_count=%0d  eff_count=%0d  mem_full=%b", spec_count, spec_occ, mem_full);
+		$display("  bitmap_val_q=%b  mem_full=%b", bitmap_val_q, mem_full);
 		$display("  INPUTS : spec_release=%b to_block=%b proc_full=%b proc_empty=%b", spec_release, to_block, proc_full, proc_empty);
-		$display("  RELEASE: tran_valid=%b tran_ready=%b release_ready=%b found_unluck=%b zeros=%b", tran_valid, tran_ready, release_ready, found_unluck, zeros);
+		$display("  RELEASE: tran_valid=%b tran_ready=%b release_ready=%b found_unluck=%b", tran_valid, tran_ready, release_ready, found_unluck);
 		$display("           first_done=%b first_unluck=%b unluck=%b spec2router=%b", first_done, first_unluck, unluck, spec2router);
-		$display("  READ   : rd_curr=%0d rd_next=%0d rd_addr=%0d sent_transfer=%0d tran_done_q=%b td_addr=%0d", rd_curr, rd_next, rd_addr, sent_transfer, tran_done_q, tran_done_addr_q);
+		$display("  READ   : rd_curr=%0d rd_next=%0d rd_addr=%0d sent_transfer=%0d", rd_curr, rd_next, rd_addr, sent_transfer);
 		$display("  PIPES  : rd_pipe_up_ready=%b rd_skid_valid=%b rd_skid_ready=%b m_data(v=%b r=%b)", rd_pipe_up_ready, rd_skid_valid, rd_skid_ready, m_data.wvalid, m_data.wready);
 		$display("  ADDR   : eu_state=%0d load_release=%b m_add(v=%b r=%b) m_add_vld_q=%b d_cur_id=%0d", int'(eu_state), load_release, m_add.awvalid, m_add.awready, m_add_vld_q, d_cur_id);
-		$display("  CODER  : spec_mem_unluck=%b prior_coder_in=%b prior_coder_out=%b", spec_mem_unluck, prior_coder_in, prior_coder_out);
+		$display("  CODER  : head_oh=%b unluck_oh=%b wr_oh=%b alloc_oh=%b del_oh=%b", head_oh, unluck_oh, wr_oh, alloc_oh, del_oh);
 		for (int k = 0; k < SPEC_SLOT_AMOUNT; k++)
-			$display("    slot[%0d] idx=%0d eff=%0d awid=%0d done=%b unluck=%b awlen=%0d cur_len=%0d awuser=%b",
-				k, spec_mem[k].index, effective_index[k], spec_mem[k].awid, spec_mem[k].done,
-				spec_mem[k].unluck, spec_mem[k].awlen, spec_mem[k].cur_len, spec_mem[k].awuser);
+			$display("    slot[%0d] valid=%b awid=%0d done=%b unluck=%b awlen=%0d cur_len=%0d awuser=%b age_row=%b",
+				k, bitmap_val_q[k], spec_mem[k].awid, spec_mem[k].done,
+				spec_mem[k].unluck, spec_mem[k].awlen, spec_mem[k].cur_len, spec_mem[k].awuser, age_q[k]);
 		$display("==========================================================================");
 		$fatal("[SPECMEM] deadlock watchdog tripped @%0t", $time);
 	end
 end
 
-// Event trace: insert / release-start / release-complete.
 always @(posedge clk) begin
 	if (rst_n) begin
 		if (in_awshake)
-			$display("[SPECMEM @%0t] INSERT  awid=%0d awuser=%b awlen=%0d unluck=%b -> spec_count(next)=%0d",
-				$time, s_add.awid, s_add.awuser, s_add.awlen, unluck, spec_count + 1);
+			$display("[SPECMEM @%0t] INSERT  awid=%0d awuser=%b awlen=%0d unluck=%b -> next_free_idx=%0d",
+				$time, s_add.awid, s_add.awuser, s_add.awlen, unluck, enc_oh(alloc_oh));
 		if (tran_valid & tran_ready)
-			$display("[SPECMEM @%0t] REL-START slot=%0d awid=%0d kind=%s eff_count=%0d",
-				$time, rd_next, spec_mem[rd_next].awid, (found_unluck ? "UNLUCKY" : "SPECIAL"), spec_occ);
+			$display("[SPECMEM @%0t] REL-START slot=%0d awid=%0d kind=%s",
+				$time, rd_next, spec_mem[rd_next].awid, (found_unluck ? "UNLUCKY" : "SPECIAL"));
 		if (transfer_done)
 			$display("[SPECMEM @%0t] REL-DONE  slot=%0d awid=%0d", $time, rd_curr, spec_mem[rd_curr].awid);
 	end
