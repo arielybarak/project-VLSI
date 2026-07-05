@@ -1,0 +1,31 @@
+ 
+****************************************
+Report : area
+Design : top
+Version: U-2022.12
+Date   : Wed May 27 13:19:13 2026
+****************************************
+
+Library(s) Used:
+
+    tsl18fs190svt_tt_1p8v_25c (File: /tools/kits/tower/TS18SL_6_01/tsl18fs190svt_Rev_2019.09/lib/db/tsl18fs190svt_tt_1p8v_25c.db)
+    dpram72x128_cb_typ (File: /users/epabab/Project/synthesis/work/dpram72x128_cb_typ.db)
+    dpram16x256_cb_typ (File: /users/epabab/Project/synthesis/work/dpram16x256_cb_typ.db)
+
+Number of ports:                         4801
+Number of nets:                         50628
+Number of cells:                        46043
+Number of combinational cells:          36036
+Number of sequential cells:              9964
+Number of macros/black boxes:               5
+Number of buf/inv:                       6146
+Number of references:                     162
+
+Combinational area:             501930.907061
+Buf/Inv area:                    47051.480580
+Noncombinational area:          398657.563938
+Macro/Black Box area:            66633.339355
+Net Interconnect area:      undefined  (No wire load specified)
+
+Total cell area:                967221.810354
+Total area:                 undefined

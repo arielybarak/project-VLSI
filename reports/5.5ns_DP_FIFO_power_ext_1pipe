@@ -1,0 +1,110 @@
+ 
+****************************************
+Report : power
+        -analysis_effort low
+Design : top
+Version: U-2022.12
+Date   : Thu May 28 15:51:58 2026
+****************************************
+
+
+Library(s) Used:
+
+    tsl18fs190svt_tt_1p8v_25c (File: /tools/kits/tower/TS18SL_6_01/tsl18fs190svt_Rev_2019.09/lib/db/tsl18fs190svt_tt_1p8v_25c.db)
+    dpram72x128_cb_typ (File: /users/epabab/Project/synthesis/work/dpram72x128_cb_typ.db)
+    dpram16x256_cb_typ (File: /users/epabab/Project/synthesis/work/dpram16x256_cb_typ.db)
+
+
+Operating Conditions: tt_1p8v_25c   Library: tsl18fs190svt_tt_1p8v_25c
+Wire Load Model Mode: top
+
+
+Global Operating Voltage = 1.8  
+Power-specific unit information :
+    Voltage Units = 1V
+    Capacitance Units = 1.000000pf
+    Time Units = 1ns
+    Dynamic Power Units = 1mW    (derived from V,C,T units)
+    Leakage Power Units = 1pW
+
+
+Attributes
+----------
+i - Including register clock pin internal power
+
+
+  Cell Internal Power  = 109.0936 mW   (97%)
+  Net Switching Power  =   3.0093 mW    (3%)
+                         ---------
+Total Dynamic Power    = 112.1029 mW  (100%)
+
+Cell Leakage Power     =   7.5306 uW
+
+
+                 Internal         Switching           Leakage            Total
+Power Group      Power            Power               Power              Power   (   %    )  Attrs
+--------------------------------------------------------------------------------------------------
+io_pad             0.0000            0.0000            0.0000            0.0000  (   0.00%)
+memory             0.5932        3.0019e-02        6.4385e+06            0.6297  (   0.56%)
+black_box          0.0000            0.0000            0.0000            0.0000  (   0.00%)
+clock_network    105.7552            0.0000            0.0000          105.7552  (  94.33%)  i
+register           0.9402            0.1584        5.8501e+05            1.0998  (   0.98%)
+sequential         0.0000            0.0000            0.0000            0.0000  (   0.00%)
+combinational      1.8044            2.8209        5.0709e+05            4.6260  (   4.13%)
+--------------------------------------------------------------------------------------------------
+Total            109.0930 mW         3.0093 mW     7.5306e+06 pW       112.1107 mW
+ 
+****************************************
+Report : power
+        -analysis_effort low
+Design : top
+Version: U-2022.12
+Date   : Thu May 28 15:52:09 2026
+****************************************
+
+
+Library(s) Used:
+
+    tsl18fs190svt_tt_1p8v_25c (File: /tools/kits/tower/TS18SL_6_01/tsl18fs190svt_Rev_2019.09/lib/db/tsl18fs190svt_tt_1p8v_25c.db)
+    dpram72x128_cb_typ (File: /users/epabab/Project/synthesis/work/dpram72x128_cb_typ.db)
+    dpram16x256_cb_typ (File: /users/epabab/Project/synthesis/work/dpram16x256_cb_typ.db)
+
+
+Operating Conditions: tt_1p8v_25c   Library: tsl18fs190svt_tt_1p8v_25c
+Wire Load Model Mode: top
+
+
+Global Operating Voltage = 1.8  
+Power-specific unit information :
+    Voltage Units = 1V
+    Capacitance Units = 1.000000pf
+    Time Units = 1ns
+    Dynamic Power Units = 1mW    (derived from V,C,T units)
+    Leakage Power Units = 1pW
+
+
+Attributes
+----------
+i - Including register clock pin internal power
+
+
+  Cell Internal Power  = 109.0936 mW   (97%)
+  Net Switching Power  =   3.0093 mW    (3%)
+                         ---------
+Total Dynamic Power    = 112.1029 mW  (100%)
+
+Cell Leakage Power     =   7.5306 uW
+
+
+                 Internal         Switching           Leakage            Total
+Power Group      Power            Power               Power              Power   (   %    )  Attrs
+--------------------------------------------------------------------------------------------------
+io_pad             0.0000            0.0000            0.0000            0.0000  (   0.00%)
+memory             0.5932        3.0019e-02        6.4385e+06            0.6297  (   0.56%)
+black_box          0.0000            0.0000            0.0000            0.0000  (   0.00%)
+clock_network    105.7552            0.0000            0.0000          105.7552  (  94.33%)  i
+register           0.9402            0.1584        5.8501e+05            1.0998  (   0.98%)
+sequential         0.0000            0.0000            0.0000            0.0000  (   0.00%)
+combinational      1.8044            2.8209        5.0709e+05            4.6260  (   4.13%)
+--------------------------------------------------------------------------------------------------
+Total            109.0930 mW         3.0093 mW     7.5306e+06 pW       112.1107 mW

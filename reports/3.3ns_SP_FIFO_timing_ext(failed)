@@ -1,0 +1,52 @@
+ 
+****************************************
+Report : timing
+        -path full
+        -delay max
+        -max_paths 1
+        -sort_by group
+Design : top
+Version: U-2022.12
+Date   : Sat Jun 13 13:59:33 2026
+****************************************
+
+ # A fanout number of 1000 was used for high fanout net computations.
+
+Operating Conditions: tt_1p8v_25c   Library: tsl18fs190svt_tt_1p8v_25c
+Wire Load Model Mode: top
+
+  Startpoint: writetop/spec_mem/memory/g_slot[1].g_data[4].u_data
+              (falling edge-triggered flip-flop clocked by clk)
+  Endpoint: writetop/spec_mem/rd_raw_pipe/data_q_reg[125]
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: max
+
+  Point                                                   Incr       Path
+  --------------------------------------------------------------------------
+  clock clk (fall edge)                                   1.65       1.65
+  clock network delay (ideal)                             0.00       1.65
+  writetop/spec_mem/memory/g_slot[1].g_data[4].u_data/CEB (spram16x64_cb)
+                                                          0.00       1.65 f
+  writetop/spec_mem/memory/g_slot[1].g_data[4].u_data/O[12] (spram16x64_cb)
+                                                          1.26       2.91 r
+  writetop/spec_mem/U9349/Q (INV_A_OAI22_X2_18_SVT)       0.08       2.99 f
+  writetop/spec_mem/U9356/Q (NOR2_A_NAND3_X0_18_SVT)      0.25       3.25 f
+  writetop/spec_mem/U9357/Q (NAND2_X1_18_SVT)             0.08       3.33 r
+  writetop/spec_mem/rd_raw_pipe/data_q_reg[125]/D (DFFRQ_X1_18_SVT)
+                                                          0.00       3.33 r
+  data arrival time                                                  3.33
+
+  clock clk (rise edge)                                   3.30       3.30
+  clock network delay (ideal)                             0.00       3.30
+  writetop/spec_mem/rd_raw_pipe/data_q_reg[125]/CK (DFFRQ_X1_18_SVT)
+                                                          0.00       3.30 r
+  library setup time                                     -0.07       3.23
+  data required time                                                 3.23
+  --------------------------------------------------------------------------
+  data required time                                                 3.23
+  data arrival time                                                 -3.33
+  --------------------------------------------------------------------------
+  slack (VIOLATED)                                                  -0.10
+
+

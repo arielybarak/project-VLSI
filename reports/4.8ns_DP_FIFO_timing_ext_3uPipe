@@ -1,0 +1,596 @@
+ 
+****************************************
+Report : timing
+        -path full
+        -delay max
+        -nworst 15
+        -max_paths 10
+        -sort_by group
+Design : top
+Version: U-2022.12
+Date   : Sun May 31 01:36:46 2026
+****************************************
+
+ # A fanout number of 1000 was used for high fanout net computations.
+
+Operating Conditions: tt_1p8v_25c   Library: tsl18fs190svt_tt_1p8v_25c
+Wire Load Model Mode: top
+
+  Startpoint: writetop/spec_mem/wr_data_skid/buf_full_q_reg
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: writetop/spec_mem/memory/u_ram_128x72_3
+            (falling edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: max
+
+  Point                                                   Incr       Path
+  --------------------------------------------------------------------------
+  clock clk (rise edge)                                   0.00       0.00
+  clock network delay (ideal)                             0.00       0.00
+  writetop/spec_mem/wr_data_skid/buf_full_q_reg/CK (DFFRQ_X8_18_SVT)
+                                                          0.00 #     0.00 r
+  writetop/spec_mem/wr_data_skid/buf_full_q_reg/Q (DFFRQ_X8_18_SVT)
+                                                          0.33       0.33 f
+  writetop/spec_mem/U3128/Q (BUF_X16_18_SVT)              0.10       0.43 f
+  writetop/spec_mem/U3227/Q (MUXI2PG_X6_18_SVT)           0.11       0.55 f
+  writetop/spec_mem/U3225/Q (BUF_X8_18_SVT)               0.13       0.67 f
+  writetop/spec_mem/U396/Q (XNOR2_X0_18_SVT)              0.14       0.81 f
+  writetop/spec_mem/U2096/Q (INV_A_NAND2_X2_18_SVT)       0.16       0.97 f
+  writetop/spec_mem/U2644/Q (NOR2P3_X6_18_SVT)            0.09       1.05 r
+  writetop/spec_mem/U2622/Q (NAND3_X6_18_SVT)             0.07       1.12 f
+  writetop/spec_mem/U1991/Q (INV_X2_18_SVT)               0.08       1.20 r
+  writetop/spec_mem/U1982/Q (NOR2P3_X4_18_SVT)            0.07       1.27 f
+  writetop/spec_mem/U301/Q (NOR2P3T_X4_18_SVT)            0.09       1.36 r
+  writetop/spec_mem/U1063/Q (OAI21P2_X6_18_SVT)           0.08       1.44 f
+  writetop/spec_mem/U3482/Q (NAND4T_X8_18_SVT)            0.12       1.56 r
+  writetop/spec_mem/U3327/Q (NAND2_X24_18_SVT)            0.07       1.62 f
+  writetop/spec_mem/U1057/Q (NAND3_X2_18_SVT)             0.12       1.74 r
+  writetop/spec_mem/U149/Q (INVP2_X1_18_SVT)              0.07       1.81 f
+  writetop/spec_mem/U119/Q (AND2_X0_18_SVT)               0.14       1.95 f
+  writetop/spec_mem/U1062/Q (NOR2P3_X4_18_SVT)            0.06       2.01 r
+  writetop/spec_mem/U3484/Q (NAND2_A_NAND2_X2_18_SVT)     0.06       2.06 f
+  writetop/spec_mem/U4936/Q (AOI211_X4_18_SVT)            0.22       2.28 r
+  writetop/spec_mem/U4842/Q (NAND3T_X4_18_SVT)            0.12       2.40 f
+  writetop/spec_mem/memory/u_ram_128x72_3/A1[1] (dpram72x128_cb)
+                                                          0.00       2.40 f
+  data arrival time                                                  2.40
+
+  clock clk (fall edge)                                   2.40       2.40
+  clock network delay (ideal)                             0.00       2.40
+  writetop/spec_mem/memory/u_ram_128x72_3/CEB1 (dpram72x128_cb)
+                                                          0.00       2.40 f
+  library setup time                                      0.00       2.40
+  data required time                                                 2.40
+  --------------------------------------------------------------------------
+  data required time                                                 2.40
+  data arrival time                                                 -2.40
+  --------------------------------------------------------------------------
+  slack (MET)                                                        0.00
+
+
+  Startpoint: writetop/spec_mem/wr_data_skid/buf_full_q_reg
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: writetop/spec_mem/memory/u_ram_128x72_2
+            (falling edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: max
+
+  Point                                                   Incr       Path
+  --------------------------------------------------------------------------
+  clock clk (rise edge)                                   0.00       0.00
+  clock network delay (ideal)                             0.00       0.00
+  writetop/spec_mem/wr_data_skid/buf_full_q_reg/CK (DFFRQ_X8_18_SVT)
+                                                          0.00 #     0.00 r
+  writetop/spec_mem/wr_data_skid/buf_full_q_reg/Q (DFFRQ_X8_18_SVT)
+                                                          0.33       0.33 f
+  writetop/spec_mem/U3128/Q (BUF_X16_18_SVT)              0.10       0.43 f
+  writetop/spec_mem/U3227/Q (MUXI2PG_X6_18_SVT)           0.11       0.55 f
+  writetop/spec_mem/U3225/Q (BUF_X8_18_SVT)               0.13       0.67 f
+  writetop/spec_mem/U396/Q (XNOR2_X0_18_SVT)              0.14       0.81 f
+  writetop/spec_mem/U2096/Q (INV_A_NAND2_X2_18_SVT)       0.16       0.97 f
+  writetop/spec_mem/U2644/Q (NOR2P3_X6_18_SVT)            0.09       1.05 r
+  writetop/spec_mem/U2622/Q (NAND3_X6_18_SVT)             0.07       1.12 f
+  writetop/spec_mem/U1991/Q (INV_X2_18_SVT)               0.08       1.20 r
+  writetop/spec_mem/U1982/Q (NOR2P3_X4_18_SVT)            0.07       1.27 f
+  writetop/spec_mem/U301/Q (NOR2P3T_X4_18_SVT)            0.09       1.36 r
+  writetop/spec_mem/U1063/Q (OAI21P2_X6_18_SVT)           0.08       1.44 f
+  writetop/spec_mem/U3482/Q (NAND4T_X8_18_SVT)            0.12       1.56 r
+  writetop/spec_mem/U3327/Q (NAND2_X24_18_SVT)            0.07       1.62 f
+  writetop/spec_mem/U1057/Q (NAND3_X2_18_SVT)             0.12       1.74 r
+  writetop/spec_mem/U149/Q (INVP2_X1_18_SVT)              0.07       1.81 f
+  writetop/spec_mem/U119/Q (AND2_X0_18_SVT)               0.14       1.95 f
+  writetop/spec_mem/U1062/Q (NOR2P3_X4_18_SVT)            0.06       2.01 r
+  writetop/spec_mem/U3484/Q (NAND2_A_NAND2_X2_18_SVT)     0.06       2.06 f
+  writetop/spec_mem/U4936/Q (AOI211_X4_18_SVT)            0.22       2.28 r
+  writetop/spec_mem/U4842/Q (NAND3T_X4_18_SVT)            0.12       2.40 f
+  writetop/spec_mem/memory/u_ram_128x72_2/A1[1] (dpram72x128_cb)
+                                                          0.00       2.40 f
+  data arrival time                                                  2.40
+
+  clock clk (fall edge)                                   2.40       2.40
+  clock network delay (ideal)                             0.00       2.40
+  writetop/spec_mem/memory/u_ram_128x72_2/CEB1 (dpram72x128_cb)
+                                                          0.00       2.40 f
+  library setup time                                      0.00       2.40
+  data required time                                                 2.40
+  --------------------------------------------------------------------------
+  data required time                                                 2.40
+  data arrival time                                                 -2.40
+  --------------------------------------------------------------------------
+  slack (MET)                                                        0.00
+
+
+  Startpoint: writetop/spec_mem/wr_data_skid/buf_full_q_reg
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: writetop/spec_mem/memory/u_ram_128x72_1
+            (falling edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: max
+
+  Point                                                   Incr       Path
+  --------------------------------------------------------------------------
+  clock clk (rise edge)                                   0.00       0.00
+  clock network delay (ideal)                             0.00       0.00
+  writetop/spec_mem/wr_data_skid/buf_full_q_reg/CK (DFFRQ_X8_18_SVT)
+                                                          0.00 #     0.00 r
+  writetop/spec_mem/wr_data_skid/buf_full_q_reg/Q (DFFRQ_X8_18_SVT)
+                                                          0.33       0.33 f
+  writetop/spec_mem/U3128/Q (BUF_X16_18_SVT)              0.10       0.43 f
+  writetop/spec_mem/U3227/Q (MUXI2PG_X6_18_SVT)           0.11       0.55 f
+  writetop/spec_mem/U3225/Q (BUF_X8_18_SVT)               0.13       0.67 f
+  writetop/spec_mem/U396/Q (XNOR2_X0_18_SVT)              0.14       0.81 f
+  writetop/spec_mem/U2096/Q (INV_A_NAND2_X2_18_SVT)       0.16       0.97 f
+  writetop/spec_mem/U2644/Q (NOR2P3_X6_18_SVT)            0.09       1.05 r
+  writetop/spec_mem/U2622/Q (NAND3_X6_18_SVT)             0.07       1.12 f
+  writetop/spec_mem/U1991/Q (INV_X2_18_SVT)               0.08       1.20 r
+  writetop/spec_mem/U1982/Q (NOR2P3_X4_18_SVT)            0.07       1.27 f
+  writetop/spec_mem/U301/Q (NOR2P3T_X4_18_SVT)            0.09       1.36 r
+  writetop/spec_mem/U1063/Q (OAI21P2_X6_18_SVT)           0.08       1.44 f
+  writetop/spec_mem/U3482/Q (NAND4T_X8_18_SVT)            0.12       1.56 r
+  writetop/spec_mem/U3327/Q (NAND2_X24_18_SVT)            0.07       1.62 f
+  writetop/spec_mem/U1057/Q (NAND3_X2_18_SVT)             0.12       1.74 r
+  writetop/spec_mem/U149/Q (INVP2_X1_18_SVT)              0.07       1.81 f
+  writetop/spec_mem/U119/Q (AND2_X0_18_SVT)               0.14       1.95 f
+  writetop/spec_mem/U1062/Q (NOR2P3_X4_18_SVT)            0.06       2.01 r
+  writetop/spec_mem/U3484/Q (NAND2_A_NAND2_X2_18_SVT)     0.06       2.06 f
+  writetop/spec_mem/U4936/Q (AOI211_X4_18_SVT)            0.22       2.28 r
+  writetop/spec_mem/U4842/Q (NAND3T_X4_18_SVT)            0.12       2.40 f
+  writetop/spec_mem/memory/u_ram_128x72_1/A1[1] (dpram72x128_cb)
+                                                          0.00       2.40 f
+  data arrival time                                                  2.40
+
+  clock clk (fall edge)                                   2.40       2.40
+  clock network delay (ideal)                             0.00       2.40
+  writetop/spec_mem/memory/u_ram_128x72_1/CEB1 (dpram72x128_cb)
+                                                          0.00       2.40 f
+  library setup time                                      0.00       2.40
+  data required time                                                 2.40
+  --------------------------------------------------------------------------
+  data required time                                                 2.40
+  data arrival time                                                 -2.40
+  --------------------------------------------------------------------------
+  slack (MET)                                                        0.00
+
+
+  Startpoint: writetop/spec_mem/wr_data_skid/buf_full_q_reg
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: writetop/spec_mem/memory/u_ram_128x72_0
+            (falling edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: max
+
+  Point                                                   Incr       Path
+  --------------------------------------------------------------------------
+  clock clk (rise edge)                                   0.00       0.00
+  clock network delay (ideal)                             0.00       0.00
+  writetop/spec_mem/wr_data_skid/buf_full_q_reg/CK (DFFRQ_X8_18_SVT)
+                                                          0.00 #     0.00 r
+  writetop/spec_mem/wr_data_skid/buf_full_q_reg/Q (DFFRQ_X8_18_SVT)
+                                                          0.33       0.33 f
+  writetop/spec_mem/U3128/Q (BUF_X16_18_SVT)              0.10       0.43 f
+  writetop/spec_mem/U3227/Q (MUXI2PG_X6_18_SVT)           0.11       0.55 f
+  writetop/spec_mem/U3225/Q (BUF_X8_18_SVT)               0.13       0.67 f
+  writetop/spec_mem/U396/Q (XNOR2_X0_18_SVT)              0.14       0.81 f
+  writetop/spec_mem/U2096/Q (INV_A_NAND2_X2_18_SVT)       0.16       0.97 f
+  writetop/spec_mem/U2644/Q (NOR2P3_X6_18_SVT)            0.09       1.05 r
+  writetop/spec_mem/U2622/Q (NAND3_X6_18_SVT)             0.07       1.12 f
+  writetop/spec_mem/U1991/Q (INV_X2_18_SVT)               0.08       1.20 r
+  writetop/spec_mem/U1982/Q (NOR2P3_X4_18_SVT)            0.07       1.27 f
+  writetop/spec_mem/U301/Q (NOR2P3T_X4_18_SVT)            0.09       1.36 r
+  writetop/spec_mem/U1063/Q (OAI21P2_X6_18_SVT)           0.08       1.44 f
+  writetop/spec_mem/U3482/Q (NAND4T_X8_18_SVT)            0.12       1.56 r
+  writetop/spec_mem/U3327/Q (NAND2_X24_18_SVT)            0.07       1.62 f
+  writetop/spec_mem/U1057/Q (NAND3_X2_18_SVT)             0.12       1.74 r
+  writetop/spec_mem/U149/Q (INVP2_X1_18_SVT)              0.07       1.81 f
+  writetop/spec_mem/U119/Q (AND2_X0_18_SVT)               0.14       1.95 f
+  writetop/spec_mem/U1062/Q (NOR2P3_X4_18_SVT)            0.06       2.01 r
+  writetop/spec_mem/U3484/Q (NAND2_A_NAND2_X2_18_SVT)     0.06       2.06 f
+  writetop/spec_mem/U4936/Q (AOI211_X4_18_SVT)            0.22       2.28 r
+  writetop/spec_mem/U4842/Q (NAND3T_X4_18_SVT)            0.12       2.40 f
+  writetop/spec_mem/memory/u_ram_128x72_0/A1[1] (dpram72x128_cb)
+                                                          0.00       2.40 f
+  data arrival time                                                  2.40
+
+  clock clk (fall edge)                                   2.40       2.40
+  clock network delay (ideal)                             0.00       2.40
+  writetop/spec_mem/memory/u_ram_128x72_0/CEB1 (dpram72x128_cb)
+                                                          0.00       2.40 f
+  library setup time                                      0.00       2.40
+  data required time                                                 2.40
+  --------------------------------------------------------------------------
+  data required time                                                 2.40
+  data arrival time                                                 -2.40
+  --------------------------------------------------------------------------
+  slack (MET)                                                        0.00
+
+
+  Startpoint: writetop/spec_mem/spec_mem_reg[5][index][3]
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: s_add_fifo/U2/mem_reg[6][54]
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: max
+
+  Point                                                   Incr       Path
+  --------------------------------------------------------------------------
+  clock clk (rise edge)                                   0.00       0.00
+  clock network delay (ideal)                             0.00       0.00
+  writetop/spec_mem/spec_mem_reg[5][index][3]/CK (DFFRQ_X4_18_SVT)
+                                                          0.00 #     0.00 r
+  writetop/spec_mem/spec_mem_reg[5][index][3]/Q (DFFRQ_X4_18_SVT)
+                                                          0.38       0.38 r
+  writetop/spec_mem/U3999/Q (INV_X1_18_SVT)               0.07       0.45 f
+  writetop/spec_mem/U1209/Q (OR2_X2_18_SVT)               0.20       0.65 f
+  writetop/spec_mem/U4002/Q (NAND4_X2_18_SVT)             0.10       0.75 r
+  writetop/spec_mem/U715/Q (NOR2P3_X4_18_SVT)             0.09       0.84 f
+  writetop/spec_mem/U1015/Q (NAND3_X6_18_SVT)             0.12       0.96 r
+  writetop/spec_mem/U4118/Q (INV_X4_18_SVT)               0.05       1.01 f
+  writetop/spec_mem/U3690/Q (NAND2_A_NAND2_X0_18_SVT)     0.14       1.15 f
+  writetop/spec_mem/U1654/Q (INV_X1_18_SVT)               0.06       1.21 r
+  writetop/spec_mem/U1925/Q (NAND3_X1_18_SVT)             0.06       1.27 f
+  writetop/spec_mem/U1915/Q (INV_X1_18_SVT)               0.07       1.34 r
+  writetop/spec_mem/U3691/Q (NAND2_A_NAND2_X1_18_SVT)     0.08       1.41 f
+  writetop/spec_mem/U4048/Q (AOI21_X4_18_SVT)             0.11       1.52 r
+  writetop/spec_mem/U560/Q (NOR2P3T_X2_18_SVT)            0.08       1.60 f
+  writetop/spec_mem/U1643/Q (NOR2_X3_18_SVT)              0.12       1.72 r
+  writetop/spec_mem/U544/Q (INVP2_X1_18_SVT)              0.08       1.80 f
+  writetop/spec_mem/U3882/Q (NAND3_X4_18_SVT)             0.10       1.89 r
+  writetop/spec_mem/U3243/Q (NOR2P3T_X10_18_SVT)          0.08       1.97 f
+  writetop/spec_mem/U484/Q (NAND3_X3_18_SVT)              0.06       2.04 r
+  writetop/spec_mem/U1314/Q (AND3_X4_18_SVT)              0.17       2.20 r
+  writetop/spec_mem/U3421/Q (NAND3T_X6_18_SVT)            0.07       2.27 f
+  writetop/spec_mem/U3420/Q (NOR2P3_X16_18_SVT)           0.13       2.40 r
+  writetop/spec_mem/U4314/Q (NAND3_X24_18_SVT)            0.09       2.49 f
+  writetop/spec_mem/U3293/Q (INV_X4_18_SVT)               0.09       2.59 r
+  writetop/spec_mem/U3292/Q (NOR2P3T_X10_18_SVT)          0.06       2.65 f
+  writetop/spec_mem/U3290/Q (NOR2P3T_X10_18_SVT)          0.07       2.72 r
+  writetop/spec_mem/U432/Q (NOR2P3_X4_18_SVT)             0.04       2.76 f
+  writetop/spec_mem/U428/Q (INVP2_X1_18_SVT)              0.08       2.84 r
+  writetop/spec_mem/U4190/Q (NOR2_A_NAND3_X4_18_SVT)      0.10       2.94 f
+  writetop/spec_mem/U4189/Q (NAND4_X12_18_SVT)            0.16       3.10 r
+  writetop/spec_mem/U404/Q (NOR2P3_X6_18_SVT)             0.09       3.20 f
+  writetop/spec_mem/U4179/Q (NOR2P3T_X10_18_SVT)          0.11       3.31 r
+  writetop/spec_mem/U3803/Q (NAND2_X24_18_SVT)            0.07       3.38 f
+  writetop/spec_mem/U3632/Q (INV_X6_18_SVT)               0.10       3.47 r
+  writetop/spec_mem/U1867/Q (NOR2P3T_X4_18_SVT)           0.06       3.53 f
+  writetop/spec_mem/U275/Q (NAND2_X5_18_SVT)              0.06       3.60 r
+  writetop/spec_mem/U245/Q (INV_X4_18_SVT)                0.05       3.65 f
+  writetop/spec_mem/U4505/Q (BUF_X3_18_SVT)               0.14       3.79 f
+  writetop/spec_mem/U9239/Q (AOI22_X0_18_SVT)             0.21       4.00 r
+  writetop/spec_mem/U200/Q (NAND4_X1_18_SVT)              0.16       4.16 f
+  writetop/spec_mem/U4312/Q (NOR2P3_X4_18_SVT)            0.12       4.28 r
+  writetop/spec_mem/U4098/Q (INV_A_OAI22_X4_18_SVT)       0.05       4.33 f
+  writetop/spec_mem/m_add.awid[5] (special_memory_I_s_add_axi_if_slave_add_I_s_data_axi_if_slave_data_I_m_add_axi_if_master_add_I_m_data_axi_if_master_data_)
+                                                          0.00       4.33 f
+  U4412/Q (NAND2_A_NAND2_X4_18_SVT)                       0.14       4.47 f
+  s_add_fifo/data_in[54] (top_DW_asymfifo_s1_sf_J3_3)     0.00       4.47 f
+  s_add_fifo/U2/data_in[54] (top_DW_ram_r_w_s_dff_J3_3)
+                                                          0.00       4.47 f
+  s_add_fifo/U2/U131/Q (NAND2_X4_18_SVT)                  0.10       4.57 r
+  s_add_fifo/U2/U124/Q (INV_X3_18_SVT)                    0.03       4.59 f
+  s_add_fifo/U2/U113/Q (NOR2_X0_18_SVT)                   0.13       4.73 r
+  s_add_fifo/U2/U397/Q (NOR2_X1_18_SVT)                   0.05       4.77 f
+  s_add_fifo/U2/mem_reg[6][54]/D (DFFQ_X1_18_SVT)         0.00       4.77 f
+  data arrival time                                                  4.77
+
+  clock clk (rise edge)                                   4.80       4.80
+  clock network delay (ideal)                             0.00       4.80
+  s_add_fifo/U2/mem_reg[6][54]/CK (DFFQ_X1_18_SVT)        0.00       4.80 r
+  library setup time                                     -0.03       4.77
+  data required time                                                 4.77
+  --------------------------------------------------------------------------
+  data required time                                                 4.77
+  data arrival time                                                 -4.77
+  --------------------------------------------------------------------------
+  slack (MET)                                                        0.00
+
+
+  Startpoint: writetop/spec_mem/wr_data_skid/buf_full_q_reg
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: writetop/spec_mem/memory/u_ram_128x72_3
+            (falling edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: max
+
+  Point                                                   Incr       Path
+  --------------------------------------------------------------------------
+  clock clk (rise edge)                                   0.00       0.00
+  clock network delay (ideal)                             0.00       0.00
+  writetop/spec_mem/wr_data_skid/buf_full_q_reg/CK (DFFRQ_X8_18_SVT)
+                                                          0.00 #     0.00 r
+  writetop/spec_mem/wr_data_skid/buf_full_q_reg/Q (DFFRQ_X8_18_SVT)
+                                                          0.33       0.33 f
+  writetop/spec_mem/U3128/Q (BUF_X16_18_SVT)              0.10       0.43 f
+  writetop/spec_mem/U3227/Q (MUXI2PG_X6_18_SVT)           0.11       0.55 f
+  writetop/spec_mem/U3225/Q (BUF_X8_18_SVT)               0.13       0.67 f
+  writetop/spec_mem/U396/Q (XNOR2_X0_18_SVT)              0.14       0.81 f
+  writetop/spec_mem/U2096/Q (INV_A_NAND2_X2_18_SVT)       0.16       0.97 f
+  writetop/spec_mem/U2644/Q (NOR2P3_X6_18_SVT)            0.09       1.05 r
+  writetop/spec_mem/U2622/Q (NAND3_X6_18_SVT)             0.07       1.12 f
+  writetop/spec_mem/U1991/Q (INV_X2_18_SVT)               0.08       1.20 r
+  writetop/spec_mem/U1982/Q (NOR2P3_X4_18_SVT)            0.07       1.27 f
+  writetop/spec_mem/U301/Q (NOR2P3T_X4_18_SVT)            0.09       1.36 r
+  writetop/spec_mem/U1063/Q (OAI21P2_X6_18_SVT)           0.08       1.44 f
+  writetop/spec_mem/U3482/Q (NAND4T_X8_18_SVT)            0.12       1.56 r
+  writetop/spec_mem/U3327/Q (NAND2_X24_18_SVT)            0.07       1.62 f
+  writetop/spec_mem/U1057/Q (NAND3_X2_18_SVT)             0.12       1.74 r
+  writetop/spec_mem/U149/Q (INVP2_X1_18_SVT)              0.07       1.81 f
+  writetop/spec_mem/U119/Q (AND2_X0_18_SVT)               0.14       1.95 f
+  writetop/spec_mem/U1062/Q (NOR2P3_X4_18_SVT)            0.06       2.01 r
+  writetop/spec_mem/U3484/Q (NAND2_A_NAND2_X2_18_SVT)     0.06       2.06 f
+  writetop/spec_mem/U4936/Q (AOI211_X4_18_SVT)            0.22       2.28 r
+  writetop/spec_mem/U4842/Q (NAND3T_X4_18_SVT)            0.12       2.40 f
+  writetop/spec_mem/memory/u_ram_128x72_3/A1[1] (dpram72x128_cb)
+                                                          0.00       2.40 f
+  data arrival time                                                  2.40
+
+  clock clk (fall edge)                                   2.40       2.40
+  clock network delay (ideal)                             0.00       2.40
+  writetop/spec_mem/memory/u_ram_128x72_3/CEB1 (dpram72x128_cb)
+                                                          0.00       2.40 f
+  library setup time                                      0.00       2.40
+  data required time                                                 2.40
+  --------------------------------------------------------------------------
+  data required time                                                 2.40
+  data arrival time                                                 -2.40
+  --------------------------------------------------------------------------
+  slack (MET)                                                        0.00
+
+
+  Startpoint: writetop/spec_mem/wr_data_skid/buf_full_q_reg
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: writetop/spec_mem/memory/u_ram_128x72_2
+            (falling edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: max
+
+  Point                                                   Incr       Path
+  --------------------------------------------------------------------------
+  clock clk (rise edge)                                   0.00       0.00
+  clock network delay (ideal)                             0.00       0.00
+  writetop/spec_mem/wr_data_skid/buf_full_q_reg/CK (DFFRQ_X8_18_SVT)
+                                                          0.00 #     0.00 r
+  writetop/spec_mem/wr_data_skid/buf_full_q_reg/Q (DFFRQ_X8_18_SVT)
+                                                          0.33       0.33 f
+  writetop/spec_mem/U3128/Q (BUF_X16_18_SVT)              0.10       0.43 f
+  writetop/spec_mem/U3227/Q (MUXI2PG_X6_18_SVT)           0.11       0.55 f
+  writetop/spec_mem/U3225/Q (BUF_X8_18_SVT)               0.13       0.67 f
+  writetop/spec_mem/U396/Q (XNOR2_X0_18_SVT)              0.14       0.81 f
+  writetop/spec_mem/U2096/Q (INV_A_NAND2_X2_18_SVT)       0.16       0.97 f
+  writetop/spec_mem/U2644/Q (NOR2P3_X6_18_SVT)            0.09       1.05 r
+  writetop/spec_mem/U2622/Q (NAND3_X6_18_SVT)             0.07       1.12 f
+  writetop/spec_mem/U1991/Q (INV_X2_18_SVT)               0.08       1.20 r
+  writetop/spec_mem/U1982/Q (NOR2P3_X4_18_SVT)            0.07       1.27 f
+  writetop/spec_mem/U301/Q (NOR2P3T_X4_18_SVT)            0.09       1.36 r
+  writetop/spec_mem/U1063/Q (OAI21P2_X6_18_SVT)           0.08       1.44 f
+  writetop/spec_mem/U3482/Q (NAND4T_X8_18_SVT)            0.12       1.56 r
+  writetop/spec_mem/U3327/Q (NAND2_X24_18_SVT)            0.07       1.62 f
+  writetop/spec_mem/U1057/Q (NAND3_X2_18_SVT)             0.12       1.74 r
+  writetop/spec_mem/U149/Q (INVP2_X1_18_SVT)              0.07       1.81 f
+  writetop/spec_mem/U119/Q (AND2_X0_18_SVT)               0.14       1.95 f
+  writetop/spec_mem/U1062/Q (NOR2P3_X4_18_SVT)            0.06       2.01 r
+  writetop/spec_mem/U3484/Q (NAND2_A_NAND2_X2_18_SVT)     0.06       2.06 f
+  writetop/spec_mem/U4936/Q (AOI211_X4_18_SVT)            0.22       2.28 r
+  writetop/spec_mem/U4842/Q (NAND3T_X4_18_SVT)            0.12       2.40 f
+  writetop/spec_mem/memory/u_ram_128x72_2/A1[1] (dpram72x128_cb)
+                                                          0.00       2.40 f
+  data arrival time                                                  2.40
+
+  clock clk (fall edge)                                   2.40       2.40
+  clock network delay (ideal)                             0.00       2.40
+  writetop/spec_mem/memory/u_ram_128x72_2/CEB1 (dpram72x128_cb)
+                                                          0.00       2.40 f
+  library setup time                                      0.00       2.40
+  data required time                                                 2.40
+  --------------------------------------------------------------------------
+  data required time                                                 2.40
+  data arrival time                                                 -2.40
+  --------------------------------------------------------------------------
+  slack (MET)                                                        0.00
+
+
+  Startpoint: writetop/spec_mem/wr_data_skid/buf_full_q_reg
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: writetop/spec_mem/memory/u_ram_128x72_1
+            (falling edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: max
+
+  Point                                                   Incr       Path
+  --------------------------------------------------------------------------
+  clock clk (rise edge)                                   0.00       0.00
+  clock network delay (ideal)                             0.00       0.00
+  writetop/spec_mem/wr_data_skid/buf_full_q_reg/CK (DFFRQ_X8_18_SVT)
+                                                          0.00 #     0.00 r
+  writetop/spec_mem/wr_data_skid/buf_full_q_reg/Q (DFFRQ_X8_18_SVT)
+                                                          0.33       0.33 f
+  writetop/spec_mem/U3128/Q (BUF_X16_18_SVT)              0.10       0.43 f
+  writetop/spec_mem/U3227/Q (MUXI2PG_X6_18_SVT)           0.11       0.55 f
+  writetop/spec_mem/U3225/Q (BUF_X8_18_SVT)               0.13       0.67 f
+  writetop/spec_mem/U396/Q (XNOR2_X0_18_SVT)              0.14       0.81 f
+  writetop/spec_mem/U2096/Q (INV_A_NAND2_X2_18_SVT)       0.16       0.97 f
+  writetop/spec_mem/U2644/Q (NOR2P3_X6_18_SVT)            0.09       1.05 r
+  writetop/spec_mem/U2622/Q (NAND3_X6_18_SVT)             0.07       1.12 f
+  writetop/spec_mem/U1991/Q (INV_X2_18_SVT)               0.08       1.20 r
+  writetop/spec_mem/U1982/Q (NOR2P3_X4_18_SVT)            0.07       1.27 f
+  writetop/spec_mem/U301/Q (NOR2P3T_X4_18_SVT)            0.09       1.36 r
+  writetop/spec_mem/U1063/Q (OAI21P2_X6_18_SVT)           0.08       1.44 f
+  writetop/spec_mem/U3482/Q (NAND4T_X8_18_SVT)            0.12       1.56 r
+  writetop/spec_mem/U3327/Q (NAND2_X24_18_SVT)            0.07       1.62 f
+  writetop/spec_mem/U1057/Q (NAND3_X2_18_SVT)             0.12       1.74 r
+  writetop/spec_mem/U149/Q (INVP2_X1_18_SVT)              0.07       1.81 f
+  writetop/spec_mem/U119/Q (AND2_X0_18_SVT)               0.14       1.95 f
+  writetop/spec_mem/U1062/Q (NOR2P3_X4_18_SVT)            0.06       2.01 r
+  writetop/spec_mem/U3484/Q (NAND2_A_NAND2_X2_18_SVT)     0.06       2.06 f
+  writetop/spec_mem/U4936/Q (AOI211_X4_18_SVT)            0.22       2.28 r
+  writetop/spec_mem/U4842/Q (NAND3T_X4_18_SVT)            0.12       2.40 f
+  writetop/spec_mem/memory/u_ram_128x72_1/A1[1] (dpram72x128_cb)
+                                                          0.00       2.40 f
+  data arrival time                                                  2.40
+
+  clock clk (fall edge)                                   2.40       2.40
+  clock network delay (ideal)                             0.00       2.40
+  writetop/spec_mem/memory/u_ram_128x72_1/CEB1 (dpram72x128_cb)
+                                                          0.00       2.40 f
+  library setup time                                      0.00       2.40
+  data required time                                                 2.40
+  --------------------------------------------------------------------------
+  data required time                                                 2.40
+  data arrival time                                                 -2.40
+  --------------------------------------------------------------------------
+  slack (MET)                                                        0.00
+
+
+  Startpoint: writetop/spec_mem/wr_data_skid/buf_full_q_reg
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: writetop/spec_mem/memory/u_ram_128x72_0
+            (falling edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: max
+
+  Point                                                   Incr       Path
+  --------------------------------------------------------------------------
+  clock clk (rise edge)                                   0.00       0.00
+  clock network delay (ideal)                             0.00       0.00
+  writetop/spec_mem/wr_data_skid/buf_full_q_reg/CK (DFFRQ_X8_18_SVT)
+                                                          0.00 #     0.00 r
+  writetop/spec_mem/wr_data_skid/buf_full_q_reg/Q (DFFRQ_X8_18_SVT)
+                                                          0.33       0.33 f
+  writetop/spec_mem/U3128/Q (BUF_X16_18_SVT)              0.10       0.43 f
+  writetop/spec_mem/U3227/Q (MUXI2PG_X6_18_SVT)           0.11       0.55 f
+  writetop/spec_mem/U3225/Q (BUF_X8_18_SVT)               0.13       0.67 f
+  writetop/spec_mem/U396/Q (XNOR2_X0_18_SVT)              0.14       0.81 f
+  writetop/spec_mem/U2096/Q (INV_A_NAND2_X2_18_SVT)       0.16       0.97 f
+  writetop/spec_mem/U2644/Q (NOR2P3_X6_18_SVT)            0.09       1.05 r
+  writetop/spec_mem/U2622/Q (NAND3_X6_18_SVT)             0.07       1.12 f
+  writetop/spec_mem/U1991/Q (INV_X2_18_SVT)               0.08       1.20 r
+  writetop/spec_mem/U1982/Q (NOR2P3_X4_18_SVT)            0.07       1.27 f
+  writetop/spec_mem/U301/Q (NOR2P3T_X4_18_SVT)            0.09       1.36 r
+  writetop/spec_mem/U1063/Q (OAI21P2_X6_18_SVT)           0.08       1.44 f
+  writetop/spec_mem/U3482/Q (NAND4T_X8_18_SVT)            0.12       1.56 r
+  writetop/spec_mem/U3327/Q (NAND2_X24_18_SVT)            0.07       1.62 f
+  writetop/spec_mem/U1057/Q (NAND3_X2_18_SVT)             0.12       1.74 r
+  writetop/spec_mem/U149/Q (INVP2_X1_18_SVT)              0.07       1.81 f
+  writetop/spec_mem/U119/Q (AND2_X0_18_SVT)               0.14       1.95 f
+  writetop/spec_mem/U1062/Q (NOR2P3_X4_18_SVT)            0.06       2.01 r
+  writetop/spec_mem/U3484/Q (NAND2_A_NAND2_X2_18_SVT)     0.06       2.06 f
+  writetop/spec_mem/U4936/Q (AOI211_X4_18_SVT)            0.22       2.28 r
+  writetop/spec_mem/U4842/Q (NAND3T_X4_18_SVT)            0.12       2.40 f
+  writetop/spec_mem/memory/u_ram_128x72_0/A1[1] (dpram72x128_cb)
+                                                          0.00       2.40 f
+  data arrival time                                                  2.40
+
+  clock clk (fall edge)                                   2.40       2.40
+  clock network delay (ideal)                             0.00       2.40
+  writetop/spec_mem/memory/u_ram_128x72_0/CEB1 (dpram72x128_cb)
+                                                          0.00       2.40 f
+  library setup time                                      0.00       2.40
+  data required time                                                 2.40
+  --------------------------------------------------------------------------
+  data required time                                                 2.40
+  data arrival time                                                 -2.40
+  --------------------------------------------------------------------------
+  slack (MET)                                                        0.00
+
+
+  Startpoint: writetop/spec_mem/spec_mem_reg[5][index][3]
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: s_add_fifo/U2/mem_reg[6][54]
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: max
+
+  Point                                                   Incr       Path
+  --------------------------------------------------------------------------
+  clock clk (rise edge)                                   0.00       0.00
+  clock network delay (ideal)                             0.00       0.00
+  writetop/spec_mem/spec_mem_reg[5][index][3]/CK (DFFRQ_X4_18_SVT)
+                                                          0.00 #     0.00 r
+  writetop/spec_mem/spec_mem_reg[5][index][3]/Q (DFFRQ_X4_18_SVT)
+                                                          0.38       0.38 r
+  writetop/spec_mem/U3999/Q (INV_X1_18_SVT)               0.07       0.45 f
+  writetop/spec_mem/U1209/Q (OR2_X2_18_SVT)               0.20       0.65 f
+  writetop/spec_mem/U4002/Q (NAND4_X2_18_SVT)             0.10       0.75 r
+  writetop/spec_mem/U715/Q (NOR2P3_X4_18_SVT)             0.09       0.84 f
+  writetop/spec_mem/U1015/Q (NAND3_X6_18_SVT)             0.12       0.96 r
+  writetop/spec_mem/U4118/Q (INV_X4_18_SVT)               0.05       1.01 f
+  writetop/spec_mem/U3690/Q (NAND2_A_NAND2_X0_18_SVT)     0.14       1.15 f
+  writetop/spec_mem/U1654/Q (INV_X1_18_SVT)               0.06       1.21 r
+  writetop/spec_mem/U1925/Q (NAND3_X1_18_SVT)             0.06       1.27 f
+  writetop/spec_mem/U1915/Q (INV_X1_18_SVT)               0.07       1.34 r
+  writetop/spec_mem/U3691/Q (NAND2_A_NAND2_X1_18_SVT)     0.08       1.41 f
+  writetop/spec_mem/U4048/Q (AOI21_X4_18_SVT)             0.11       1.52 r
+  writetop/spec_mem/U560/Q (NOR2P3T_X2_18_SVT)            0.08       1.60 f
+  writetop/spec_mem/U1643/Q (NOR2_X3_18_SVT)              0.12       1.72 r
+  writetop/spec_mem/U544/Q (INVP2_X1_18_SVT)              0.08       1.80 f
+  writetop/spec_mem/U3882/Q (NAND3_X4_18_SVT)             0.10       1.89 r
+  writetop/spec_mem/U3243/Q (NOR2P3T_X10_18_SVT)          0.08       1.97 f
+  writetop/spec_mem/U484/Q (NAND3_X3_18_SVT)              0.06       2.04 r
+  writetop/spec_mem/U1314/Q (AND3_X4_18_SVT)              0.17       2.20 r
+  writetop/spec_mem/U3421/Q (NAND3T_X6_18_SVT)            0.07       2.27 f
+  writetop/spec_mem/U3420/Q (NOR2P3_X16_18_SVT)           0.13       2.40 r
+  writetop/spec_mem/U4314/Q (NAND3_X24_18_SVT)            0.09       2.49 f
+  writetop/spec_mem/U3293/Q (INV_X4_18_SVT)               0.09       2.59 r
+  writetop/spec_mem/U3292/Q (NOR2P3T_X10_18_SVT)          0.06       2.65 f
+  writetop/spec_mem/U3290/Q (NOR2P3T_X10_18_SVT)          0.07       2.72 r
+  writetop/spec_mem/U432/Q (NOR2P3_X4_18_SVT)             0.04       2.76 f
+  writetop/spec_mem/U428/Q (INVP2_X1_18_SVT)              0.08       2.84 r
+  writetop/spec_mem/U4190/Q (NOR2_A_NAND3_X4_18_SVT)      0.10       2.94 f
+  writetop/spec_mem/U4189/Q (NAND4_X12_18_SVT)            0.16       3.10 r
+  writetop/spec_mem/U404/Q (NOR2P3_X6_18_SVT)             0.09       3.20 f
+  writetop/spec_mem/U4179/Q (NOR2P3T_X10_18_SVT)          0.11       3.31 r
+  writetop/spec_mem/U3803/Q (NAND2_X24_18_SVT)            0.07       3.38 f
+  writetop/spec_mem/U3632/Q (INV_X6_18_SVT)               0.10       3.47 r
+  writetop/spec_mem/U1867/Q (NOR2P3T_X4_18_SVT)           0.06       3.53 f
+  writetop/spec_mem/U275/Q (NAND2_X5_18_SVT)              0.06       3.60 r
+  writetop/spec_mem/U245/Q (INV_X4_18_SVT)                0.05       3.65 f
+  writetop/spec_mem/U4505/Q (BUF_X3_18_SVT)               0.14       3.79 f
+  writetop/spec_mem/U9239/Q (AOI22_X0_18_SVT)             0.21       4.00 r
+  writetop/spec_mem/U200/Q (NAND4_X1_18_SVT)              0.16       4.16 f
+  writetop/spec_mem/U4312/Q (NOR2P3_X4_18_SVT)            0.12       4.28 r
+  writetop/spec_mem/U4098/Q (INV_A_OAI22_X4_18_SVT)       0.05       4.33 f
+  writetop/spec_mem/m_add.awid[5] (special_memory_I_s_add_axi_if_slave_add_I_s_data_axi_if_slave_data_I_m_add_axi_if_master_add_I_m_data_axi_if_master_data_)
+                                                          0.00       4.33 f
+  U4412/Q (NAND2_A_NAND2_X4_18_SVT)                       0.14       4.47 f
+  s_add_fifo/data_in[54] (top_DW_asymfifo_s1_sf_J3_3)     0.00       4.47 f
+  s_add_fifo/U2/data_in[54] (top_DW_ram_r_w_s_dff_J3_3)
+                                                          0.00       4.47 f
+  s_add_fifo/U2/U131/Q (NAND2_X4_18_SVT)                  0.10       4.57 r
+  s_add_fifo/U2/U124/Q (INV_X3_18_SVT)                    0.03       4.59 f
+  s_add_fifo/U2/U113/Q (NOR2_X0_18_SVT)                   0.13       4.73 r
+  s_add_fifo/U2/U397/Q (NOR2_X1_18_SVT)                   0.05       4.77 f
+  s_add_fifo/U2/mem_reg[6][54]/D (DFFQ_X1_18_SVT)         0.00       4.77 f
+  data arrival time                                                  4.77
+
+  clock clk (rise edge)                                   4.80       4.80
+  clock network delay (ideal)                             0.00       4.80
+  s_add_fifo/U2/mem_reg[6][54]/CK (DFFQ_X1_18_SVT)        0.00       4.80 r
+  library setup time                                     -0.03       4.77
+  data required time                                                 4.77
+  --------------------------------------------------------------------------
+  data required time                                                 4.77
+  data arrival time                                                 -4.77
+  --------------------------------------------------------------------------
+  slack (MET)                                                        0.00
+
+

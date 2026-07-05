@@ -1,0 +1,140 @@
+ 
+****************************************
+Report : timing
+        -path full
+        -delay max
+        -max_paths 1
+        -sort_by group
+Design : top
+Version: U-2022.12
+Date   : Thu May 28 15:50:55 2026
+****************************************
+
+ # A fanout number of 1000 was used for high fanout net computations.
+
+Operating Conditions: tt_1p8v_25c   Library: tsl18fs190svt_tt_1p8v_25c
+Wire Load Model Mode: top
+
+  Startpoint: m_data_fifo_w/U1/U2_1/rd_addr_int_reg[0]
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: writetop/spec_mem/memory/u_ram_256x16_parity
+            (falling edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: max
+
+  Point                                                   Incr       Path
+  --------------------------------------------------------------------------
+  clock clk (rise edge)                                   0.00       0.00
+  clock network delay (ideal)                             0.00       0.00
+  m_data_fifo_w/U1/U2_1/rd_addr_int_reg[0]/CK (DFFQ_X1_18_SVT)
+                                                          0.00 #     0.00 r
+  m_data_fifo_w/U1/U2_1/rd_addr_int_reg[0]/Q (DFFQ_X1_18_SVT)
+                                                          0.45       0.45 r
+  m_data_fifo_w/U2/rd_addr[0] (top_DW_ram_r_w_s_dff_J3_6)
+                                                          0.00       0.45 r
+  m_data_fifo_w/U2/U2341/Q (INV_X1_18_SVT)                0.10       0.55 f
+  m_data_fifo_w/U2/U2351/Q (NOR3_X0_18_SVT)               0.27       0.82 r
+  m_data_fifo_w/U2/U199/Q (BUF_X2_18_SVT)                 0.15       0.97 r
+  m_data_fifo_w/U2/U198/Q (BUF_X2_18_SVT)                 0.14       1.11 r
+  m_data_fifo_w/U2/U111/Q (BUF_X4_18_SVT)                 0.32       1.43 r
+  m_data_fifo_w/U2/U2539/Q (AOI22_X0_18_SVT)              0.11       1.54 f
+  m_data_fifo_w/U2/U2541/Q (NAND4_X1_18_SVT)              0.18       1.72 r
+  m_data_fifo_w/U2/data_out[199] (top_DW_ram_r_w_s_dff_J3_6)
+                                                          0.00       1.72 r
+  m_data_fifo_w/data_out[199] (top_DW_asymfifo_s1_sf_J3_6)
+                                                          0.00       1.72 r
+  writetop/spec_mem/s_data.wdata[24][7] (special_memory_I_s_add_axi_if_slave_add_I_s_data_axi_if_slave_data_I_m_add_axi_if_master_add_I_m_data_axi_if_master_data_)
+                                                          0.00       1.72 r
+  writetop/spec_mem/U6213/Q (XOR2NG_X1_18_SVT)            0.18       1.90 r
+  writetop/spec_mem/U6214/Q (XOR2NG_X1_18_SVT)            0.21       2.11 r
+  writetop/spec_mem/U6215/Q (XOR2NG_X1_18_SVT)            0.11       2.22 r
+  writetop/spec_mem/U6222/Q (XOR2NG_X1_18_SVT)            0.20       2.43 r
+  writetop/spec_mem/U6226/Q (XOR2NG_X1P5_18_SVT)          0.16       2.59 r
+  writetop/spec_mem/U6227/Q (XOR2NG_X1P5_18_SVT)          0.16       2.75 r
+  writetop/spec_mem/memory/u_ram_256x16_parity/I1[14] (dpram16x256_cb)
+                                                          0.00       2.75 r
+  data arrival time                                                  2.75
+
+  clock clk (fall edge)                                   2.75       2.75
+  clock network delay (ideal)                             0.00       2.75
+  writetop/spec_mem/memory/u_ram_256x16_parity/CEB1 (dpram16x256_cb)
+                                                          0.00       2.75 f
+  library setup time                                      0.00       2.75
+  data required time                                                 2.75
+  --------------------------------------------------------------------------
+  data required time                                                 2.75
+  data arrival time                                                 -2.75
+  --------------------------------------------------------------------------
+  slack (MET)                                                        0.00
+
+
+ 
+****************************************
+Report : timing
+        -path full
+        -delay max
+        -max_paths 1
+        -sort_by group
+Design : top
+Version: U-2022.12
+Date   : Thu May 28 15:50:58 2026
+****************************************
+
+ # A fanout number of 1000 was used for high fanout net computations.
+
+Operating Conditions: tt_1p8v_25c   Library: tsl18fs190svt_tt_1p8v_25c
+Wire Load Model Mode: top
+
+  Startpoint: m_data_fifo_w/U1/U2_1/rd_addr_int_reg[0]
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: writetop/spec_mem/memory/u_ram_256x16_parity
+            (falling edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: max
+
+  Point                                                   Incr       Path
+  --------------------------------------------------------------------------
+  clock clk (rise edge)                                   0.00       0.00
+  clock network delay (ideal)                             0.00       0.00
+  m_data_fifo_w/U1/U2_1/rd_addr_int_reg[0]/CK (DFFQ_X1_18_SVT)
+                                                          0.00 #     0.00 r
+  m_data_fifo_w/U1/U2_1/rd_addr_int_reg[0]/Q (DFFQ_X1_18_SVT)
+                                                          0.45       0.45 r
+  m_data_fifo_w/U2/rd_addr[0] (top_DW_ram_r_w_s_dff_J3_6)
+                                                          0.00       0.45 r
+  m_data_fifo_w/U2/U2341/Q (INV_X1_18_SVT)                0.10       0.55 f
+  m_data_fifo_w/U2/U2351/Q (NOR3_X0_18_SVT)               0.27       0.82 r
+  m_data_fifo_w/U2/U199/Q (BUF_X2_18_SVT)                 0.15       0.97 r
+  m_data_fifo_w/U2/U198/Q (BUF_X2_18_SVT)                 0.14       1.11 r
+  m_data_fifo_w/U2/U111/Q (BUF_X4_18_SVT)                 0.32       1.43 r
+  m_data_fifo_w/U2/U2539/Q (AOI22_X0_18_SVT)              0.11       1.54 f
+  m_data_fifo_w/U2/U2541/Q (NAND4_X1_18_SVT)              0.18       1.72 r
+  m_data_fifo_w/U2/data_out[199] (top_DW_ram_r_w_s_dff_J3_6)
+                                                          0.00       1.72 r
+  m_data_fifo_w/data_out[199] (top_DW_asymfifo_s1_sf_J3_6)
+                                                          0.00       1.72 r
+  writetop/spec_mem/s_data.wdata[24][7] (special_memory_I_s_add_axi_if_slave_add_I_s_data_axi_if_slave_data_I_m_add_axi_if_master_add_I_m_data_axi_if_master_data_)
+                                                          0.00       1.72 r
+  writetop/spec_mem/U6213/Q (XOR2NG_X1_18_SVT)            0.18       1.90 r
+  writetop/spec_mem/U6214/Q (XOR2NG_X1_18_SVT)            0.21       2.11 r
+  writetop/spec_mem/U6215/Q (XOR2NG_X1_18_SVT)            0.11       2.22 r
+  writetop/spec_mem/U6222/Q (XOR2NG_X1_18_SVT)            0.20       2.43 r
+  writetop/spec_mem/U6226/Q (XOR2NG_X1P5_18_SVT)          0.16       2.59 r
+  writetop/spec_mem/U6227/Q (XOR2NG_X1P5_18_SVT)          0.16       2.75 r
+  writetop/spec_mem/memory/u_ram_256x16_parity/I1[14] (dpram16x256_cb)
+                                                          0.00       2.75 r
+  data arrival time                                                  2.75
+
+  clock clk (fall edge)                                   2.75       2.75
+  clock network delay (ideal)                             0.00       2.75
+  writetop/spec_mem/memory/u_ram_256x16_parity/CEB1 (dpram16x256_cb)
+                                                          0.00       2.75 f
+  library setup time                                      0.00       2.75
+  data required time                                                 2.75
+  --------------------------------------------------------------------------
+  data required time                                                 2.75
+  data arrival time                                                 -2.75
+  --------------------------------------------------------------------------
+  slack (MET)                                                        0.00
+
+

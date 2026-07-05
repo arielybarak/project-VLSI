@@ -1,0 +1,55 @@
+ 
+****************************************
+Report : power
+        -analysis_effort low
+Design : top
+Version: U-2022.12
+Date   : Sat Jun 13 10:55:21 2026
+****************************************
+
+
+Library(s) Used:
+
+    tsl18fs190svt_tt_1p8v_25c (File: /tools/kits/tower/TS18SL_6_01/tsl18fs190svt_Rev_2019.09/lib/db/tsl18fs190svt_tt_1p8v_25c.db)
+    dpram72x128_cb_typ (File: /users/epabab/Project/synthesis/work/dpram72x128_cb_typ.db)
+    dpram16x256_cb_typ (File: /users/epabab/Project/synthesis/work/dpram16x256_cb_typ.db)
+
+
+Operating Conditions: tt_1p8v_25c   Library: tsl18fs190svt_tt_1p8v_25c
+Wire Load Model Mode: top
+
+
+Global Operating Voltage = 1.8  
+Power-specific unit information :
+    Voltage Units = 1V
+    Capacitance Units = 1.000000pf
+    Time Units = 1ns
+    Dynamic Power Units = 1mW    (derived from V,C,T units)
+    Leakage Power Units = 1pW
+
+
+Attributes
+----------
+i - Including register clock pin internal power
+
+
+  Cell Internal Power  =  66.4779 mW   (85%)
+  Net Switching Power  =  11.5501 mW   (15%)
+                         ---------
+Total Dynamic Power    =  78.0280 mW  (100%)
+
+Cell Leakage Power     =   7.6321 uW
+
+
+                 Internal         Switching           Leakage            Total
+Power Group      Power            Power               Power              Power   (   %    )  Attrs
+--------------------------------------------------------------------------------------------------
+io_pad             0.0000            0.0000            0.0000            0.0000  (   0.00%)
+memory             0.9319        3.9719e-02        6.4379e+06            0.9781  (   1.25%)
+black_box          0.0000            0.0000            0.0000            0.0000  (   0.00%)
+clock_network     60.3372            9.1753        2.0259e+04           69.5125  (  89.08%)  i
+register           3.7080            0.1805        7.8256e+05            3.8894  (   4.98%)
+sequential         0.0000            0.0000            0.0000            0.0000  (   0.00%)
+combinational      1.5007            2.1547        3.9135e+05            3.6557  (   4.68%)
+--------------------------------------------------------------------------------------------------
+Total             66.4778 mW        11.5501 mW     7.6321e+06 pW        78.0357 mW

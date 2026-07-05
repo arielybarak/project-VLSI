@@ -1,0 +1,113 @@
+# Single source of truth for all Project-B result numbers.
+# Every report / README / slide / run-note should agree with THIS file.
+# Checked by analysis/tools/check_results.py ; consumed by sync_pptx.py.
+#
+# Rule: if a number changes, change it HERE, then re-run the checker and sync.
+
+meta:
+  spec_target_freq_mhz: [400, 500]   # aspirational spec target
+  sram_ceiling_ns: 3.24              # 2 * tACC0 ; single-cycle datapath
+  sram_ceiling_mhz: 310
+  tACC0_ns: 1.62
+  srams: "4x dpram128x72 + 1x dpram256x16"
+
+params:                              # must match pkg.sv
+  SLOT_AMOUNT: 256
+  SPEC_SLOT_AMOUNT: 16
+  PWUSER_WIDTH: 8
+  DSW: 5                             # ticket width = clog2(SPEC_SLOT_AMOUNT)+1
+  special_slots_projA: 4            # was 4 in Project A -> 16 in Project B
+  outstanding_projA: 16             # was 16 -> 256
+
+# Three reference design points (the "three milestones").
+points:
+  ff_baseline:
+    label: "FF-based"
+    period_ns: 5.5
+    freq_mhz: 182                    # 181.8, rounded
+    timing: MET
+    area_um2: 1374623
+    comb_cells: 62263
+    seq_cells: 15450
+    comb_area_um2: 707075
+    noncomb_area_um2: 667548
+    macro_area_um2: 0
+    dyn_power_mw: 168.16
+    leakage_uw: 1.59
+  sram_baseline:
+    label: "SRAM-based"
+    period_ns: 5.9                   # true closure (violated -0.329 @5.5)
+    freq_mhz: 169
+    timing: "VIOLATED @5.5 (-0.329)"
+    area_um2: 967222
+    comb_cells: 36036
+    seq_cells: 9964
+    comb_area_um2: 501931
+    noncomb_area_um2: 398658
+    macro_area_um2: 66633
+    dyn_power_mw: 108.89
+    leakage_uw: 7.68
+  final:
+    label: "Final (gen-drain + DSW)"
+    period_ns: 3.4
+    freq_mhz: 294                    # 294.1
+    timing: MET
+    area_um2: 986806
+    comb_cells: 32080
+    seq_cells: 13134
+    comb_area_um2: 385814
+    noncomb_area_um2: 534358
+    macro_area_um2: 66633
+    dyn_power_mw: 78.03
+    leakage_uw: 7.63
+
+# Headline deltas (final vs each baseline). Signs are final-relative.
+deltas:
+  vs_ff:
+    freq_pct: +62
+    area_pct: -28
+    comb_cells_pct: -48
+    seq_cells_pct: -15
+    dyn_power_pct: -54            # RAW, mixed activity (see caveats)
+    leakage_pct: +380
+  vs_sram:
+    freq_pct: +74
+    area_pct: +2
+    comb_cells_pct: -11
+    seq_cells_pct: +32
+    dyn_power_pct: -28            # RAW, mixed activity
+
+# The optimization journey, in order. freq=null where timing-only/violated.
+journey:
+  - {period_ns: 5.5, freq_mhz: 182,  area_um2: 1374623, dyn_power_mw: 168.16, change: "FF baseline (Project-A style)",         timing: MET}
+  - {period_ns: 5.5, freq_mhz: null, area_um2: 967222,  dyn_power_mw: 108.89, change: "payload FFs -> SRAM",                   timing: "VIOLATED (-0.329)"}
+  - {period_ns: 5.5, freq_mhz: 182,  area_um2: 966204,  dyn_power_mw: 112.10, change: "1-Pipe (read path)",                    timing: MET}
+  - {period_ns: 5.5, freq_mhz: 182,  area_um2: 1005579, dyn_power_mw: 119.08, change: "2-Pipe (write path)",                   timing: MET}
+  - {period_ns: 4.8, freq_mhz: 208,  area_um2: 1041613, dyn_power_mw: 136.72, change: "3uPipe (unlucky addr reg + prefetch)",  timing: MET}
+  - {period_ns: 4.5, freq_mhz: 222,  area_um2: 1061601, dyn_power_mw: 146.86, change: "3uPipe (tightened)",                    timing: MET}
+  - {period_ns: 4.0, freq_mhz: 250,  area_um2: 1069297, dyn_power_mw: 173.15, change: "Option C (bitmap + age matrix)",        timing: MET}
+  - {period_ns: 3.6, freq_mhz: 278,  area_um2: 1374682, dyn_power_mw: 235.96, change: "Option D (free-list + s_add skid)",     timing: MET}
+  - {period_ns: 3.4, freq_mhz: 294,  area_um2: null,    dyn_power_mw: null,   change: "bidreg (cut 1)",                        timing: "FAILED (-0.09)"}
+  - {period_ns: 3.5, freq_mhz: 286,  area_um2: 1105839, dyn_power_mw: 256.38, change: "one-hot decode-late + parity isolation", timing: MET}
+  - {period_ns: 3.4, freq_mhz: 294,  area_um2: 986806,  dyn_power_mw: 78.03,  change: "generation-drain + DSW shrink",         timing: MET}
+
+# Other legitimate numbers that appear in the docs (intermediate breakdowns,
+# critical-path delays, micro-opt slices). Keeps the drift-lint high-signal.
+also_valid:
+  ns: [0.0, 0.09, 0.24, 0.329, 1.00, 1.25, 1.75, 2.0, 2.25, 2.40, 2.5, 2.75, 3.08, 3.24, 3.26, 3.8, 4.34, 5.46, 5.83]
+  MHz: [150, 162, 169, 171.6, 180, 307, 400, 450, 500]   # 150=Proj-A target; 180=deck rounding of 182; 400/500=spec aspiration
+  µm²: [411981, 438806, 487589, 500139, 533107, 538966, 552754, 442213, 463697, 1095735, 1059689, 385814, 534358, 707075, 667548, 398658, 501931]
+  mW: [2.576, 2.026, 3.449, 4.039, 245.45, 248.04, 254.65, 80.90, 235.96]
+  µW: [7.53, 7.56, 7.67, 7.74, 7.76, 8.24, 7.71]
+  pct: [12.6, 18, 21, 21.4, 14.6, 30, 35, 37, 95, 96, 100, 0.68, 0.7, 2.5, 4.8, 0.91, 1.6, 10.8, 31.8, 61.8, 53.6, 28.3, 71.4, 94, 1.25]
+
+# Numbers that need a caveat wherever they appear.
+caveats:
+  dyn_power: >
+    Dynamic-power deltas (-54% vs FF, -28% vs SRAM) are RAW, not iso-activity:
+    the gen-drain family was measured at 86/14 internal/switching vs 25/75 in
+    the earlier runs. Indicative only; a rigorous delta needs both netlists
+    under the same annotated activity (SAIF/VCD).
+  leakage: >
+    Leakage grew ~5x (1.59 -> 7.63 uW) because SRAMs leak when idle. Accepted
+    trade for the dynamic/area win.

@@ -1,0 +1,62 @@
+ 
+****************************************
+Report : area
+Design : top
+Version: U-2022.12
+Date   : Thu May 28 15:51:16 2026
+****************************************
+
+Library(s) Used:
+
+    tsl18fs190svt_tt_1p8v_25c (File: /tools/kits/tower/TS18SL_6_01/tsl18fs190svt_Rev_2019.09/lib/db/tsl18fs190svt_tt_1p8v_25c.db)
+    dpram72x128_cb_typ (File: /users/epabab/Project/synthesis/work/dpram72x128_cb_typ.db)
+    dpram16x256_cb_typ (File: /users/epabab/Project/synthesis/work/dpram16x256_cb_typ.db)
+
+Number of ports:                         4801
+Number of nets:                         52560
+Number of cells:                        47972
+Number of combinational cells:          37650
+Number of sequential cells:             10279
+Number of macros/black boxes:               5
+Number of buf/inv:                       6812
+Number of references:                     163
+
+Combinational area:             487589.356213
+Buf/Inv area:                    47512.380835
+Noncombinational area:          411981.244423
+Macro/Black Box area:            66633.339355
+Net Interconnect area:      undefined  (No wire load specified)
+
+Total cell area:                966203.939991
+Total area:                 undefined
+ 
+****************************************
+Report : area
+Design : top
+Version: U-2022.12
+Date   : Thu May 28 15:51:18 2026
+****************************************
+
+Library(s) Used:
+
+    tsl18fs190svt_tt_1p8v_25c (File: /tools/kits/tower/TS18SL_6_01/tsl18fs190svt_Rev_2019.09/lib/db/tsl18fs190svt_tt_1p8v_25c.db)
+    dpram72x128_cb_typ (File: /users/epabab/Project/synthesis/work/dpram72x128_cb_typ.db)
+    dpram16x256_cb_typ (File: /users/epabab/Project/synthesis/work/dpram16x256_cb_typ.db)
+
+Number of ports:                         4801
+Number of nets:                         52560
+Number of cells:                        47972
+Number of combinational cells:          37650
+Number of sequential cells:             10279
+Number of macros/black boxes:               5
+Number of buf/inv:                       6812
+Number of references:                     163
+
+Combinational area:             487589.356213
+Buf/Inv area:                    47512.380835
+Noncombinational area:          411981.244423
+Macro/Black Box area:            66633.339355
+Net Interconnect area:      undefined  (No wire load specified)
+
+Total cell area:                966203.939991
+Total area:                 undefined

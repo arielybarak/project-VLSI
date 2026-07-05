@@ -1,0 +1,338 @@
+ 
+****************************************
+Report : timing
+        -path full
+        -delay max
+        -nworst 15
+        -max_paths 10
+        -sort_by group
+Design : top
+Version: U-2022.12
+Date   : Wed Jun 10 01:14:00 2026
+****************************************
+
+ # A fanout number of 1000 was used for high fanout net computations.
+
+Operating Conditions: tt_1p8v_25c   Library: tsl18fs190svt_tt_1p8v_25c
+Wire Load Model Mode: top
+
+  Startpoint: writetop/spec_mem/memory/u_ram_128x72_0
+              (falling edge-triggered flip-flop clocked by clk)
+  Endpoint: writetop/spec_mem/rd_raw_pipe/data_q_reg[17]
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: max
+
+  Point                                                   Incr       Path
+  --------------------------------------------------------------------------
+  clock clk (fall edge)                                  1.650      1.650
+  clock network delay (ideal)                            0.000      1.650
+  writetop/spec_mem/memory/u_ram_128x72_0/CEB2 (dpram72x128_cb)
+                                                         0.000      1.650 f
+  writetop/spec_mem/memory/u_ram_128x72_0/O2[64] (dpram72x128_cb)
+                                                         1.631      3.281 f
+  writetop/spec_mem/rd_raw_pipe/data_q_reg[17]/D (DFFR_X1_18_SVT)
+                                                         0.000      3.281 f
+  data arrival time                                                 3.281
+
+  clock clk (rise edge)                                  3.300      3.300
+  clock network delay (ideal)                            0.000      3.300
+  writetop/spec_mem/rd_raw_pipe/data_q_reg[17]/CK (DFFR_X1_18_SVT)
+                                                         0.000      3.300 r
+  library setup time                                    -0.044      3.256
+  data required time                                                3.256
+  --------------------------------------------------------------------------
+  data required time                                                3.256
+  data arrival time                                                -3.281
+  --------------------------------------------------------------------------
+  slack (VIOLATED)                                                 -0.025
+
+
+  Startpoint: writetop/spec_mem/memory/u_ram_128x72_0
+              (falling edge-triggered flip-flop clocked by clk)
+  Endpoint: writetop/spec_mem/rd_raw_pipe/data_q_reg[18]
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: max
+
+  Point                                                   Incr       Path
+  --------------------------------------------------------------------------
+  clock clk (fall edge)                                  1.650      1.650
+  clock network delay (ideal)                            0.000      1.650
+  writetop/spec_mem/memory/u_ram_128x72_0/CEB2 (dpram72x128_cb)
+                                                         0.000      1.650 f
+  writetop/spec_mem/memory/u_ram_128x72_0/O2[65] (dpram72x128_cb)
+                                                         1.631      3.281 f
+  writetop/spec_mem/rd_raw_pipe/data_q_reg[18]/D (DFFR_X1_18_SVT)
+                                                         0.000      3.281 f
+  data arrival time                                                 3.281
+
+  clock clk (rise edge)                                  3.300      3.300
+  clock network delay (ideal)                            0.000      3.300
+  writetop/spec_mem/rd_raw_pipe/data_q_reg[18]/CK (DFFR_X1_18_SVT)
+                                                         0.000      3.300 r
+  library setup time                                    -0.044      3.256
+  data required time                                                3.256
+  --------------------------------------------------------------------------
+  data required time                                                3.256
+  data arrival time                                                -3.281
+  --------------------------------------------------------------------------
+  slack (VIOLATED)                                                 -0.025
+
+
+  Startpoint: writetop/spec_mem/memory/u_ram_128x72_0
+              (falling edge-triggered flip-flop clocked by clk)
+  Endpoint: writetop/spec_mem/rd_raw_pipe/data_q_reg[19]
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: max
+
+  Point                                                   Incr       Path
+  --------------------------------------------------------------------------
+  clock clk (fall edge)                                  1.650      1.650
+  clock network delay (ideal)                            0.000      1.650
+  writetop/spec_mem/memory/u_ram_128x72_0/CEB2 (dpram72x128_cb)
+                                                         0.000      1.650 f
+  writetop/spec_mem/memory/u_ram_128x72_0/O2[66] (dpram72x128_cb)
+                                                         1.631      3.281 f
+  writetop/spec_mem/rd_raw_pipe/data_q_reg[19]/D (DFFR_X1_18_SVT)
+                                                         0.000      3.281 f
+  data arrival time                                                 3.281
+
+  clock clk (rise edge)                                  3.300      3.300
+  clock network delay (ideal)                            0.000      3.300
+  writetop/spec_mem/rd_raw_pipe/data_q_reg[19]/CK (DFFR_X1_18_SVT)
+                                                         0.000      3.300 r
+  library setup time                                    -0.044      3.256
+  data required time                                                3.256
+  --------------------------------------------------------------------------
+  data required time                                                3.256
+  data arrival time                                                -3.281
+  --------------------------------------------------------------------------
+  slack (VIOLATED)                                                 -0.025
+
+
+  Startpoint: writetop/spec_mem/memory/u_ram_128x72_0
+              (falling edge-triggered flip-flop clocked by clk)
+  Endpoint: writetop/spec_mem/rd_raw_pipe/data_q_reg[20]
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: max
+
+  Point                                                   Incr       Path
+  --------------------------------------------------------------------------
+  clock clk (fall edge)                                  1.650      1.650
+  clock network delay (ideal)                            0.000      1.650
+  writetop/spec_mem/memory/u_ram_128x72_0/CEB2 (dpram72x128_cb)
+                                                         0.000      1.650 f
+  writetop/spec_mem/memory/u_ram_128x72_0/O2[67] (dpram72x128_cb)
+                                                         1.631      3.281 f
+  writetop/spec_mem/rd_raw_pipe/data_q_reg[20]/D (DFFR_X1_18_SVT)
+                                                         0.000      3.281 f
+  data arrival time                                                 3.281
+
+  clock clk (rise edge)                                  3.300      3.300
+  clock network delay (ideal)                            0.000      3.300
+  writetop/spec_mem/rd_raw_pipe/data_q_reg[20]/CK (DFFR_X1_18_SVT)
+                                                         0.000      3.300 r
+  library setup time                                    -0.044      3.256
+  data required time                                                3.256
+  --------------------------------------------------------------------------
+  data required time                                                3.256
+  data arrival time                                                -3.281
+  --------------------------------------------------------------------------
+  slack (VIOLATED)                                                 -0.025
+
+
+  Startpoint: writetop/spec_mem/memory/u_ram_128x72_0
+              (falling edge-triggered flip-flop clocked by clk)
+  Endpoint: writetop/spec_mem/rd_raw_pipe/data_q_reg[21]
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: max
+
+  Point                                                   Incr       Path
+  --------------------------------------------------------------------------
+  clock clk (fall edge)                                  1.650      1.650
+  clock network delay (ideal)                            0.000      1.650
+  writetop/spec_mem/memory/u_ram_128x72_0/CEB2 (dpram72x128_cb)
+                                                         0.000      1.650 f
+  writetop/spec_mem/memory/u_ram_128x72_0/O2[68] (dpram72x128_cb)
+                                                         1.631      3.281 f
+  writetop/spec_mem/rd_raw_pipe/data_q_reg[21]/D (DFFR_X1_18_SVT)
+                                                         0.000      3.281 f
+  data arrival time                                                 3.281
+
+  clock clk (rise edge)                                  3.300      3.300
+  clock network delay (ideal)                            0.000      3.300
+  writetop/spec_mem/rd_raw_pipe/data_q_reg[21]/CK (DFFR_X1_18_SVT)
+                                                         0.000      3.300 r
+  library setup time                                    -0.044      3.256
+  data required time                                                3.256
+  --------------------------------------------------------------------------
+  data required time                                                3.256
+  data arrival time                                                -3.281
+  --------------------------------------------------------------------------
+  slack (VIOLATED)                                                 -0.025
+
+
+  Startpoint: writetop/spec_mem/memory/u_ram_128x72_0
+              (falling edge-triggered flip-flop clocked by clk)
+  Endpoint: writetop/spec_mem/rd_raw_pipe/data_q_reg[22]
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: max
+
+  Point                                                   Incr       Path
+  --------------------------------------------------------------------------
+  clock clk (fall edge)                                  1.650      1.650
+  clock network delay (ideal)                            0.000      1.650
+  writetop/spec_mem/memory/u_ram_128x72_0/CEB2 (dpram72x128_cb)
+                                                         0.000      1.650 f
+  writetop/spec_mem/memory/u_ram_128x72_0/O2[69] (dpram72x128_cb)
+                                                         1.631      3.281 f
+  writetop/spec_mem/rd_raw_pipe/data_q_reg[22]/D (DFFR_X1_18_SVT)
+                                                         0.000      3.281 f
+  data arrival time                                                 3.281
+
+  clock clk (rise edge)                                  3.300      3.300
+  clock network delay (ideal)                            0.000      3.300
+  writetop/spec_mem/rd_raw_pipe/data_q_reg[22]/CK (DFFR_X1_18_SVT)
+                                                         0.000      3.300 r
+  library setup time                                    -0.044      3.256
+  data required time                                                3.256
+  --------------------------------------------------------------------------
+  data required time                                                3.256
+  data arrival time                                                -3.281
+  --------------------------------------------------------------------------
+  slack (VIOLATED)                                                 -0.025
+
+
+  Startpoint: writetop/spec_mem/memory/u_ram_128x72_0
+              (falling edge-triggered flip-flop clocked by clk)
+  Endpoint: writetop/spec_mem/rd_raw_pipe/data_q_reg[23]
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: max
+
+  Point                                                   Incr       Path
+  --------------------------------------------------------------------------
+  clock clk (fall edge)                                  1.650      1.650
+  clock network delay (ideal)                            0.000      1.650
+  writetop/spec_mem/memory/u_ram_128x72_0/CEB2 (dpram72x128_cb)
+                                                         0.000      1.650 f
+  writetop/spec_mem/memory/u_ram_128x72_0/O2[70] (dpram72x128_cb)
+                                                         1.631      3.281 f
+  writetop/spec_mem/rd_raw_pipe/data_q_reg[23]/D (DFFR_X1_18_SVT)
+                                                         0.000      3.281 f
+  data arrival time                                                 3.281
+
+  clock clk (rise edge)                                  3.300      3.300
+  clock network delay (ideal)                            0.000      3.300
+  writetop/spec_mem/rd_raw_pipe/data_q_reg[23]/CK (DFFR_X1_18_SVT)
+                                                         0.000      3.300 r
+  library setup time                                    -0.044      3.256
+  data required time                                                3.256
+  --------------------------------------------------------------------------
+  data required time                                                3.256
+  data arrival time                                                -3.281
+  --------------------------------------------------------------------------
+  slack (VIOLATED)                                                 -0.025
+
+
+  Startpoint: writetop/spec_mem/memory/u_ram_128x72_0
+              (falling edge-triggered flip-flop clocked by clk)
+  Endpoint: writetop/spec_mem/rd_raw_pipe/data_q_reg[24]
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: max
+
+  Point                                                   Incr       Path
+  --------------------------------------------------------------------------
+  clock clk (fall edge)                                  1.650      1.650
+  clock network delay (ideal)                            0.000      1.650
+  writetop/spec_mem/memory/u_ram_128x72_0/CEB2 (dpram72x128_cb)
+                                                         0.000      1.650 f
+  writetop/spec_mem/memory/u_ram_128x72_0/O2[71] (dpram72x128_cb)
+                                                         1.631      3.281 f
+  writetop/spec_mem/rd_raw_pipe/data_q_reg[24]/D (DFFR_X1_18_SVT)
+                                                         0.000      3.281 f
+  data arrival time                                                 3.281
+
+  clock clk (rise edge)                                  3.300      3.300
+  clock network delay (ideal)                            0.000      3.300
+  writetop/spec_mem/rd_raw_pipe/data_q_reg[24]/CK (DFFR_X1_18_SVT)
+                                                         0.000      3.300 r
+  library setup time                                    -0.044      3.256
+  data required time                                                3.256
+  --------------------------------------------------------------------------
+  data required time                                                3.256
+  data arrival time                                                -3.281
+  --------------------------------------------------------------------------
+  slack (VIOLATED)                                                 -0.025
+
+
+  Startpoint: writetop/spec_mem/memory/u_ram_128x72_1
+              (falling edge-triggered flip-flop clocked by clk)
+  Endpoint: writetop/spec_mem/rd_raw_pipe/data_q_reg[25]
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: max
+
+  Point                                                   Incr       Path
+  --------------------------------------------------------------------------
+  clock clk (fall edge)                                  1.650      1.650
+  clock network delay (ideal)                            0.000      1.650
+  writetop/spec_mem/memory/u_ram_128x72_1/CEB2 (dpram72x128_cb)
+                                                         0.000      1.650 f
+  writetop/spec_mem/memory/u_ram_128x72_1/O2[64] (dpram72x128_cb)
+                                                         1.631      3.281 f
+  writetop/spec_mem/rd_raw_pipe/data_q_reg[25]/D (DFFR_X1_18_SVT)
+                                                         0.000      3.281 f
+  data arrival time                                                 3.281
+
+  clock clk (rise edge)                                  3.300      3.300
+  clock network delay (ideal)                            0.000      3.300
+  writetop/spec_mem/rd_raw_pipe/data_q_reg[25]/CK (DFFR_X1_18_SVT)
+                                                         0.000      3.300 r
+  library setup time                                    -0.044      3.256
+  data required time                                                3.256
+  --------------------------------------------------------------------------
+  data required time                                                3.256
+  data arrival time                                                -3.281
+  --------------------------------------------------------------------------
+  slack (VIOLATED)                                                 -0.025
+
+
+  Startpoint: writetop/spec_mem/memory/u_ram_128x72_1
+              (falling edge-triggered flip-flop clocked by clk)
+  Endpoint: writetop/spec_mem/rd_raw_pipe/data_q_reg[26]
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: max
+
+  Point                                                   Incr       Path
+  --------------------------------------------------------------------------
+  clock clk (fall edge)                                  1.650      1.650
+  clock network delay (ideal)                            0.000      1.650
+  writetop/spec_mem/memory/u_ram_128x72_1/CEB2 (dpram72x128_cb)
+                                                         0.000      1.650 f
+  writetop/spec_mem/memory/u_ram_128x72_1/O2[65] (dpram72x128_cb)
+                                                         1.631      3.281 f
+  writetop/spec_mem/rd_raw_pipe/data_q_reg[26]/D (DFFR_X1_18_SVT)
+                                                         0.000      3.281 f
+  data arrival time                                                 3.281
+
+  clock clk (rise edge)                                  3.300      3.300
+  clock network delay (ideal)                            0.000      3.300
+  writetop/spec_mem/rd_raw_pipe/data_q_reg[26]/CK (DFFR_X1_18_SVT)
+                                                         0.000      3.300 r
+  library setup time                                    -0.044      3.256
+  data required time                                                3.256
+  --------------------------------------------------------------------------
+  data required time                                                3.256
+  data arrival time                                                -3.281
+  --------------------------------------------------------------------------
+  slack (VIOLATED)                                                 -0.025
+
+

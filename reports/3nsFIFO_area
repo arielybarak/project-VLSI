@@ -1,0 +1,217 @@
+ 
+****************************************
+Report : design
+Design : top
+Version: U-2022.12
+Date   : Wed Jun 18 12:05:05 2025
+****************************************
+
+Design allows ideal nets on clock nets.
+
+Library(s) Used:
+
+    tsl18fs190svt_tt_1p8v_25c (File: /tools/kits/tower/TS18SL_6_01/tsl18fs190svt_Rev_2019.09/lib/db/tsl18fs190svt_tt_1p8v_25c.db)
+
+Local Link Library:
+
+    {tsl18fs190svt_tt_1p8v_25c.db}
+
+Flip-Flop Types:
+
+    No flip-flop types specified.
+
+Latch Types:
+
+    No latch types specified.
+
+Operating Conditions:
+
+
+    Operating Condition Name : tt_1p8v_25c
+    Library : tsl18fs190svt_tt_1p8v_25c
+    Process :   1.00
+    Temperature :  25.00
+    Voltage :   1.80
+
+Wire Loading Model:
+
+    No wire loading specified.
+
+
+Wire Loading Model Mode: top.
+
+Timing Ranges:
+
+    No timing ranges specified.
+
+Pin Input Delays:
+
+    None specified.
+
+Pin Output Delays:
+
+    None specified.
+
+Disabled Timing Arcs:
+
+    No arcs disabled.
+
+Required Licenses:
+
+    DesignWare
+
+Design Parameters:
+
+    None specified.
+ 
+****************************************
+Report : design
+Design : top
+Version: U-2022.12
+Date   : Wed Jun 18 12:05:20 2025
+****************************************
+
+Design allows ideal nets on clock nets.
+
+Library(s) Used:
+
+    tsl18fs190svt_tt_1p8v_25c (File: /tools/kits/tower/TS18SL_6_01/tsl18fs190svt_Rev_2019.09/lib/db/tsl18fs190svt_tt_1p8v_25c.db)
+
+Local Link Library:
+
+    {tsl18fs190svt_tt_1p8v_25c.db}
+
+Flip-Flop Types:
+
+    No flip-flop types specified.
+
+Latch Types:
+
+    No latch types specified.
+
+Operating Conditions:
+
+
+    Operating Condition Name : tt_1p8v_25c
+    Library : tsl18fs190svt_tt_1p8v_25c
+    Process :   1.00
+    Temperature :  25.00
+    Voltage :   1.80
+
+Wire Loading Model:
+
+    No wire loading specified.
+
+
+Wire Loading Model Mode: top.
+
+Timing Ranges:
+
+    No timing ranges specified.
+
+Pin Input Delays:
+
+    None specified.
+
+Pin Output Delays:
+
+    None specified.
+
+Disabled Timing Arcs:
+
+    No arcs disabled.
+
+Required Licenses:
+
+    DesignWare
+
+Design Parameters:
+
+    None specified.
+ 
+****************************************
+Report : area
+Design : top
+Version: U-2022.12
+Date   : Wed Jun 18 12:57:37 2025
+****************************************
+
+Library(s) Used:
+
+    tsl18fs190svt_tt_1p8v_25c (File: /tools/kits/tower/TS18SL_6_01/tsl18fs190svt_Rev_2019.09/lib/db/tsl18fs190svt_tt_1p8v_25c.db)
+
+Number of ports:                         1540
+Number of nets:                         15844
+Number of cells:                        14754
+Number of combinational cells:          11080
+Number of sequential cells:              3582
+Number of macros/black boxes:               0
+Number of buf/inv:                       2294
+Number of references:                     154
+
+Combinational area:             132082.199093
+Buf/Inv area:                    17928.730288
+Noncombinational area:          185713.243572
+Macro/Black Box area:                0.000000
+Net Interconnect area:      undefined  (No wire load specified)
+
+Total cell area:                317795.442665
+Total area:                 undefined
+ 
+****************************************
+Report : area
+Design : top
+Version: U-2022.12
+Date   : Wed Jun 18 12:57:40 2025
+****************************************
+
+Library(s) Used:
+
+    tsl18fs190svt_tt_1p8v_25c (File: /tools/kits/tower/TS18SL_6_01/tsl18fs190svt_Rev_2019.09/lib/db/tsl18fs190svt_tt_1p8v_25c.db)
+
+Number of ports:                         1540
+Number of nets:                         15844
+Number of cells:                        14754
+Number of combinational cells:          11080
+Number of sequential cells:              3582
+Number of macros/black boxes:               0
+Number of buf/inv:                       2294
+Number of references:                     154
+
+Combinational area:             132082.199093
+Buf/Inv area:                    17928.730288
+Noncombinational area:          185713.243572
+Macro/Black Box area:                0.000000
+Net Interconnect area:      undefined  (No wire load specified)
+
+Total cell area:                317795.442665
+Total area:                 undefined
+ 
+****************************************
+Report : area
+Design : top
+Version: U-2022.12
+Date   : Sun Jun 22 13:05:04 2025
+****************************************
+
+Library(s) Used:
+
+    tsl18fs190svt_tt_1p8v_25c (File: /tools/kits/tower/TS18SL_6_01/tsl18fs190svt_Rev_2019.09/lib/db/tsl18fs190svt_tt_1p8v_25c.db)
+
+Number of ports:                         1211
+Number of nets:                         15193
+Number of cells:                        14149
+Number of combinational cells:          10526
+Number of sequential cells:              3603
+Number of macros/black boxes:               0
+Number of buf/inv:                       2170
+Number of references:                     153
+
+Combinational area:             127192.159195
+Buf/Inv area:                    15480.600251
+Noncombinational area:          147003.342327
+Macro/Black Box area:                0.000000
+Net Interconnect area:      undefined  (No wire load specified)
+
+Total cell area:                274195.501522
+Total area:                 undefined

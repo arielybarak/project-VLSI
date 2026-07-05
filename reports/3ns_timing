@@ -1,0 +1,1033 @@
+ 
+****************************************
+Report : timing
+        -path full
+        -delay max
+        -input_pins
+        -nets
+        -max_paths 10
+        -sort_by group
+Design : WriteOrderTop
+Version: U-2022.12
+Date   : Mon Jun 23 00:37:20 2025
+****************************************
+
+ # A fanout number of 1000 was used for high fanout net computations.
+
+Operating Conditions: tt_1p8v_25c   Library: tsl18fs190svt_tt_1p8v_25c
+Wire Load Model Mode: top
+
+  Startpoint: spec_mem/spec_mem_reg[1][awid][0]
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: spec_mem/send_burst/slot_reg[data][2][0]
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: max
+
+  Point                                       Fanout      Incr       Path
+  --------------------------------------------------------------------------
+  clock clk (rise edge)                                  0.000      0.000
+  clock network delay (ideal)                            0.000      0.000
+  spec_mem/spec_mem_reg[1][awid][0]/CK (DFFRQ_X2_18_SVT)
+                                                         0.000 #    0.000 r
+  spec_mem/spec_mem_reg[1][awid][0]/Q (DFFRQ_X2_18_SVT)
+                                                         0.349      0.349 r
+  spec_mem/spec_mem[1][awid][0] (net)           6        0.000      0.349 r
+  spec_mem/U1470/B (XNOR2_X1_18_SVT)                     0.000      0.349 r
+  spec_mem/U1470/Q (XNOR2_X1_18_SVT)                     0.157      0.507 r
+  spec_mem/n60 (net)                            1        0.000      0.507 r
+  spec_mem/U1471/B (AND3_X2_18_SVT)                      0.000      0.507 r
+  spec_mem/U1471/Q (AND3_X2_18_SVT)                      0.198      0.704 r
+  spec_mem/n62 (net)                            1        0.000      0.704 r
+  spec_mem/U1472/C (INV_A_NAND3_X4_18_SVT)               0.000      0.704 r
+  spec_mem/U1472/Q (INV_A_NAND3_X4_18_SVT)               0.080      0.784 f
+  spec_mem/n130 (net)                           4        0.000      0.784 f
+  spec_mem/U1491/A (NAND3_X1_18_SVT)                     0.000      0.784 f
+  spec_mem/U1491/Q (NAND3_X1_18_SVT)                     0.094      0.878 r
+  spec_mem/n80 (net)                            1        0.000      0.878 r
+  spec_mem/U1493/C (NAND4_X2_18_SVT)                     0.000      0.878 r
+  spec_mem/U1493/Q (NAND4_X2_18_SVT)                     0.156      1.034 f
+  spec_mem/n173 (net)                           3        0.000      1.034 f
+  spec_mem/U1495/B (INV_A_NAND3_X4_18_SVT)               0.000      1.034 f
+  spec_mem/U1495/Q (INV_A_NAND3_X4_18_SVT)               0.151      1.185 r
+  spec_mem/n120 (net)                           3        0.000      1.185 r
+  spec_mem/U1512/A (INV_X3_18_SVT)                       0.000      1.185 r
+  spec_mem/U1512/Q (INV_X3_18_SVT)                       0.025      1.210 f
+  spec_mem/n106 (net)                           1        0.000      1.210 f
+  spec_mem/U1518/A (CLKNAND2_X2_18_SVT)                  0.000      1.210 f
+  spec_mem/U1518/Q (CLKNAND2_X2_18_SVT)                  0.051      1.261 r
+  spec_mem/n108 (net)                           1        0.000      1.261 r
+  spec_mem/U1520/A (NAND3T_X2_18_SVT)                    0.000      1.261 r
+  spec_mem/U1520/Q (NAND3T_X2_18_SVT)                    0.053      1.314 f
+  spec_mem/n166 (net)                           2        0.000      1.314 f
+  spec_mem/U1523/A (NAND2_X2_18_SVT)                     0.000      1.314 f
+  spec_mem/U1523/Q (NAND2_X2_18_SVT)                     0.060      1.375 r
+  spec_mem/n111 (net)                           1        0.000      1.375 r
+  spec_mem/U1524/B0 (OAI21P2_X1_18_SVT)                  0.000      1.375 r
+  spec_mem/U1524/Q (OAI21P2_X1_18_SVT)                   0.075      1.449 f
+  spec_mem/n113 (net)                           1        0.000      1.449 f
+  spec_mem/U446/A (INV_X2_18_SVT)                        0.000      1.449 f
+  spec_mem/U446/Q (INV_X2_18_SVT)                        0.070      1.519 r
+  spec_mem/n150 (net)                           1        0.000      1.519 r
+  spec_mem/U443/A (NAND2_X3_18_SVT)                      0.000      1.519 r
+  spec_mem/U443/Q (NAND2_X3_18_SVT)                      0.054      1.573 f
+  spec_mem/n175 (net)                           2        0.000      1.573 f
+  spec_mem/U1551/C0 (OAI211_X4_18_SVT)                   0.000      1.573 f
+  spec_mem/U1551/Q (OAI211_X4_18_SVT)                    0.131      1.704 r
+  spec_mem/n471 (net)                           6        0.000      1.704 r
+  spec_mem/U1552/S0 (MUXI2PG_X4_18_SVT)                  0.000      1.704 r
+  spec_mem/U1552/Q (MUXI2PG_X4_18_SVT)                   0.159      1.863 r
+  spec_mem/n521 (net)                           2        0.000      1.863 r
+  spec_mem/U1554/A (NOR2P3T_X4_18_SVT)                   0.000      1.863 r
+  spec_mem/U1554/Q (NOR2P3T_X4_18_SVT)                   0.091      1.954 f
+  spec_mem/n202 (net)                           3        0.000      1.954 f
+  spec_mem/U1576/A (INV_X4_18_SVT)                       0.000      1.954 f
+  spec_mem/U1576/Q (INV_X4_18_SVT)                       0.058      2.012 r
+  spec_mem/n204 (net)                           1        0.000      2.012 r
+  spec_mem/U1578/A (NAND2T_X4_18_SVT)                    0.000      2.012 r
+  spec_mem/U1578/Q (NAND2T_X4_18_SVT)                    0.037      2.049 f
+  spec_mem/n222 (net)                           1        0.000      2.049 f
+  spec_mem/U425/A (INV_X6_18_SVT)                        0.000      2.049 f
+  spec_mem/U425/Q (INV_X6_18_SVT)                        0.080      2.130 r
+  spec_mem/n24 (net)                            9        0.000      2.130 r
+  spec_mem/U1631/A (INV_X2_18_SVT)                       0.000      2.130 r
+  spec_mem/U1631/Q (INV_X2_18_SVT)                       0.068      2.198 f
+  spec_mem/n296 (net)                           4        0.000      2.198 f
+  spec_mem/U409/A (BUF_X8_18_SVT)                        0.000      2.198 f
+  spec_mem/U409/Q (BUF_X8_18_SVT)                        0.137      2.335 f
+  spec_mem/n4562 (net)                         38        0.000      2.335 f
+  spec_mem/U1881/A (INV_X1_18_SVT)                       0.000      2.335 f
+  spec_mem/U1881/Q (INV_X1_18_SVT)                       0.061      2.396 r
+  spec_mem/n425 (net)                           1        0.000      2.396 r
+  spec_mem/U1882/A1N (NOR2_A_AOI21_X0_18_SVT)            0.000      2.396 r
+  spec_mem/U1882/Q (NOR2_A_AOI21_X0_18_SVT)              0.222      2.618 r
+  spec_mem/n427 (net)                           1        0.000      2.618 r
+  spec_mem/U1883/B (NAND2_X1_18_SVT)                     0.000      2.618 r
+  spec_mem/U1883/Q (NAND2_X1_18_SVT)                     0.075      2.694 f
+  spec_mem/n657 (net)                           2        0.000      2.694 f
+  spec_mem/U1412/B0 (AO21_X1_18_SVT)                     0.000      2.694 f
+  spec_mem/U1412/Q (AO21_X1_18_SVT)                      0.243      2.937 f
+  spec_mem/n1626 (net)                          1        0.000      2.937 f
+  spec_mem/send_burst/slot_reg[data][2][0]/D (DFFRQ_X1_18_SVT)
+                                                         0.000      2.937 f
+  data arrival time                                                 2.937
+
+  clock clk (rise edge)                                  3.000      3.000
+  clock network delay (ideal)                            0.000      3.000
+  spec_mem/send_burst/slot_reg[data][2][0]/CK (DFFRQ_X1_18_SVT)
+                                                         0.000      3.000 r
+  library setup time                                    -0.062      2.938
+  data required time                                                2.938
+  --------------------------------------------------------------------------
+  data required time                                                2.938
+  data arrival time                                                -2.937
+  --------------------------------------------------------------------------
+  slack (MET)                                                       0.001
+
+
+  Startpoint: spec_mem/spec_mem_reg[1][awid][0]
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: spec_mem/send_burst/slot_reg[awaddr][7]
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: max
+
+  Point                                       Fanout      Incr       Path
+  --------------------------------------------------------------------------
+  clock clk (rise edge)                                  0.000      0.000
+  clock network delay (ideal)                            0.000      0.000
+  spec_mem/spec_mem_reg[1][awid][0]/CK (DFFRQ_X2_18_SVT)
+                                                         0.000 #    0.000 r
+  spec_mem/spec_mem_reg[1][awid][0]/Q (DFFRQ_X2_18_SVT)
+                                                         0.349      0.349 r
+  spec_mem/spec_mem[1][awid][0] (net)           6        0.000      0.349 r
+  spec_mem/U1470/B (XNOR2_X1_18_SVT)                     0.000      0.349 r
+  spec_mem/U1470/Q (XNOR2_X1_18_SVT)                     0.157      0.507 r
+  spec_mem/n60 (net)                            1        0.000      0.507 r
+  spec_mem/U1471/B (AND3_X2_18_SVT)                      0.000      0.507 r
+  spec_mem/U1471/Q (AND3_X2_18_SVT)                      0.198      0.704 r
+  spec_mem/n62 (net)                            1        0.000      0.704 r
+  spec_mem/U1472/C (INV_A_NAND3_X4_18_SVT)               0.000      0.704 r
+  spec_mem/U1472/Q (INV_A_NAND3_X4_18_SVT)               0.080      0.784 f
+  spec_mem/n130 (net)                           4        0.000      0.784 f
+  spec_mem/U1491/A (NAND3_X1_18_SVT)                     0.000      0.784 f
+  spec_mem/U1491/Q (NAND3_X1_18_SVT)                     0.094      0.878 r
+  spec_mem/n80 (net)                            1        0.000      0.878 r
+  spec_mem/U1493/C (NAND4_X2_18_SVT)                     0.000      0.878 r
+  spec_mem/U1493/Q (NAND4_X2_18_SVT)                     0.156      1.034 f
+  spec_mem/n173 (net)                           3        0.000      1.034 f
+  spec_mem/U1519/A (INVP2_X1_18_SVT)                     0.000      1.034 f
+  spec_mem/U1519/Q (INVP2_X1_18_SVT)                     0.087      1.121 r
+  spec_mem/n138 (net)                           2        0.000      1.121 r
+  spec_mem/U1538/A (NAND2_X1_18_SVT)                     0.000      1.121 r
+  spec_mem/U1538/Q (NAND2_X1_18_SVT)                     0.049      1.170 f
+  spec_mem/n147 (net)                           1        0.000      1.170 f
+  spec_mem/U1540/A0 (OA21_X2_18_SVT)                     0.000      1.170 f
+  spec_mem/U1540/Q (OA21_X2_18_SVT)                      0.204      1.374 f
+  spec_mem/n158 (net)                           2        0.000      1.374 f
+  spec_mem/U1541/C (INV_A_NAND3_X2_18_SVT)               0.000      1.374 f
+  spec_mem/U1541/Q (INV_A_NAND3_X2_18_SVT)               0.094      1.467 r
+  spec_mem/n148 (net)                           1        0.000      1.467 r
+  spec_mem/U1542/A (INV_X2_18_SVT)                       0.000      1.467 r
+  spec_mem/U1542/Q (INV_X2_18_SVT)                       0.041      1.508 f
+  spec_mem/n149 (net)                           1        0.000      1.508 f
+  spec_mem/U443/B (NAND2_X3_18_SVT)                      0.000      1.508 f
+  spec_mem/U443/Q (NAND2_X3_18_SVT)                      0.087      1.594 r
+  spec_mem/n175 (net)                           2        0.000      1.594 r
+  spec_mem/U1543/A (INV_X2_18_SVT)                       0.000      1.594 r
+  spec_mem/U1543/Q (INV_X2_18_SVT)                       0.046      1.641 f
+  spec_mem/n180 (net)                           2        0.000      1.641 f
+  spec_mem/U51/C (NOR2_A_NAND3_X2_18_SVT)                0.000      1.641 f
+  spec_mem/U51/Q (NOR2_A_NAND3_X2_18_SVT)                0.112      1.753 r
+  spec_mem/n531 (net)                           4        0.000      1.753 r
+  spec_mem/U439/A (BUF_X4_18_SVT)                        0.000      1.753 r
+  spec_mem/U439/Q (BUF_X4_18_SVT)                        0.125      1.878 r
+  spec_mem/release_ready_BAR (net)              6        0.000      1.878 r
+  spec_mem/U1572/A (NOR2P3T_X2_18_SVT)                   0.000      1.878 r
+  spec_mem/U1572/Q (NOR2P3T_X2_18_SVT)                   0.085      1.964 f
+  spec_mem/n958 (net)                           5        0.000      1.964 f
+  spec_mem/U1574/A1N (INV_A_AOI21_X2_18_SVT)             0.000      1.964 f
+  spec_mem/U1574/Q (INV_A_AOI21_X2_18_SVT)               0.137      2.101 f
+  spec_mem/n225 (net)                           1        0.000      2.101 f
+  spec_mem/U35/A (BUF_X5_18_SVT)                         0.000      2.101 f
+  spec_mem/U35/Q (BUF_X5_18_SVT)                         0.170      2.270 f
+  spec_mem/n21 (net)                           27        0.000      2.270 f
+  spec_mem/U1575/A (BUF_X2_18_SVT)                       0.000      2.270 f
+  spec_mem/U1575/Q (BUF_X2_18_SVT)                       0.166      2.437 f
+  spec_mem/n702 (net)                          11        0.000      2.437 f
+  spec_mem/U2292/A0 (AOI22_X0_18_SVT)                    0.000      2.437 f
+  spec_mem/U2292/Q (AOI22_X0_18_SVT)                     0.169      2.606 r
+  spec_mem/n816 (net)                           1        0.000      2.606 r
+  spec_mem/U2294/A (NAND2_X1_18_SVT)                     0.000      2.606 r
+  spec_mem/U2294/Q (NAND2_X1_18_SVT)                     0.086      2.691 f
+  spec_mem/n4574 (net)                          2        0.000      2.691 f
+  spec_mem/U4663/B0 (AO21_X1_18_SVT)                     0.000      2.691 f
+  spec_mem/U4663/Q (AO21_X1_18_SVT)                      0.243      2.935 f
+  spec_mem/n2884 (net)                          1        0.000      2.935 f
+  spec_mem/send_burst/slot_reg[awaddr][7]/D (DFFRQ_X1_18_SVT)
+                                                         0.000      2.935 f
+  data arrival time                                                 2.935
+
+  clock clk (rise edge)                                  3.000      3.000
+  clock network delay (ideal)                            0.000      3.000
+  spec_mem/send_burst/slot_reg[awaddr][7]/CK (DFFRQ_X1_18_SVT)
+                                                         0.000      3.000 r
+  library setup time                                    -0.062      2.938
+  data required time                                                2.938
+  --------------------------------------------------------------------------
+  data required time                                                2.938
+  data arrival time                                                -2.935
+  --------------------------------------------------------------------------
+  slack (MET)                                                       0.003
+
+
+  Startpoint: spec_mem/spec_mem_reg[1][awid][0]
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: spec_mem/send_burst/slot_reg[awaddr][27]
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: max
+
+  Point                                       Fanout      Incr       Path
+  --------------------------------------------------------------------------
+  clock clk (rise edge)                                  0.000      0.000
+  clock network delay (ideal)                            0.000      0.000
+  spec_mem/spec_mem_reg[1][awid][0]/CK (DFFRQ_X2_18_SVT)
+                                                         0.000 #    0.000 r
+  spec_mem/spec_mem_reg[1][awid][0]/Q (DFFRQ_X2_18_SVT)
+                                                         0.349      0.349 r
+  spec_mem/spec_mem[1][awid][0] (net)           6        0.000      0.349 r
+  spec_mem/U1470/B (XNOR2_X1_18_SVT)                     0.000      0.349 r
+  spec_mem/U1470/Q (XNOR2_X1_18_SVT)                     0.157      0.507 r
+  spec_mem/n60 (net)                            1        0.000      0.507 r
+  spec_mem/U1471/B (AND3_X2_18_SVT)                      0.000      0.507 r
+  spec_mem/U1471/Q (AND3_X2_18_SVT)                      0.198      0.704 r
+  spec_mem/n62 (net)                            1        0.000      0.704 r
+  spec_mem/U1472/C (INV_A_NAND3_X4_18_SVT)               0.000      0.704 r
+  spec_mem/U1472/Q (INV_A_NAND3_X4_18_SVT)               0.080      0.784 f
+  spec_mem/n130 (net)                           4        0.000      0.784 f
+  spec_mem/U1491/A (NAND3_X1_18_SVT)                     0.000      0.784 f
+  spec_mem/U1491/Q (NAND3_X1_18_SVT)                     0.094      0.878 r
+  spec_mem/n80 (net)                            1        0.000      0.878 r
+  spec_mem/U1493/C (NAND4_X2_18_SVT)                     0.000      0.878 r
+  spec_mem/U1493/Q (NAND4_X2_18_SVT)                     0.156      1.034 f
+  spec_mem/n173 (net)                           3        0.000      1.034 f
+  spec_mem/U1519/A (INVP2_X1_18_SVT)                     0.000      1.034 f
+  spec_mem/U1519/Q (INVP2_X1_18_SVT)                     0.087      1.121 r
+  spec_mem/n138 (net)                           2        0.000      1.121 r
+  spec_mem/U1538/A (NAND2_X1_18_SVT)                     0.000      1.121 r
+  spec_mem/U1538/Q (NAND2_X1_18_SVT)                     0.049      1.170 f
+  spec_mem/n147 (net)                           1        0.000      1.170 f
+  spec_mem/U1540/A0 (OA21_X2_18_SVT)                     0.000      1.170 f
+  spec_mem/U1540/Q (OA21_X2_18_SVT)                      0.204      1.374 f
+  spec_mem/n158 (net)                           2        0.000      1.374 f
+  spec_mem/U1541/C (INV_A_NAND3_X2_18_SVT)               0.000      1.374 f
+  spec_mem/U1541/Q (INV_A_NAND3_X2_18_SVT)               0.094      1.467 r
+  spec_mem/n148 (net)                           1        0.000      1.467 r
+  spec_mem/U1542/A (INV_X2_18_SVT)                       0.000      1.467 r
+  spec_mem/U1542/Q (INV_X2_18_SVT)                       0.041      1.508 f
+  spec_mem/n149 (net)                           1        0.000      1.508 f
+  spec_mem/U443/B (NAND2_X3_18_SVT)                      0.000      1.508 f
+  spec_mem/U443/Q (NAND2_X3_18_SVT)                      0.087      1.594 r
+  spec_mem/n175 (net)                           2        0.000      1.594 r
+  spec_mem/U1543/A (INV_X2_18_SVT)                       0.000      1.594 r
+  spec_mem/U1543/Q (INV_X2_18_SVT)                       0.046      1.641 f
+  spec_mem/n180 (net)                           2        0.000      1.641 f
+  spec_mem/U51/C (NOR2_A_NAND3_X2_18_SVT)                0.000      1.641 f
+  spec_mem/U51/Q (NOR2_A_NAND3_X2_18_SVT)                0.112      1.753 r
+  spec_mem/n531 (net)                           4        0.000      1.753 r
+  spec_mem/U439/A (BUF_X4_18_SVT)                        0.000      1.753 r
+  spec_mem/U439/Q (BUF_X4_18_SVT)                        0.125      1.878 r
+  spec_mem/release_ready_BAR (net)              6        0.000      1.878 r
+  spec_mem/U1572/A (NOR2P3T_X2_18_SVT)                   0.000      1.878 r
+  spec_mem/U1572/Q (NOR2P3T_X2_18_SVT)                   0.085      1.964 f
+  spec_mem/n958 (net)                           5        0.000      1.964 f
+  spec_mem/U1574/A1N (INV_A_AOI21_X2_18_SVT)             0.000      1.964 f
+  spec_mem/U1574/Q (INV_A_AOI21_X2_18_SVT)               0.137      2.101 f
+  spec_mem/n225 (net)                           1        0.000      2.101 f
+  spec_mem/U35/A (BUF_X5_18_SVT)                         0.000      2.101 f
+  spec_mem/U35/Q (BUF_X5_18_SVT)                         0.170      2.270 f
+  spec_mem/n21 (net)                           27        0.000      2.270 f
+  spec_mem/U1575/A (BUF_X2_18_SVT)                       0.000      2.270 f
+  spec_mem/U1575/Q (BUF_X2_18_SVT)                       0.166      2.437 f
+  spec_mem/n702 (net)                          11        0.000      2.437 f
+  spec_mem/U2277/A0 (AOI22_X0_18_SVT)                    0.000      2.437 f
+  spec_mem/U2277/Q (AOI22_X0_18_SVT)                     0.169      2.606 r
+  spec_mem/n805 (net)                           1        0.000      2.606 r
+  spec_mem/U2279/A (NAND2_X1_18_SVT)                     0.000      2.606 r
+  spec_mem/U2279/Q (NAND2_X1_18_SVT)                     0.086      2.691 f
+  spec_mem/n4586 (net)                          2        0.000      2.691 f
+  spec_mem/U4674/B0 (AO21_X1_18_SVT)                     0.000      2.691 f
+  spec_mem/U4674/Q (AO21_X1_18_SVT)                      0.243      2.935 f
+  spec_mem/n2864 (net)                          1        0.000      2.935 f
+  spec_mem/send_burst/slot_reg[awaddr][27]/D (DFFRQ_X1_18_SVT)
+                                                         0.000      2.935 f
+  data arrival time                                                 2.935
+
+  clock clk (rise edge)                                  3.000      3.000
+  clock network delay (ideal)                            0.000      3.000
+  spec_mem/send_burst/slot_reg[awaddr][27]/CK (DFFRQ_X1_18_SVT)
+                                                         0.000      3.000 r
+  library setup time                                    -0.062      2.938
+  data required time                                                2.938
+  --------------------------------------------------------------------------
+  data required time                                                2.938
+  data arrival time                                                -2.935
+  --------------------------------------------------------------------------
+  slack (MET)                                                       0.003
+
+
+  Startpoint: spec_mem/spec_mem_reg[1][awid][0]
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: spec_mem/send_burst/slot_reg[other][6]
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: max
+
+  Point                                       Fanout      Incr       Path
+  --------------------------------------------------------------------------
+  clock clk (rise edge)                                  0.000      0.000
+  clock network delay (ideal)                            0.000      0.000
+  spec_mem/spec_mem_reg[1][awid][0]/CK (DFFRQ_X2_18_SVT)
+                                                         0.000 #    0.000 r
+  spec_mem/spec_mem_reg[1][awid][0]/Q (DFFRQ_X2_18_SVT)
+                                                         0.349      0.349 r
+  spec_mem/spec_mem[1][awid][0] (net)           6        0.000      0.349 r
+  spec_mem/U1470/B (XNOR2_X1_18_SVT)                     0.000      0.349 r
+  spec_mem/U1470/Q (XNOR2_X1_18_SVT)                     0.157      0.507 r
+  spec_mem/n60 (net)                            1        0.000      0.507 r
+  spec_mem/U1471/B (AND3_X2_18_SVT)                      0.000      0.507 r
+  spec_mem/U1471/Q (AND3_X2_18_SVT)                      0.198      0.704 r
+  spec_mem/n62 (net)                            1        0.000      0.704 r
+  spec_mem/U1472/C (INV_A_NAND3_X4_18_SVT)               0.000      0.704 r
+  spec_mem/U1472/Q (INV_A_NAND3_X4_18_SVT)               0.080      0.784 f
+  spec_mem/n130 (net)                           4        0.000      0.784 f
+  spec_mem/U1491/A (NAND3_X1_18_SVT)                     0.000      0.784 f
+  spec_mem/U1491/Q (NAND3_X1_18_SVT)                     0.094      0.878 r
+  spec_mem/n80 (net)                            1        0.000      0.878 r
+  spec_mem/U1493/C (NAND4_X2_18_SVT)                     0.000      0.878 r
+  spec_mem/U1493/Q (NAND4_X2_18_SVT)                     0.156      1.034 f
+  spec_mem/n173 (net)                           3        0.000      1.034 f
+  spec_mem/U1495/B (INV_A_NAND3_X4_18_SVT)               0.000      1.034 f
+  spec_mem/U1495/Q (INV_A_NAND3_X4_18_SVT)               0.151      1.185 r
+  spec_mem/n120 (net)                           3        0.000      1.185 r
+  spec_mem/U1512/A (INV_X3_18_SVT)                       0.000      1.185 r
+  spec_mem/U1512/Q (INV_X3_18_SVT)                       0.025      1.210 f
+  spec_mem/n106 (net)                           1        0.000      1.210 f
+  spec_mem/U1518/A (CLKNAND2_X2_18_SVT)                  0.000      1.210 f
+  spec_mem/U1518/Q (CLKNAND2_X2_18_SVT)                  0.051      1.261 r
+  spec_mem/n108 (net)                           1        0.000      1.261 r
+  spec_mem/U1520/A (NAND3T_X2_18_SVT)                    0.000      1.261 r
+  spec_mem/U1520/Q (NAND3T_X2_18_SVT)                    0.053      1.314 f
+  spec_mem/n166 (net)                           2        0.000      1.314 f
+  spec_mem/U1523/A (NAND2_X2_18_SVT)                     0.000      1.314 f
+  spec_mem/U1523/Q (NAND2_X2_18_SVT)                     0.060      1.375 r
+  spec_mem/n111 (net)                           1        0.000      1.375 r
+  spec_mem/U1524/B0 (OAI21P2_X1_18_SVT)                  0.000      1.375 r
+  spec_mem/U1524/Q (OAI21P2_X1_18_SVT)                   0.075      1.449 f
+  spec_mem/n113 (net)                           1        0.000      1.449 f
+  spec_mem/U446/A (INV_X2_18_SVT)                        0.000      1.449 f
+  spec_mem/U446/Q (INV_X2_18_SVT)                        0.070      1.519 r
+  spec_mem/n150 (net)                           1        0.000      1.519 r
+  spec_mem/U443/A (NAND2_X3_18_SVT)                      0.000      1.519 r
+  spec_mem/U443/Q (NAND2_X3_18_SVT)                      0.054      1.573 f
+  spec_mem/n175 (net)                           2        0.000      1.573 f
+  spec_mem/U1551/C0 (OAI211_X4_18_SVT)                   0.000      1.573 f
+  spec_mem/U1551/Q (OAI211_X4_18_SVT)                    0.131      1.704 r
+  spec_mem/n471 (net)                           6        0.000      1.704 r
+  spec_mem/U1552/S0 (MUXI2PG_X4_18_SVT)                  0.000      1.704 r
+  spec_mem/U1552/Q (MUXI2PG_X4_18_SVT)                   0.159      1.863 r
+  spec_mem/n521 (net)                           2        0.000      1.863 r
+  spec_mem/U1554/A (NOR2P3T_X4_18_SVT)                   0.000      1.863 r
+  spec_mem/U1554/Q (NOR2P3T_X4_18_SVT)                   0.091      1.954 f
+  spec_mem/n202 (net)                           3        0.000      1.954 f
+  spec_mem/U1576/A (INV_X4_18_SVT)                       0.000      1.954 f
+  spec_mem/U1576/Q (INV_X4_18_SVT)                       0.058      2.012 r
+  spec_mem/n204 (net)                           1        0.000      2.012 r
+  spec_mem/U1578/A (NAND2T_X4_18_SVT)                    0.000      2.012 r
+  spec_mem/U1578/Q (NAND2T_X4_18_SVT)                    0.037      2.049 f
+  spec_mem/n222 (net)                           1        0.000      2.049 f
+  spec_mem/U425/A (INV_X6_18_SVT)                        0.000      2.049 f
+  spec_mem/U425/Q (INV_X6_18_SVT)                        0.080      2.130 r
+  spec_mem/n24 (net)                            9        0.000      2.130 r
+  spec_mem/U1631/A (INV_X2_18_SVT)                       0.000      2.130 r
+  spec_mem/U1631/Q (INV_X2_18_SVT)                       0.068      2.198 f
+  spec_mem/n296 (net)                           4        0.000      2.198 f
+  spec_mem/U1641/A (INV_X2_18_SVT)                       0.000      2.198 f
+  spec_mem/U1641/Q (INV_X2_18_SVT)                       0.175      2.373 r
+  spec_mem/n242 (net)                          13        0.000      2.373 r
+  spec_mem/U1898/A1N (NOR2_A_AOI21_X0_18_SVT)            0.000      2.373 r
+  spec_mem/U1898/Q (NOR2_A_AOI21_X0_18_SVT)              0.242      2.615 r
+  spec_mem/n439 (net)                           1        0.000      2.615 r
+  spec_mem/U1899/B (NAND2_X1_18_SVT)                     0.000      2.615 r
+  spec_mem/U1899/Q (NAND2_X1_18_SVT)                     0.075      2.691 f
+  spec_mem/n819 (net)                           2        0.000      2.691 f
+  spec_mem/U1900/B0 (AO21_X1_18_SVT)                     0.000      2.691 f
+  spec_mem/U1900/Q (AO21_X1_18_SVT)                      0.243      2.934 f
+  spec_mem/n2899 (net)                          1        0.000      2.934 f
+  spec_mem/send_burst/slot_reg[other][6]/D (DFFRQ_X1_18_SVT)
+                                                         0.000      2.934 f
+  data arrival time                                                 2.934
+
+  clock clk (rise edge)                                  3.000      3.000
+  clock network delay (ideal)                            0.000      3.000
+  spec_mem/send_burst/slot_reg[other][6]/CK (DFFRQ_X1_18_SVT)
+                                                         0.000      3.000 r
+  library setup time                                    -0.062      2.938
+  data required time                                                2.938
+  --------------------------------------------------------------------------
+  data required time                                                2.938
+  data arrival time                                                -2.934
+  --------------------------------------------------------------------------
+  slack (MET)                                                       0.004
+
+
+  Startpoint: spec_mem/spec_mem_reg[1][awid][0]
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: spec_mem/send_burst/slot_reg[awsize][0]
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: max
+
+  Point                                       Fanout      Incr       Path
+  --------------------------------------------------------------------------
+  clock clk (rise edge)                                  0.000      0.000
+  clock network delay (ideal)                            0.000      0.000
+  spec_mem/spec_mem_reg[1][awid][0]/CK (DFFRQ_X2_18_SVT)
+                                                         0.000 #    0.000 r
+  spec_mem/spec_mem_reg[1][awid][0]/Q (DFFRQ_X2_18_SVT)
+                                                         0.349      0.349 r
+  spec_mem/spec_mem[1][awid][0] (net)           6        0.000      0.349 r
+  spec_mem/U1470/B (XNOR2_X1_18_SVT)                     0.000      0.349 r
+  spec_mem/U1470/Q (XNOR2_X1_18_SVT)                     0.157      0.507 r
+  spec_mem/n60 (net)                            1        0.000      0.507 r
+  spec_mem/U1471/B (AND3_X2_18_SVT)                      0.000      0.507 r
+  spec_mem/U1471/Q (AND3_X2_18_SVT)                      0.198      0.704 r
+  spec_mem/n62 (net)                            1        0.000      0.704 r
+  spec_mem/U1472/C (INV_A_NAND3_X4_18_SVT)               0.000      0.704 r
+  spec_mem/U1472/Q (INV_A_NAND3_X4_18_SVT)               0.080      0.784 f
+  spec_mem/n130 (net)                           4        0.000      0.784 f
+  spec_mem/U1491/A (NAND3_X1_18_SVT)                     0.000      0.784 f
+  spec_mem/U1491/Q (NAND3_X1_18_SVT)                     0.094      0.878 r
+  spec_mem/n80 (net)                            1        0.000      0.878 r
+  spec_mem/U1493/C (NAND4_X2_18_SVT)                     0.000      0.878 r
+  spec_mem/U1493/Q (NAND4_X2_18_SVT)                     0.156      1.034 f
+  spec_mem/n173 (net)                           3        0.000      1.034 f
+  spec_mem/U1495/B (INV_A_NAND3_X4_18_SVT)               0.000      1.034 f
+  spec_mem/U1495/Q (INV_A_NAND3_X4_18_SVT)               0.151      1.185 r
+  spec_mem/n120 (net)                           3        0.000      1.185 r
+  spec_mem/U1512/A (INV_X3_18_SVT)                       0.000      1.185 r
+  spec_mem/U1512/Q (INV_X3_18_SVT)                       0.025      1.210 f
+  spec_mem/n106 (net)                           1        0.000      1.210 f
+  spec_mem/U1518/A (CLKNAND2_X2_18_SVT)                  0.000      1.210 f
+  spec_mem/U1518/Q (CLKNAND2_X2_18_SVT)                  0.051      1.261 r
+  spec_mem/n108 (net)                           1        0.000      1.261 r
+  spec_mem/U1520/A (NAND3T_X2_18_SVT)                    0.000      1.261 r
+  spec_mem/U1520/Q (NAND3T_X2_18_SVT)                    0.053      1.314 f
+  spec_mem/n166 (net)                           2        0.000      1.314 f
+  spec_mem/U1523/A (NAND2_X2_18_SVT)                     0.000      1.314 f
+  spec_mem/U1523/Q (NAND2_X2_18_SVT)                     0.060      1.375 r
+  spec_mem/n111 (net)                           1        0.000      1.375 r
+  spec_mem/U1524/B0 (OAI21P2_X1_18_SVT)                  0.000      1.375 r
+  spec_mem/U1524/Q (OAI21P2_X1_18_SVT)                   0.075      1.449 f
+  spec_mem/n113 (net)                           1        0.000      1.449 f
+  spec_mem/U446/A (INV_X2_18_SVT)                        0.000      1.449 f
+  spec_mem/U446/Q (INV_X2_18_SVT)                        0.070      1.519 r
+  spec_mem/n150 (net)                           1        0.000      1.519 r
+  spec_mem/U443/A (NAND2_X3_18_SVT)                      0.000      1.519 r
+  spec_mem/U443/Q (NAND2_X3_18_SVT)                      0.054      1.573 f
+  spec_mem/n175 (net)                           2        0.000      1.573 f
+  spec_mem/U1551/C0 (OAI211_X4_18_SVT)                   0.000      1.573 f
+  spec_mem/U1551/Q (OAI211_X4_18_SVT)                    0.131      1.704 r
+  spec_mem/n471 (net)                           6        0.000      1.704 r
+  spec_mem/U1552/S0 (MUXI2PG_X4_18_SVT)                  0.000      1.704 r
+  spec_mem/U1552/Q (MUXI2PG_X4_18_SVT)                   0.159      1.863 r
+  spec_mem/n521 (net)                           2        0.000      1.863 r
+  spec_mem/U1554/A (NOR2P3T_X4_18_SVT)                   0.000      1.863 r
+  spec_mem/U1554/Q (NOR2P3T_X4_18_SVT)                   0.091      1.954 f
+  spec_mem/n202 (net)                           3        0.000      1.954 f
+  spec_mem/U1576/A (INV_X4_18_SVT)                       0.000      1.954 f
+  spec_mem/U1576/Q (INV_X4_18_SVT)                       0.058      2.012 r
+  spec_mem/n204 (net)                           1        0.000      2.012 r
+  spec_mem/U1578/A (NAND2T_X4_18_SVT)                    0.000      2.012 r
+  spec_mem/U1578/Q (NAND2T_X4_18_SVT)                    0.037      2.049 f
+  spec_mem/n222 (net)                           1        0.000      2.049 f
+  spec_mem/U425/A (INV_X6_18_SVT)                        0.000      2.049 f
+  spec_mem/U425/Q (INV_X6_18_SVT)                        0.080      2.130 r
+  spec_mem/n24 (net)                            9        0.000      2.130 r
+  spec_mem/U1631/A (INV_X2_18_SVT)                       0.000      2.130 r
+  spec_mem/U1631/Q (INV_X2_18_SVT)                       0.068      2.198 f
+  spec_mem/n296 (net)                           4        0.000      2.198 f
+  spec_mem/U1641/A (INV_X2_18_SVT)                       0.000      2.198 f
+  spec_mem/U1641/Q (INV_X2_18_SVT)                       0.175      2.373 r
+  spec_mem/n242 (net)                          13        0.000      2.373 r
+  spec_mem/U1903/A1N (NOR2_A_AOI21_X0_18_SVT)            0.000      2.373 r
+  spec_mem/U1903/Q (NOR2_A_AOI21_X0_18_SVT)              0.242      2.615 r
+  spec_mem/n442 (net)                           1        0.000      2.615 r
+  spec_mem/U1904/B (NAND2_X1_18_SVT)                     0.000      2.615 r
+  spec_mem/U1904/Q (NAND2_X1_18_SVT)                     0.075      2.691 f
+  spec_mem/n844 (net)                           2        0.000      2.691 f
+  spec_mem/U1905/B0 (AO21_X1_18_SVT)                     0.000      2.691 f
+  spec_mem/U1905/Q (AO21_X1_18_SVT)                      0.243      2.934 f
+  spec_mem/n2894 (net)                          1        0.000      2.934 f
+  spec_mem/send_burst/slot_reg[awsize][0]/D (DFFRQ_X1_18_SVT)
+                                                         0.000      2.934 f
+  data arrival time                                                 2.934
+
+  clock clk (rise edge)                                  3.000      3.000
+  clock network delay (ideal)                            0.000      3.000
+  spec_mem/send_burst/slot_reg[awsize][0]/CK (DFFRQ_X1_18_SVT)
+                                                         0.000      3.000 r
+  library setup time                                    -0.062      2.938
+  data required time                                                2.938
+  --------------------------------------------------------------------------
+  data required time                                                2.938
+  data arrival time                                                -2.934
+  --------------------------------------------------------------------------
+  slack (MET)                                                       0.004
+
+
+  Startpoint: spec_mem/spec_mem_reg[1][awid][0]
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: spec_mem/send_burst/slot_reg[awsize][2]
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: max
+
+  Point                                       Fanout      Incr       Path
+  --------------------------------------------------------------------------
+  clock clk (rise edge)                                  0.000      0.000
+  clock network delay (ideal)                            0.000      0.000
+  spec_mem/spec_mem_reg[1][awid][0]/CK (DFFRQ_X2_18_SVT)
+                                                         0.000 #    0.000 r
+  spec_mem/spec_mem_reg[1][awid][0]/Q (DFFRQ_X2_18_SVT)
+                                                         0.349      0.349 r
+  spec_mem/spec_mem[1][awid][0] (net)           6        0.000      0.349 r
+  spec_mem/U1470/B (XNOR2_X1_18_SVT)                     0.000      0.349 r
+  spec_mem/U1470/Q (XNOR2_X1_18_SVT)                     0.157      0.507 r
+  spec_mem/n60 (net)                            1        0.000      0.507 r
+  spec_mem/U1471/B (AND3_X2_18_SVT)                      0.000      0.507 r
+  spec_mem/U1471/Q (AND3_X2_18_SVT)                      0.198      0.704 r
+  spec_mem/n62 (net)                            1        0.000      0.704 r
+  spec_mem/U1472/C (INV_A_NAND3_X4_18_SVT)               0.000      0.704 r
+  spec_mem/U1472/Q (INV_A_NAND3_X4_18_SVT)               0.080      0.784 f
+  spec_mem/n130 (net)                           4        0.000      0.784 f
+  spec_mem/U1491/A (NAND3_X1_18_SVT)                     0.000      0.784 f
+  spec_mem/U1491/Q (NAND3_X1_18_SVT)                     0.094      0.878 r
+  spec_mem/n80 (net)                            1        0.000      0.878 r
+  spec_mem/U1493/C (NAND4_X2_18_SVT)                     0.000      0.878 r
+  spec_mem/U1493/Q (NAND4_X2_18_SVT)                     0.156      1.034 f
+  spec_mem/n173 (net)                           3        0.000      1.034 f
+  spec_mem/U1495/B (INV_A_NAND3_X4_18_SVT)               0.000      1.034 f
+  spec_mem/U1495/Q (INV_A_NAND3_X4_18_SVT)               0.151      1.185 r
+  spec_mem/n120 (net)                           3        0.000      1.185 r
+  spec_mem/U1512/A (INV_X3_18_SVT)                       0.000      1.185 r
+  spec_mem/U1512/Q (INV_X3_18_SVT)                       0.025      1.210 f
+  spec_mem/n106 (net)                           1        0.000      1.210 f
+  spec_mem/U1518/A (CLKNAND2_X2_18_SVT)                  0.000      1.210 f
+  spec_mem/U1518/Q (CLKNAND2_X2_18_SVT)                  0.051      1.261 r
+  spec_mem/n108 (net)                           1        0.000      1.261 r
+  spec_mem/U1520/A (NAND3T_X2_18_SVT)                    0.000      1.261 r
+  spec_mem/U1520/Q (NAND3T_X2_18_SVT)                    0.053      1.314 f
+  spec_mem/n166 (net)                           2        0.000      1.314 f
+  spec_mem/U1523/A (NAND2_X2_18_SVT)                     0.000      1.314 f
+  spec_mem/U1523/Q (NAND2_X2_18_SVT)                     0.060      1.375 r
+  spec_mem/n111 (net)                           1        0.000      1.375 r
+  spec_mem/U1524/B0 (OAI21P2_X1_18_SVT)                  0.000      1.375 r
+  spec_mem/U1524/Q (OAI21P2_X1_18_SVT)                   0.075      1.449 f
+  spec_mem/n113 (net)                           1        0.000      1.449 f
+  spec_mem/U446/A (INV_X2_18_SVT)                        0.000      1.449 f
+  spec_mem/U446/Q (INV_X2_18_SVT)                        0.070      1.519 r
+  spec_mem/n150 (net)                           1        0.000      1.519 r
+  spec_mem/U443/A (NAND2_X3_18_SVT)                      0.000      1.519 r
+  spec_mem/U443/Q (NAND2_X3_18_SVT)                      0.054      1.573 f
+  spec_mem/n175 (net)                           2        0.000      1.573 f
+  spec_mem/U1551/C0 (OAI211_X4_18_SVT)                   0.000      1.573 f
+  spec_mem/U1551/Q (OAI211_X4_18_SVT)                    0.131      1.704 r
+  spec_mem/n471 (net)                           6        0.000      1.704 r
+  spec_mem/U1552/S0 (MUXI2PG_X4_18_SVT)                  0.000      1.704 r
+  spec_mem/U1552/Q (MUXI2PG_X4_18_SVT)                   0.159      1.863 r
+  spec_mem/n521 (net)                           2        0.000      1.863 r
+  spec_mem/U1554/A (NOR2P3T_X4_18_SVT)                   0.000      1.863 r
+  spec_mem/U1554/Q (NOR2P3T_X4_18_SVT)                   0.091      1.954 f
+  spec_mem/n202 (net)                           3        0.000      1.954 f
+  spec_mem/U1576/A (INV_X4_18_SVT)                       0.000      1.954 f
+  spec_mem/U1576/Q (INV_X4_18_SVT)                       0.058      2.012 r
+  spec_mem/n204 (net)                           1        0.000      2.012 r
+  spec_mem/U1578/A (NAND2T_X4_18_SVT)                    0.000      2.012 r
+  spec_mem/U1578/Q (NAND2T_X4_18_SVT)                    0.037      2.049 f
+  spec_mem/n222 (net)                           1        0.000      2.049 f
+  spec_mem/U425/A (INV_X6_18_SVT)                        0.000      2.049 f
+  spec_mem/U425/Q (INV_X6_18_SVT)                        0.080      2.130 r
+  spec_mem/n24 (net)                            9        0.000      2.130 r
+  spec_mem/U1631/A (INV_X2_18_SVT)                       0.000      2.130 r
+  spec_mem/U1631/Q (INV_X2_18_SVT)                       0.068      2.198 f
+  spec_mem/n296 (net)                           4        0.000      2.198 f
+  spec_mem/U1641/A (INV_X2_18_SVT)                       0.000      2.198 f
+  spec_mem/U1641/Q (INV_X2_18_SVT)                       0.175      2.373 r
+  spec_mem/n242 (net)                          13        0.000      2.373 r
+  spec_mem/U1908/A1N (NOR2_A_AOI21_X0_18_SVT)            0.000      2.373 r
+  spec_mem/U1908/Q (NOR2_A_AOI21_X0_18_SVT)              0.242      2.615 r
+  spec_mem/n445 (net)                           1        0.000      2.615 r
+  spec_mem/U1909/B (NAND2_X1_18_SVT)                     0.000      2.615 r
+  spec_mem/U1909/Q (NAND2_X1_18_SVT)                     0.075      2.691 f
+  spec_mem/n832 (net)                           2        0.000      2.691 f
+  spec_mem/U1910/B0 (AO21_X1_18_SVT)                     0.000      2.691 f
+  spec_mem/U1910/Q (AO21_X1_18_SVT)                      0.243      2.934 f
+  spec_mem/n2892 (net)                          1        0.000      2.934 f
+  spec_mem/send_burst/slot_reg[awsize][2]/D (DFFRQ_X1_18_SVT)
+                                                         0.000      2.934 f
+  data arrival time                                                 2.934
+
+  clock clk (rise edge)                                  3.000      3.000
+  clock network delay (ideal)                            0.000      3.000
+  spec_mem/send_burst/slot_reg[awsize][2]/CK (DFFRQ_X1_18_SVT)
+                                                         0.000      3.000 r
+  library setup time                                    -0.062      2.938
+  data required time                                                2.938
+  --------------------------------------------------------------------------
+  data required time                                                2.938
+  data arrival time                                                -2.934
+  --------------------------------------------------------------------------
+  slack (MET)                                                       0.004
+
+
+  Startpoint: spec_mem/spec_mem_reg[1][awid][0]
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: spec_mem/send_burst/slot_reg[awaddr][1]
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: max
+
+  Point                                       Fanout      Incr       Path
+  --------------------------------------------------------------------------
+  clock clk (rise edge)                                  0.000      0.000
+  clock network delay (ideal)                            0.000      0.000
+  spec_mem/spec_mem_reg[1][awid][0]/CK (DFFRQ_X2_18_SVT)
+                                                         0.000 #    0.000 r
+  spec_mem/spec_mem_reg[1][awid][0]/Q (DFFRQ_X2_18_SVT)
+                                                         0.349      0.349 r
+  spec_mem/spec_mem[1][awid][0] (net)           6        0.000      0.349 r
+  spec_mem/U1470/B (XNOR2_X1_18_SVT)                     0.000      0.349 r
+  spec_mem/U1470/Q (XNOR2_X1_18_SVT)                     0.157      0.507 r
+  spec_mem/n60 (net)                            1        0.000      0.507 r
+  spec_mem/U1471/B (AND3_X2_18_SVT)                      0.000      0.507 r
+  spec_mem/U1471/Q (AND3_X2_18_SVT)                      0.198      0.704 r
+  spec_mem/n62 (net)                            1        0.000      0.704 r
+  spec_mem/U1472/C (INV_A_NAND3_X4_18_SVT)               0.000      0.704 r
+  spec_mem/U1472/Q (INV_A_NAND3_X4_18_SVT)               0.080      0.784 f
+  spec_mem/n130 (net)                           4        0.000      0.784 f
+  spec_mem/U1491/A (NAND3_X1_18_SVT)                     0.000      0.784 f
+  spec_mem/U1491/Q (NAND3_X1_18_SVT)                     0.094      0.878 r
+  spec_mem/n80 (net)                            1        0.000      0.878 r
+  spec_mem/U1493/C (NAND4_X2_18_SVT)                     0.000      0.878 r
+  spec_mem/U1493/Q (NAND4_X2_18_SVT)                     0.156      1.034 f
+  spec_mem/n173 (net)                           3        0.000      1.034 f
+  spec_mem/U1495/B (INV_A_NAND3_X4_18_SVT)               0.000      1.034 f
+  spec_mem/U1495/Q (INV_A_NAND3_X4_18_SVT)               0.151      1.185 r
+  spec_mem/n120 (net)                           3        0.000      1.185 r
+  spec_mem/U1512/A (INV_X3_18_SVT)                       0.000      1.185 r
+  spec_mem/U1512/Q (INV_X3_18_SVT)                       0.025      1.210 f
+  spec_mem/n106 (net)                           1        0.000      1.210 f
+  spec_mem/U1518/A (CLKNAND2_X2_18_SVT)                  0.000      1.210 f
+  spec_mem/U1518/Q (CLKNAND2_X2_18_SVT)                  0.051      1.261 r
+  spec_mem/n108 (net)                           1        0.000      1.261 r
+  spec_mem/U1520/A (NAND3T_X2_18_SVT)                    0.000      1.261 r
+  spec_mem/U1520/Q (NAND3T_X2_18_SVT)                    0.053      1.314 f
+  spec_mem/n166 (net)                           2        0.000      1.314 f
+  spec_mem/U1523/A (NAND2_X2_18_SVT)                     0.000      1.314 f
+  spec_mem/U1523/Q (NAND2_X2_18_SVT)                     0.060      1.375 r
+  spec_mem/n111 (net)                           1        0.000      1.375 r
+  spec_mem/U1524/B0 (OAI21P2_X1_18_SVT)                  0.000      1.375 r
+  spec_mem/U1524/Q (OAI21P2_X1_18_SVT)                   0.075      1.449 f
+  spec_mem/n113 (net)                           1        0.000      1.449 f
+  spec_mem/U446/A (INV_X2_18_SVT)                        0.000      1.449 f
+  spec_mem/U446/Q (INV_X2_18_SVT)                        0.070      1.519 r
+  spec_mem/n150 (net)                           1        0.000      1.519 r
+  spec_mem/U443/A (NAND2_X3_18_SVT)                      0.000      1.519 r
+  spec_mem/U443/Q (NAND2_X3_18_SVT)                      0.054      1.573 f
+  spec_mem/n175 (net)                           2        0.000      1.573 f
+  spec_mem/U1551/C0 (OAI211_X4_18_SVT)                   0.000      1.573 f
+  spec_mem/U1551/Q (OAI211_X4_18_SVT)                    0.131      1.704 r
+  spec_mem/n471 (net)                           6        0.000      1.704 r
+  spec_mem/U1552/S0 (MUXI2PG_X4_18_SVT)                  0.000      1.704 r
+  spec_mem/U1552/Q (MUXI2PG_X4_18_SVT)                   0.159      1.863 r
+  spec_mem/n521 (net)                           2        0.000      1.863 r
+  spec_mem/U1554/A (NOR2P3T_X4_18_SVT)                   0.000      1.863 r
+  spec_mem/U1554/Q (NOR2P3T_X4_18_SVT)                   0.091      1.954 f
+  spec_mem/n202 (net)                           3        0.000      1.954 f
+  spec_mem/U1576/A (INV_X4_18_SVT)                       0.000      1.954 f
+  spec_mem/U1576/Q (INV_X4_18_SVT)                       0.058      2.012 r
+  spec_mem/n204 (net)                           1        0.000      2.012 r
+  spec_mem/U1578/A (NAND2T_X4_18_SVT)                    0.000      2.012 r
+  spec_mem/U1578/Q (NAND2T_X4_18_SVT)                    0.037      2.049 f
+  spec_mem/n222 (net)                           1        0.000      2.049 f
+  spec_mem/U425/A (INV_X6_18_SVT)                        0.000      2.049 f
+  spec_mem/U425/Q (INV_X6_18_SVT)                        0.080      2.130 r
+  spec_mem/n24 (net)                            9        0.000      2.130 r
+  spec_mem/U1631/A (INV_X2_18_SVT)                       0.000      2.130 r
+  spec_mem/U1631/Q (INV_X2_18_SVT)                       0.068      2.198 f
+  spec_mem/n296 (net)                           4        0.000      2.198 f
+  spec_mem/U1641/A (INV_X2_18_SVT)                       0.000      2.198 f
+  spec_mem/U1641/Q (INV_X2_18_SVT)                       0.175      2.373 r
+  spec_mem/n242 (net)                          13        0.000      2.373 r
+  spec_mem/U1913/A1N (NOR2_A_AOI21_X0_18_SVT)            0.000      2.373 r
+  spec_mem/U1913/Q (NOR2_A_AOI21_X0_18_SVT)              0.242      2.615 r
+  spec_mem/n449 (net)                           1        0.000      2.615 r
+  spec_mem/U1914/B (NAND2_X1_18_SVT)                     0.000      2.615 r
+  spec_mem/U1914/Q (NAND2_X1_18_SVT)                     0.075      2.691 f
+  spec_mem/n856 (net)                           2        0.000      2.691 f
+  spec_mem/U391/B0 (AO21_X1_18_SVT)                      0.000      2.691 f
+  spec_mem/U391/Q (AO21_X1_18_SVT)                       0.243      2.934 f
+  spec_mem/n2890 (net)                          1        0.000      2.934 f
+  spec_mem/send_burst/slot_reg[awaddr][1]/D (DFFRQ_X1_18_SVT)
+                                                         0.000      2.934 f
+  data arrival time                                                 2.934
+
+  clock clk (rise edge)                                  3.000      3.000
+  clock network delay (ideal)                            0.000      3.000
+  spec_mem/send_burst/slot_reg[awaddr][1]/CK (DFFRQ_X1_18_SVT)
+                                                         0.000      3.000 r
+  library setup time                                    -0.062      2.938
+  data required time                                                2.938
+  --------------------------------------------------------------------------
+  data required time                                                2.938
+  data arrival time                                                -2.934
+  --------------------------------------------------------------------------
+  slack (MET)                                                       0.004
+
+
+  Startpoint: spec_mem/spec_mem_reg[1][awid][0]
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: spec_mem/send_burst/slot_reg[other][3]
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: max
+
+  Point                                       Fanout      Incr       Path
+  --------------------------------------------------------------------------
+  clock clk (rise edge)                                  0.000      0.000
+  clock network delay (ideal)                            0.000      0.000
+  spec_mem/spec_mem_reg[1][awid][0]/CK (DFFRQ_X2_18_SVT)
+                                                         0.000 #    0.000 r
+  spec_mem/spec_mem_reg[1][awid][0]/Q (DFFRQ_X2_18_SVT)
+                                                         0.349      0.349 r
+  spec_mem/spec_mem[1][awid][0] (net)           6        0.000      0.349 r
+  spec_mem/U1470/B (XNOR2_X1_18_SVT)                     0.000      0.349 r
+  spec_mem/U1470/Q (XNOR2_X1_18_SVT)                     0.157      0.507 r
+  spec_mem/n60 (net)                            1        0.000      0.507 r
+  spec_mem/U1471/B (AND3_X2_18_SVT)                      0.000      0.507 r
+  spec_mem/U1471/Q (AND3_X2_18_SVT)                      0.198      0.704 r
+  spec_mem/n62 (net)                            1        0.000      0.704 r
+  spec_mem/U1472/C (INV_A_NAND3_X4_18_SVT)               0.000      0.704 r
+  spec_mem/U1472/Q (INV_A_NAND3_X4_18_SVT)               0.080      0.784 f
+  spec_mem/n130 (net)                           4        0.000      0.784 f
+  spec_mem/U1491/A (NAND3_X1_18_SVT)                     0.000      0.784 f
+  spec_mem/U1491/Q (NAND3_X1_18_SVT)                     0.094      0.878 r
+  spec_mem/n80 (net)                            1        0.000      0.878 r
+  spec_mem/U1493/C (NAND4_X2_18_SVT)                     0.000      0.878 r
+  spec_mem/U1493/Q (NAND4_X2_18_SVT)                     0.156      1.034 f
+  spec_mem/n173 (net)                           3        0.000      1.034 f
+  spec_mem/U1495/B (INV_A_NAND3_X4_18_SVT)               0.000      1.034 f
+  spec_mem/U1495/Q (INV_A_NAND3_X4_18_SVT)               0.151      1.185 r
+  spec_mem/n120 (net)                           3        0.000      1.185 r
+  spec_mem/U1512/A (INV_X3_18_SVT)                       0.000      1.185 r
+  spec_mem/U1512/Q (INV_X3_18_SVT)                       0.025      1.210 f
+  spec_mem/n106 (net)                           1        0.000      1.210 f
+  spec_mem/U1518/A (CLKNAND2_X2_18_SVT)                  0.000      1.210 f
+  spec_mem/U1518/Q (CLKNAND2_X2_18_SVT)                  0.051      1.261 r
+  spec_mem/n108 (net)                           1        0.000      1.261 r
+  spec_mem/U1520/A (NAND3T_X2_18_SVT)                    0.000      1.261 r
+  spec_mem/U1520/Q (NAND3T_X2_18_SVT)                    0.053      1.314 f
+  spec_mem/n166 (net)                           2        0.000      1.314 f
+  spec_mem/U1523/A (NAND2_X2_18_SVT)                     0.000      1.314 f
+  spec_mem/U1523/Q (NAND2_X2_18_SVT)                     0.060      1.375 r
+  spec_mem/n111 (net)                           1        0.000      1.375 r
+  spec_mem/U1524/B0 (OAI21P2_X1_18_SVT)                  0.000      1.375 r
+  spec_mem/U1524/Q (OAI21P2_X1_18_SVT)                   0.075      1.449 f
+  spec_mem/n113 (net)                           1        0.000      1.449 f
+  spec_mem/U446/A (INV_X2_18_SVT)                        0.000      1.449 f
+  spec_mem/U446/Q (INV_X2_18_SVT)                        0.070      1.519 r
+  spec_mem/n150 (net)                           1        0.000      1.519 r
+  spec_mem/U443/A (NAND2_X3_18_SVT)                      0.000      1.519 r
+  spec_mem/U443/Q (NAND2_X3_18_SVT)                      0.054      1.573 f
+  spec_mem/n175 (net)                           2        0.000      1.573 f
+  spec_mem/U1543/A (INV_X2_18_SVT)                       0.000      1.573 f
+  spec_mem/U1543/Q (INV_X2_18_SVT)                       0.078      1.651 r
+  spec_mem/n180 (net)                           2        0.000      1.651 r
+  spec_mem/U51/C (NOR2_A_NAND3_X2_18_SVT)                0.000      1.651 r
+  spec_mem/U51/Q (NOR2_A_NAND3_X2_18_SVT)                0.094      1.746 f
+  spec_mem/n531 (net)                           4        0.000      1.746 f
+  spec_mem/U439/A (BUF_X4_18_SVT)                        0.000      1.746 f
+  spec_mem/U439/Q (BUF_X4_18_SVT)                        0.135      1.881 f
+  spec_mem/release_ready_BAR (net)              6        0.000      1.881 f
+  spec_mem/U1572/A (NOR2P3T_X2_18_SVT)                   0.000      1.881 f
+  spec_mem/U1572/Q (NOR2P3T_X2_18_SVT)                   0.109      1.991 r
+  spec_mem/n958 (net)                           5        0.000      1.991 r
+  spec_mem/U1574/A1N (INV_A_AOI21_X2_18_SVT)             0.000      1.991 r
+  spec_mem/U1574/Q (INV_A_AOI21_X2_18_SVT)               0.184      2.175 r
+  spec_mem/n225 (net)                           1        0.000      2.175 r
+  spec_mem/U35/A (BUF_X5_18_SVT)                         0.000      2.175 r
+  spec_mem/U35/Q (BUF_X5_18_SVT)                         0.224      2.399 r
+  spec_mem/n21 (net)                           27        0.000      2.399 r
+  spec_mem/U1605/A (BUF_X2_18_SVT)                       0.000      2.399 r
+  spec_mem/U1605/Q (BUF_X2_18_SVT)                       0.205      2.604 r
+  spec_mem/n792 (net)                          11        0.000      2.604 r
+  spec_mem/U1607/A0 (AOI22_X0_18_SVT)                    0.000      2.604 r
+  spec_mem/U1607/Q (AOI22_X0_18_SVT)                     0.066      2.670 f
+  spec_mem/n223 (net)                           1        0.000      2.670 f
+  spec_mem/U1608/B (NAND2_X0_18_SVT)                     0.000      2.670 f
+  spec_mem/U1608/Q (NAND2_X0_18_SVT)                     0.137      2.807 r
+  spec_mem/n811 (net)                           2        0.000      2.807 r
+  spec_mem/U1609/B0 (AO21_X1_18_SVT)                     0.000      2.807 r
+  spec_mem/U1609/Q (AO21_X1_18_SVT)                      0.123      2.930 r
+  spec_mem/n2902 (net)                          1        0.000      2.930 r
+  spec_mem/send_burst/slot_reg[other][3]/D (DFFRQ_X1_18_SVT)
+                                                         0.000      2.930 r
+  data arrival time                                                 2.930
+
+  clock clk (rise edge)                                  3.000      3.000
+  clock network delay (ideal)                            0.000      3.000
+  spec_mem/send_burst/slot_reg[other][3]/CK (DFFRQ_X1_18_SVT)
+                                                         0.000      3.000 r
+  library setup time                                    -0.065      2.935
+  data required time                                                2.935
+  --------------------------------------------------------------------------
+  data required time                                                2.935
+  data arrival time                                                -2.930
+  --------------------------------------------------------------------------
+  slack (MET)                                                       0.004
+
+
+  Startpoint: spec_mem/spec_mem_reg[1][awid][0]
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: spec_mem/send_burst/slot_reg[awaddr][26]
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: max
+
+  Point                                       Fanout      Incr       Path
+  --------------------------------------------------------------------------
+  clock clk (rise edge)                                  0.000      0.000
+  clock network delay (ideal)                            0.000      0.000
+  spec_mem/spec_mem_reg[1][awid][0]/CK (DFFRQ_X2_18_SVT)
+                                                         0.000 #    0.000 r
+  spec_mem/spec_mem_reg[1][awid][0]/Q (DFFRQ_X2_18_SVT)
+                                                         0.349      0.349 r
+  spec_mem/spec_mem[1][awid][0] (net)           6        0.000      0.349 r
+  spec_mem/U1470/B (XNOR2_X1_18_SVT)                     0.000      0.349 r
+  spec_mem/U1470/Q (XNOR2_X1_18_SVT)                     0.157      0.507 r
+  spec_mem/n60 (net)                            1        0.000      0.507 r
+  spec_mem/U1471/B (AND3_X2_18_SVT)                      0.000      0.507 r
+  spec_mem/U1471/Q (AND3_X2_18_SVT)                      0.198      0.704 r
+  spec_mem/n62 (net)                            1        0.000      0.704 r
+  spec_mem/U1472/C (INV_A_NAND3_X4_18_SVT)               0.000      0.704 r
+  spec_mem/U1472/Q (INV_A_NAND3_X4_18_SVT)               0.080      0.784 f
+  spec_mem/n130 (net)                           4        0.000      0.784 f
+  spec_mem/U1491/A (NAND3_X1_18_SVT)                     0.000      0.784 f
+  spec_mem/U1491/Q (NAND3_X1_18_SVT)                     0.094      0.878 r
+  spec_mem/n80 (net)                            1        0.000      0.878 r
+  spec_mem/U1493/C (NAND4_X2_18_SVT)                     0.000      0.878 r
+  spec_mem/U1493/Q (NAND4_X2_18_SVT)                     0.156      1.034 f
+  spec_mem/n173 (net)                           3        0.000      1.034 f
+  spec_mem/U1519/A (INVP2_X1_18_SVT)                     0.000      1.034 f
+  spec_mem/U1519/Q (INVP2_X1_18_SVT)                     0.087      1.121 r
+  spec_mem/n138 (net)                           2        0.000      1.121 r
+  spec_mem/U1538/A (NAND2_X1_18_SVT)                     0.000      1.121 r
+  spec_mem/U1538/Q (NAND2_X1_18_SVT)                     0.049      1.170 f
+  spec_mem/n147 (net)                           1        0.000      1.170 f
+  spec_mem/U1540/A0 (OA21_X2_18_SVT)                     0.000      1.170 f
+  spec_mem/U1540/Q (OA21_X2_18_SVT)                      0.204      1.374 f
+  spec_mem/n158 (net)                           2        0.000      1.374 f
+  spec_mem/U1541/C (INV_A_NAND3_X2_18_SVT)               0.000      1.374 f
+  spec_mem/U1541/Q (INV_A_NAND3_X2_18_SVT)               0.094      1.467 r
+  spec_mem/n148 (net)                           1        0.000      1.467 r
+  spec_mem/U1542/A (INV_X2_18_SVT)                       0.000      1.467 r
+  spec_mem/U1542/Q (INV_X2_18_SVT)                       0.041      1.508 f
+  spec_mem/n149 (net)                           1        0.000      1.508 f
+  spec_mem/U443/B (NAND2_X3_18_SVT)                      0.000      1.508 f
+  spec_mem/U443/Q (NAND2_X3_18_SVT)                      0.087      1.594 r
+  spec_mem/n175 (net)                           2        0.000      1.594 r
+  spec_mem/U1543/A (INV_X2_18_SVT)                       0.000      1.594 r
+  spec_mem/U1543/Q (INV_X2_18_SVT)                       0.046      1.641 f
+  spec_mem/n180 (net)                           2        0.000      1.641 f
+  spec_mem/U51/C (NOR2_A_NAND3_X2_18_SVT)                0.000      1.641 f
+  spec_mem/U51/Q (NOR2_A_NAND3_X2_18_SVT)                0.112      1.753 r
+  spec_mem/n531 (net)                           4        0.000      1.753 r
+  spec_mem/U439/A (BUF_X4_18_SVT)                        0.000      1.753 r
+  spec_mem/U439/Q (BUF_X4_18_SVT)                        0.125      1.878 r
+  spec_mem/release_ready_BAR (net)              6        0.000      1.878 r
+  spec_mem/U1572/A (NOR2P3T_X2_18_SVT)                   0.000      1.878 r
+  spec_mem/U1572/Q (NOR2P3T_X2_18_SVT)                   0.085      1.964 f
+  spec_mem/n958 (net)                           5        0.000      1.964 f
+  spec_mem/U1574/A1N (INV_A_AOI21_X2_18_SVT)             0.000      1.964 f
+  spec_mem/U1574/Q (INV_A_AOI21_X2_18_SVT)               0.137      2.101 f
+  spec_mem/n225 (net)                           1        0.000      2.101 f
+  spec_mem/U35/A (BUF_X5_18_SVT)                         0.000      2.101 f
+  spec_mem/U35/Q (BUF_X5_18_SVT)                         0.170      2.270 f
+  spec_mem/n21 (net)                           27        0.000      2.270 f
+  spec_mem/U1605/A (BUF_X2_18_SVT)                       0.000      2.270 f
+  spec_mem/U1605/Q (BUF_X2_18_SVT)                       0.166      2.436 f
+  spec_mem/n792 (net)                          11        0.000      2.436 f
+  spec_mem/U2213/A0 (AOI22_X0_18_SVT)                    0.000      2.436 f
+  spec_mem/U2213/Q (AOI22_X0_18_SVT)                     0.168      2.604 r
+  spec_mem/n754 (net)                           1        0.000      2.604 r
+  spec_mem/U2215/A (NAND2_X1_18_SVT)                     0.000      2.604 r
+  spec_mem/U2215/Q (NAND2_X1_18_SVT)                     0.086      2.690 f
+  spec_mem/n4585 (net)                          2        0.000      2.690 f
+  spec_mem/U4673/B0 (AO21_X1_18_SVT)                     0.000      2.690 f
+  spec_mem/U4673/Q (AO21_X1_18_SVT)                      0.243      2.934 f
+  spec_mem/n2865 (net)                          1        0.000      2.934 f
+  spec_mem/send_burst/slot_reg[awaddr][26]/D (DFFRQ_X1_18_SVT)
+                                                         0.000      2.934 f
+  data arrival time                                                 2.934
+
+  clock clk (rise edge)                                  3.000      3.000
+  clock network delay (ideal)                            0.000      3.000
+  spec_mem/send_burst/slot_reg[awaddr][26]/CK (DFFRQ_X1_18_SVT)
+                                                         0.000      3.000 r
+  library setup time                                    -0.062      2.938
+  data required time                                                2.938
+  --------------------------------------------------------------------------
+  data required time                                                2.938
+  data arrival time                                                -2.934
+  --------------------------------------------------------------------------
+  slack (MET)                                                       0.005
+
+
+  Startpoint: spec_mem/spec_mem_reg[1][awid][0]
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: spec_mem/send_burst/slot_reg[data][1][6]
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: max
+
+  Point                                       Fanout      Incr       Path
+  --------------------------------------------------------------------------
+  clock clk (rise edge)                                  0.000      0.000
+  clock network delay (ideal)                            0.000      0.000
+  spec_mem/spec_mem_reg[1][awid][0]/CK (DFFRQ_X2_18_SVT)
+                                                         0.000 #    0.000 r
+  spec_mem/spec_mem_reg[1][awid][0]/Q (DFFRQ_X2_18_SVT)
+                                                         0.349      0.349 r
+  spec_mem/spec_mem[1][awid][0] (net)           6        0.000      0.349 r
+  spec_mem/U1470/B (XNOR2_X1_18_SVT)                     0.000      0.349 r
+  spec_mem/U1470/Q (XNOR2_X1_18_SVT)                     0.157      0.507 r
+  spec_mem/n60 (net)                            1        0.000      0.507 r
+  spec_mem/U1471/B (AND3_X2_18_SVT)                      0.000      0.507 r
+  spec_mem/U1471/Q (AND3_X2_18_SVT)                      0.198      0.704 r
+  spec_mem/n62 (net)                            1        0.000      0.704 r
+  spec_mem/U1472/C (INV_A_NAND3_X4_18_SVT)               0.000      0.704 r
+  spec_mem/U1472/Q (INV_A_NAND3_X4_18_SVT)               0.080      0.784 f
+  spec_mem/n130 (net)                           4        0.000      0.784 f
+  spec_mem/U1491/A (NAND3_X1_18_SVT)                     0.000      0.784 f
+  spec_mem/U1491/Q (NAND3_X1_18_SVT)                     0.094      0.878 r
+  spec_mem/n80 (net)                            1        0.000      0.878 r
+  spec_mem/U1493/C (NAND4_X2_18_SVT)                     0.000      0.878 r
+  spec_mem/U1493/Q (NAND4_X2_18_SVT)                     0.156      1.034 f
+  spec_mem/n173 (net)                           3        0.000      1.034 f
+  spec_mem/U1519/A (INVP2_X1_18_SVT)                     0.000      1.034 f
+  spec_mem/U1519/Q (INVP2_X1_18_SVT)                     0.087      1.121 r
+  spec_mem/n138 (net)                           2        0.000      1.121 r
+  spec_mem/U1538/A (NAND2_X1_18_SVT)                     0.000      1.121 r
+  spec_mem/U1538/Q (NAND2_X1_18_SVT)                     0.049      1.170 f
+  spec_mem/n147 (net)                           1        0.000      1.170 f
+  spec_mem/U1540/A0 (OA21_X2_18_SVT)                     0.000      1.170 f
+  spec_mem/U1540/Q (OA21_X2_18_SVT)                      0.204      1.374 f
+  spec_mem/n158 (net)                           2        0.000      1.374 f
+  spec_mem/U1541/C (INV_A_NAND3_X2_18_SVT)               0.000      1.374 f
+  spec_mem/U1541/Q (INV_A_NAND3_X2_18_SVT)               0.094      1.467 r
+  spec_mem/n148 (net)                           1        0.000      1.467 r
+  spec_mem/U1542/A (INV_X2_18_SVT)                       0.000      1.467 r
+  spec_mem/U1542/Q (INV_X2_18_SVT)                       0.041      1.508 f
+  spec_mem/n149 (net)                           1        0.000      1.508 f
+  spec_mem/U443/B (NAND2_X3_18_SVT)                      0.000      1.508 f
+  spec_mem/U443/Q (NAND2_X3_18_SVT)                      0.087      1.594 r
+  spec_mem/n175 (net)                           2        0.000      1.594 r
+  spec_mem/U1543/A (INV_X2_18_SVT)                       0.000      1.594 r
+  spec_mem/U1543/Q (INV_X2_18_SVT)                       0.046      1.641 f
+  spec_mem/n180 (net)                           2        0.000      1.641 f
+  spec_mem/U51/C (NOR2_A_NAND3_X2_18_SVT)                0.000      1.641 f
+  spec_mem/U51/Q (NOR2_A_NAND3_X2_18_SVT)                0.112      1.753 r
+  spec_mem/n531 (net)                           4        0.000      1.753 r
+  spec_mem/U439/A (BUF_X4_18_SVT)                        0.000      1.753 r
+  spec_mem/U439/Q (BUF_X4_18_SVT)                        0.125      1.878 r
+  spec_mem/release_ready_BAR (net)              6        0.000      1.878 r
+  spec_mem/U1572/A (NOR2P3T_X2_18_SVT)                   0.000      1.878 r
+  spec_mem/U1572/Q (NOR2P3T_X2_18_SVT)                   0.085      1.964 f
+  spec_mem/n958 (net)                           5        0.000      1.964 f
+  spec_mem/U1574/A1N (INV_A_AOI21_X2_18_SVT)             0.000      1.964 f
+  spec_mem/U1574/Q (INV_A_AOI21_X2_18_SVT)               0.137      2.101 f
+  spec_mem/n225 (net)                           1        0.000      2.101 f
+  spec_mem/U35/A (BUF_X5_18_SVT)                         0.000      2.101 f
+  spec_mem/U35/Q (BUF_X5_18_SVT)                         0.170      2.270 f
+  spec_mem/n21 (net)                           27        0.000      2.270 f
+  spec_mem/U1605/A (BUF_X2_18_SVT)                       0.000      2.270 f
+  spec_mem/U1605/Q (BUF_X2_18_SVT)                       0.166      2.436 f
+  spec_mem/n792 (net)                          11        0.000      2.436 f
+  spec_mem/U2087/A0 (AOI22_X0_18_SVT)                    0.000      2.436 f
+  spec_mem/U2087/Q (AOI22_X0_18_SVT)                     0.168      2.604 r
+  spec_mem/n638 (net)                           1        0.000      2.604 r
+  spec_mem/U2089/A (NAND2_X1_18_SVT)                     0.000      2.604 r
+  spec_mem/U2089/Q (NAND2_X1_18_SVT)                     0.086      2.690 f
+  spec_mem/n3706 (net)                          2        0.000      2.690 f
+  spec_mem/U3715/B0 (AO21_X1_18_SVT)                     0.000      2.690 f
+  spec_mem/U3715/Q (AO21_X1_18_SVT)                      0.243      2.934 f
+  spec_mem/n1622 (net)                          1        0.000      2.934 f
+  spec_mem/send_burst/slot_reg[data][1][6]/D (DFFRQ_X1_18_SVT)
+                                                         0.000      2.934 f
+  data arrival time                                                 2.934
+
+  clock clk (rise edge)                                  3.000      3.000
+  clock network delay (ideal)                            0.000      3.000
+  spec_mem/send_burst/slot_reg[data][1][6]/CK (DFFRQ_X1_18_SVT)
+                                                         0.000      3.000 r
+  library setup time                                    -0.062      2.938
+  data required time                                                2.938
+  --------------------------------------------------------------------------
+  data required time                                                2.938
+  data arrival time                                                -2.934
+  --------------------------------------------------------------------------
+  slack (MET)                                                       0.005
+
+

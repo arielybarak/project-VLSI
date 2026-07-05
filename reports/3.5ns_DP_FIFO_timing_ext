@@ -1,0 +1,686 @@
+ 
+****************************************
+Report : timing
+        -path full
+        -delay max
+        -nworst 15
+        -max_paths 10
+        -sort_by group
+Design : top
+Version: U-2022.12
+Date   : Mon Jun  8 12:09:19 2026
+****************************************
+
+ # A fanout number of 1000 was used for high fanout net computations.
+
+Operating Conditions: tt_1p8v_25c   Library: tsl18fs190svt_tt_1p8v_25c
+Wire Load Model Mode: top
+
+  Startpoint: writetop/monitor/bid_q_reg[4]
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: writetop/monitor/clk_gate_base_q_reg/latch
+            (gating element for clock clk)
+  Path Group: clk
+  Path Type: max
+
+  Point                                                   Incr       Path
+  --------------------------------------------------------------------------
+  clock clk (rise edge)                                  0.000      0.000
+  clock network delay (ideal)                            0.000      0.000
+  writetop/monitor/bid_q_reg[4]/CK (DFFRQ_X8_18_SVT)     0.000      0.000 r
+  writetop/monitor/bid_q_reg[4]/Q (DFFRQ_X8_18_SVT)      0.300      0.300 f
+  U3912/Q (BUF_X8_18_SVT)                                0.117      0.417 f
+  U3913/Q (BUF_X18_18_SVT)                               0.163      0.579 f
+  U10338/Q (XNOR2_X1_18_SVT)                             0.157      0.736 f
+  U623/Q (AND3_X2_18_SVT)                                0.140      0.877 f
+  U2183/Q (NAND3_X2_18_SVT)                              0.108      0.984 r
+  U1049/Q (INV_X1_18_SVT)                                0.069      1.053 f
+  U2612/Q (INV_A_NAND2_X2_18_SVT)                        0.104      1.157 r
+  writetop/monitor/add_x_771/A[0] (top_DW01_inc_0)       0.000      1.157 r
+  writetop/monitor/add_x_771/U2250/Q (NAND2_X0_18_SVT)
+                                                         0.088      1.245 f
+  writetop/monitor/add_x_771/U2134/Q (NOR2_X2_18_SVT)    0.130      1.375 r
+  writetop/monitor/add_x_771/U2133/Q (NAND2_X2_18_SVT)
+                                                         0.061      1.436 f
+  writetop/monitor/add_x_771/U2379/Q (NOR2_X2_18_SVT)    0.149      1.585 r
+  writetop/monitor/add_x_771/U2380/Q (NAND2_X2_18_SVT)
+                                                         0.082      1.667 f
+  writetop/monitor/add_x_771/U2396/Q (NOR2_X2_18_SVT)    0.163      1.830 r
+  writetop/monitor/add_x_771/U2416/Q (INV_X2_18_SVT)     0.077      1.907 f
+  writetop/monitor/add_x_771/U2417/Q (BUF_X20_18_SVT)    0.152      2.059 f
+  writetop/monitor/add_x_771/U2642/Q (XOR2NG_X1_18_SVT)
+                                                         0.118      2.177 f
+  writetop/monitor/add_x_771/SUM[64] (top_DW01_inc_0)    0.000      2.177 f
+  U14253/Q (AND2_X1_18_SVT)                              0.136      2.313 f
+  U14255/Q (NOR2_X2_18_SVT)                              0.106      2.418 r
+  U2864/Q (INV_A_NAND2_X1_18_SVT)                        0.130      2.548 r
+  U1186/Q (NAND3_X2_18_SVT)                              0.076      2.624 f
+  U486/Q (NOR2P3T_X2_18_SVT)                             0.090      2.714 r
+  U1625/Q (NOR2_A_NAND3_X2_18_SVT)                       0.062      2.776 f
+  U2473/Q (NOR2P3_X2_18_SVT)                             0.092      2.868 r
+  U14292/Q (NAND4_X2_18_SVT)                             0.088      2.956 f
+  U14415/Q (NOR2P3T_X2_18_SVT)                           0.080      3.036 r
+  U14569/Q (INV_A_NAND4_X2_18_SVT)                       0.081      3.117 f
+  U15027/Q (OAI12P2_X1_18_SVT)                           0.109      3.226 r
+  U15028/Q (NAND2_X2_18_SVT)                             0.056      3.282 f
+  writetop/monitor/clk_gate_base_q_reg/EN (SNPS_CLOCK_GATE_HIGH_process_mem_3)
+                                                         0.000      3.282 f
+  writetop/monitor/clk_gate_base_q_reg/latch/E (TLATNTSCA_X2_18_SVT)
+                                                         0.000      3.282 f
+  data arrival time                                                 3.282
+
+  clock clk (rise edge)                                  3.500      3.500
+  clock network delay (ideal)                            0.000      3.500
+  writetop/monitor/clk_gate_base_q_reg/latch/CK (TLATNTSCA_X2_18_SVT)
+                                                         0.000      3.500 r
+  clock gating setup time                               -0.218      3.282
+  data required time                                                3.282
+  --------------------------------------------------------------------------
+  data required time                                                3.282
+  data arrival time                                                -3.282
+  --------------------------------------------------------------------------
+  slack (MET)                                                       0.000
+
+
+  Startpoint: m_data_fifo_meta/U1/U2_1/rd_addr_int_reg[1]
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: writetop/spec_mem/wr_data_pipe/data_q_reg[10]
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: max
+
+  Point                                                   Incr       Path
+  --------------------------------------------------------------------------
+  clock clk (rise edge)                                  0.000      0.000
+  clock network delay (ideal)                            0.000      0.000
+  m_data_fifo_meta/U1/U2_1/rd_addr_int_reg[1]/CK (DFFQ_X2_18_SVT)
+                                                         0.000      0.000 r
+  m_data_fifo_meta/U1/U2_1/rd_addr_int_reg[1]/Q (DFFQ_X2_18_SVT)
+                                                         0.278      0.278 r
+  m_data_fifo_meta/U31/Q (INV_X4_18_SVT)                 0.042      0.320 f
+  m_data_fifo_meta/U19/Q (INV_X8_18_SVT)                 0.067      0.387 r
+  m_data_fifo_meta/U2/rd_addr[1] (top_DW_ram_r_w_s_dff_5)
+                                                         0.000      0.387 r
+  m_data_fifo_meta/U2/U24/Q (INV_X14_18_SVT)             0.042      0.429 f
+  m_data_fifo_meta/U2/U62/Q (INV_X24_18_SVT)             0.083      0.512 r
+  m_data_fifo_meta/U2/U121/Q (INV_A_NAND3_X2_18_SVT)     0.105      0.617 r
+  m_data_fifo_meta/U2/U123/Q (MUXI2_X1_18_SVT)           0.075      0.692 f
+  m_data_fifo_meta/U2/U126/Q (OR4_X4_18_SVT)             0.418      1.110 f
+  m_data_fifo_meta/U2/data_out[46] (top_DW_ram_r_w_s_dff_5)
+                                                         0.000      1.110 f
+  m_data_fifo_meta/data_out[46] (top_DW_asymfifo_s1_sf_J3_5)
+                                                         0.000      1.110 f
+  U3054/Q (INVP2_X5_18_SVT)                              0.079      1.190 r
+  U3523/Q (INV_X12_18_SVT)                               0.044      1.234 f
+  U598/Q (INV_X24_18_SVT)                                0.080      1.313 r
+  U3707/Q (INV_X32_18_SVT)                               0.060      1.373 f
+  writetop/spec_mem/s_data.wid[5] (special_memory_I_s_add_axi_if_slave_add_I_s_data_axi_if_slave_data_I_m_add_axi_if_master_add_I_m_data_axi_if_master_data_)
+                                                         0.000      1.373 f
+  writetop/spec_mem/U468/Q (XNOR2_X1_18_SVT)             0.139      1.513 f
+  writetop/spec_mem/U579/Q (AND2_X2_18_SVT)              0.129      1.642 f
+  writetop/spec_mem/U1008/Q (INV_A_NAND3_X4_18_SVT)      0.118      1.760 r
+  writetop/spec_mem/U1006/Q (NOR2_X12_18_SVT)            0.048      1.808 f
+  writetop/spec_mem/U1571/Q (AOI22_X2_18_SVT)            0.151      1.959 r
+  writetop/spec_mem/U1572/Q (INV_B_AOI21_X0_18_SVT)      0.230      2.188 r
+  writetop/spec_mem/U1574/Q (INV_A_NAND4_X1_18_SVT)      0.150      2.339 f
+  writetop/spec_mem/U1611/Q (OAI31_X2_18_SVT)            0.265      2.604 r
+  writetop/spec_mem/U1088/Q (OA21_X4_18_SVT)             0.172      2.776 r
+  writetop/spec_mem/U1012/Q (OAI12P2_X10_18_SVT)         0.104      2.880 f
+  writetop/spec_mem/U180/Q (INV_X8_18_SVT)               0.082      2.962 r
+  writetop/spec_mem/U1011/Q (NOR2P3T_X10_18_SVT)         0.061      3.022 f
+  writetop/spec_mem/U1033/Q (AOI22_X0_18_SVT)            0.164      3.186 r
+  writetop/spec_mem/U1764/Q (AOI21_X1_18_SVT)            0.076      3.263 f
+  writetop/spec_mem/U1765/Q (INV_X1_18_SVT)              0.067      3.330 r
+  writetop/spec_mem/U1766/Q (INV_A_NAND4_X1_18_SVT)      0.098      3.427 f
+  writetop/spec_mem/wr_data_pipe/data_q_reg[10]/D (DFFRQ_X1_18_SVT)
+                                                         0.000      3.427 f
+  data arrival time                                                 3.427
+
+  clock clk (rise edge)                                  3.500      3.500
+  clock network delay (ideal)                            0.000      3.500
+  writetop/spec_mem/wr_data_pipe/data_q_reg[10]/CK (DFFRQ_X1_18_SVT)
+                                                         0.000      3.500 r
+  library setup time                                    -0.072      3.428
+  data required time                                                3.428
+  --------------------------------------------------------------------------
+  data required time                                                3.428
+  data arrival time                                                -3.427
+  --------------------------------------------------------------------------
+  slack (MET)                                                       0.000
+
+
+  Startpoint: m_data_fifo_meta/U1/U2_1/rd_addr_int_reg[1]
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: writetop/spec_mem/wr_data_pipe/data_q_reg[10]
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: max
+
+  Point                                                   Incr       Path
+  --------------------------------------------------------------------------
+  clock clk (rise edge)                                  0.000      0.000
+  clock network delay (ideal)                            0.000      0.000
+  m_data_fifo_meta/U1/U2_1/rd_addr_int_reg[1]/CK (DFFQ_X2_18_SVT)
+                                                         0.000      0.000 r
+  m_data_fifo_meta/U1/U2_1/rd_addr_int_reg[1]/Q (DFFQ_X2_18_SVT)
+                                                         0.278      0.278 r
+  m_data_fifo_meta/U31/Q (INV_X4_18_SVT)                 0.042      0.320 f
+  m_data_fifo_meta/U19/Q (INV_X8_18_SVT)                 0.067      0.387 r
+  m_data_fifo_meta/U2/rd_addr[1] (top_DW_ram_r_w_s_dff_5)
+                                                         0.000      0.387 r
+  m_data_fifo_meta/U2/U24/Q (INV_X14_18_SVT)             0.042      0.429 f
+  m_data_fifo_meta/U2/U62/Q (INV_X24_18_SVT)             0.083      0.512 r
+  m_data_fifo_meta/U2/U121/Q (INV_A_NAND3_X2_18_SVT)     0.105      0.617 r
+  m_data_fifo_meta/U2/U123/Q (MUXI2_X1_18_SVT)           0.075      0.692 f
+  m_data_fifo_meta/U2/U126/Q (OR4_X4_18_SVT)             0.418      1.110 f
+  m_data_fifo_meta/U2/data_out[46] (top_DW_ram_r_w_s_dff_5)
+                                                         0.000      1.110 f
+  m_data_fifo_meta/data_out[46] (top_DW_asymfifo_s1_sf_J3_5)
+                                                         0.000      1.110 f
+  U3054/Q (INVP2_X5_18_SVT)                              0.079      1.190 r
+  U3523/Q (INV_X12_18_SVT)                               0.044      1.234 f
+  U598/Q (INV_X24_18_SVT)                                0.080      1.313 r
+  U3707/Q (INV_X32_18_SVT)                               0.060      1.373 f
+  writetop/spec_mem/s_data.wid[5] (special_memory_I_s_add_axi_if_slave_add_I_s_data_axi_if_slave_data_I_m_add_axi_if_master_add_I_m_data_axi_if_master_data_)
+                                                         0.000      1.373 f
+  writetop/spec_mem/U468/Q (XNOR2_X1_18_SVT)             0.139      1.513 f
+  writetop/spec_mem/U579/Q (AND2_X2_18_SVT)              0.129      1.641 f
+  writetop/spec_mem/U1008/Q (INV_A_NAND3_X4_18_SVT)      0.118      1.759 r
+  writetop/spec_mem/U1006/Q (NOR2_X12_18_SVT)            0.048      1.808 f
+  writetop/spec_mem/U1571/Q (AOI22_X2_18_SVT)            0.151      1.959 r
+  writetop/spec_mem/U1572/Q (INV_B_AOI21_X0_18_SVT)      0.230      2.188 r
+  writetop/spec_mem/U1574/Q (INV_A_NAND4_X1_18_SVT)      0.150      2.339 f
+  writetop/spec_mem/U1611/Q (OAI31_X2_18_SVT)            0.265      2.603 r
+  writetop/spec_mem/U1088/Q (OA21_X4_18_SVT)             0.172      2.776 r
+  writetop/spec_mem/U1012/Q (OAI12P2_X10_18_SVT)         0.104      2.880 f
+  writetop/spec_mem/U180/Q (INV_X8_18_SVT)               0.082      2.962 r
+  writetop/spec_mem/U1011/Q (NOR2P3T_X10_18_SVT)         0.061      3.022 f
+  writetop/spec_mem/U1033/Q (AOI22_X0_18_SVT)            0.164      3.186 r
+  writetop/spec_mem/U1764/Q (AOI21_X1_18_SVT)            0.076      3.263 f
+  writetop/spec_mem/U1765/Q (INV_X1_18_SVT)              0.067      3.330 r
+  writetop/spec_mem/U1766/Q (INV_A_NAND4_X1_18_SVT)      0.098      3.427 f
+  writetop/spec_mem/wr_data_pipe/data_q_reg[10]/D (DFFRQ_X1_18_SVT)
+                                                         0.000      3.427 f
+  data arrival time                                                 3.427
+
+  clock clk (rise edge)                                  3.500      3.500
+  clock network delay (ideal)                            0.000      3.500
+  writetop/spec_mem/wr_data_pipe/data_q_reg[10]/CK (DFFRQ_X1_18_SVT)
+                                                         0.000      3.500 r
+  library setup time                                    -0.072      3.428
+  data required time                                                3.428
+  --------------------------------------------------------------------------
+  data required time                                                3.428
+  data arrival time                                                -3.427
+  --------------------------------------------------------------------------
+  slack (MET)                                                       0.000
+
+
+  Startpoint: writetop/monitor/bid_q_reg[4]
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: writetop/monitor/empty_q_reg
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: max
+
+  Point                                                   Incr       Path
+  --------------------------------------------------------------------------
+  clock clk (rise edge)                                  0.000      0.000
+  clock network delay (ideal)                            0.000      0.000
+  writetop/monitor/bid_q_reg[4]/CK (DFFRQ_X8_18_SVT)     0.000      0.000 r
+  writetop/monitor/bid_q_reg[4]/Q (DFFRQ_X8_18_SVT)      0.300      0.300 f
+  U3912/Q (BUF_X8_18_SVT)                                0.117      0.417 f
+  U3728/Q (BUF_X10_18_SVT)                               0.164      0.581 f
+  U3959/Q (XNOR2_X0_18_SVT)                              0.159      0.740 f
+  U3960/Q (AND4_X1_18_SVT)                               0.179      0.919 f
+  U1051/Q (AND2_X2_18_SVT)                               0.133      1.052 f
+  U669/Q (INV_X1_18_SVT)                                 0.111      1.163 r
+  U1305/Q (INV_A_NAND4_X0_18_SVT)                        0.101      1.264 f
+  U10358/Q (NOR2_X1_18_SVT)                              0.136      1.400 r
+  U1007/Q (NAND2_A_NOR3_X2_18_SVT)                       0.270      1.670 r
+  U1255/Q (INV_A_NAND4_X2_18_SVT)                        0.117      1.786 f
+  U521/Q (NOR2P3_X4_18_SVT)                              0.101      1.887 r
+  U985/Q (NOR2P3T_X6_18_SVT)                             0.109      1.996 f
+  writetop/monitor/DP_OP_3612J1_122_6347/I3 (top_DP_OP_3612J1_122_6347_0)
+                                                         0.000      1.996 f
+  writetop/monitor/DP_OP_3612J1_122_6347/U114/Q (NAND2_X0_18_SVT)
+                                                         0.130      2.126 r
+  writetop/monitor/DP_OP_3612J1_122_6347/U116/Q (CLKNAND2_X2_18_SVT)
+                                                         0.120      2.247 f
+  writetop/monitor/DP_OP_3612J1_122_6347/U120/Q (NOR2P3_X2_18_SVT)
+                                                         0.104      2.350 r
+  writetop/monitor/DP_OP_3612J1_122_6347/U92/Q (NAND2_X0_18_SVT)
+                                                         0.070      2.421 f
+  writetop/monitor/DP_OP_3612J1_122_6347/U123/Q (NOR2_X0_18_SVT)
+                                                         0.180      2.601 r
+  writetop/monitor/DP_OP_3612J1_122_6347/U124/Q (NAND2_X0_18_SVT)
+                                                         0.085      2.686 f
+  writetop/monitor/DP_OP_3612J1_122_6347/U147/Q (OR2_X1_18_SVT)
+                                                         0.196      2.883 f
+  writetop/monitor/DP_OP_3612J1_122_6347/U95/Q (AOI21_X1_18_SVT)
+                                                         0.156      3.039 r
+  writetop/monitor/DP_OP_3612J1_122_6347/U148/Q (XOR2NG_X1_18_SVT)
+                                                         0.151      3.190 r
+  writetop/monitor/DP_OP_3612J1_122_6347/O1[8] (top_DP_OP_3612J1_122_6347_0)
+                                                         0.000      3.190 r
+  U3897/Q (INV_X1_18_SVT)                                0.037      3.227 f
+  U3898/Q (NAND3_X0_18_SVT)                              0.105      3.332 r
+  U3899/Q (NOR2_X1_18_SVT)                               0.047      3.379 f
+  U3900/Q (INV_X1_18_SVT)                                0.057      3.436 r
+  writetop/monitor/empty_q_reg/D (DFFRQ_X1_18_SVT)       0.000      3.436 r
+  data arrival time                                                 3.436
+
+  clock clk (rise edge)                                  3.500      3.500
+  clock network delay (ideal)                            0.000      3.500
+  writetop/monitor/empty_q_reg/CK (DFFRQ_X1_18_SVT)      0.000      3.500 r
+  library setup time                                    -0.064      3.436
+  data required time                                                3.436
+  --------------------------------------------------------------------------
+  data required time                                                3.436
+  data arrival time                                                -3.436
+  --------------------------------------------------------------------------
+  slack (MET)                                                       0.000
+
+
+  Startpoint: writetop/monitor/bid_q_reg[1]
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: writetop/monitor/clk_gate_base_q_reg/latch
+            (gating element for clock clk)
+  Path Group: clk
+  Path Type: max
+
+  Point                                                   Incr       Path
+  --------------------------------------------------------------------------
+  clock clk (rise edge)                                  0.000      0.000
+  clock network delay (ideal)                            0.000      0.000
+  writetop/monitor/bid_q_reg[1]/CK (DFFRQ_X8_18_SVT)     0.000      0.000 r
+  writetop/monitor/bid_q_reg[1]/Q (DFFRQ_X8_18_SVT)      0.320      0.320 f
+  U650/Q (BUF_X4_18_SVT)                                 0.133      0.453 f
+  U3719/Q (BUF_X12_18_SVT)                               0.156      0.609 f
+  U8131/Q (XNOR2_X0_18_SVT)                              0.152      0.761 f
+  U3186/Q (AND2_X0_18_SVT)                               0.131      0.891 f
+  U604/Q (INV_A_NAND4_X1_18_SVT)                         0.155      1.046 r
+  U3180/Q (INV_X1_18_SVT)                                0.055      1.101 f
+  U8133/Q (NAND2_X1_18_SVT)                              0.139      1.240 r
+  writetop/monitor/add_x_771/A[186] (top_DW01_inc_0)     0.000      1.240 r
+  writetop/monitor/add_x_771/U2444/Q (NAND2_X0_18_SVT)
+                                                         0.063      1.303 f
+  writetop/monitor/add_x_771/U2445/Q (NOR2_X1_18_SVT)    0.204      1.507 r
+  writetop/monitor/add_x_771/U2201/Q (AND2_X2_18_SVT)    0.189      1.696 r
+  writetop/monitor/add_x_771/U2199/Q (NAND3_X6_18_SVT)
+                                                         0.089      1.785 f
+  writetop/monitor/add_x_771/U2198/Q (NOR2P3T_X10_18_SVT)
+                                                         0.103      1.888 r
+  writetop/monitor/add_x_771/U2197/Q (INVP2_X5_18_SVT)
+                                                         0.054      1.942 f
+  writetop/monitor/add_x_771/U2214/Q (INV_X3_18_SVT)     0.116      2.058 r
+  writetop/monitor/add_x_771/U3680/Q (NAND2_X0_18_SVT)
+                                                         0.060      2.118 f
+  writetop/monitor/add_x_771/U3681/Q (NOR2_X0_18_SVT)    0.164      2.283 r
+  writetop/monitor/add_x_771/U3683/Q (XNOR2_X0_18_SVT)
+                                                         0.174      2.456 r
+  writetop/monitor/add_x_771/SUM[253] (top_DW01_inc_0)
+                                                         0.000      2.456 r
+  U14982/Q (AND2_X2_18_SVT)                              0.139      2.596 r
+  U14983/Q (NOR2_X1_18_SVT)                              0.047      2.643 f
+  U14984/Q (NOR2_X1_18_SVT)                              0.129      2.772 r
+  U14988/Q (NOR2P3_X2_18_SVT)                            0.061      2.833 f
+  U15000/Q (NAND4T_X0_18_SVT)                            0.145      2.978 r
+  U15025/Q (NOR2P3_X2_18_SVT)                            0.074      3.052 f
+  U15026/Q (INV_A_NAND4_X2_18_SVT)                       0.104      3.156 r
+  U15027/Q (OAI12P2_X1_18_SVT)                           0.089      3.245 f
+  U15028/Q (NAND2_X2_18_SVT)                             0.095      3.340 r
+  writetop/monitor/clk_gate_base_q_reg/EN (SNPS_CLOCK_GATE_HIGH_process_mem_3)
+                                                         0.000      3.340 r
+  writetop/monitor/clk_gate_base_q_reg/latch/E (TLATNTSCA_X2_18_SVT)
+                                                         0.000      3.340 r
+  data arrival time                                                 3.340
+
+  clock clk (rise edge)                                  3.500      3.500
+  clock network delay (ideal)                            0.000      3.500
+  writetop/monitor/clk_gate_base_q_reg/latch/CK (TLATNTSCA_X2_18_SVT)
+                                                         0.000      3.500 r
+  clock gating setup time                               -0.159      3.341
+  data required time                                                3.341
+  --------------------------------------------------------------------------
+  data required time                                                3.341
+  data arrival time                                                -3.340
+  --------------------------------------------------------------------------
+  slack (MET)                                                       0.000
+
+
+  Startpoint: writetop/monitor/bid_q_reg[7]
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: writetop/monitor/clk_gate_base_q_reg/latch
+            (gating element for clock clk)
+  Path Group: clk
+  Path Type: max
+
+  Point                                                   Incr       Path
+  --------------------------------------------------------------------------
+  clock clk (rise edge)                                  0.000      0.000
+  clock network delay (ideal)                            0.000      0.000
+  writetop/monitor/bid_q_reg[7]/CK (DFFRQ_X8_18_SVT)     0.000      0.000 r
+  writetop/monitor/bid_q_reg[7]/Q (DFFRQ_X8_18_SVT)      0.314      0.314 r
+  U858/Q (BUF_X12_18_SVT)                                0.148      0.462 r
+  U9188/Q (BUF_X12_18_SVT)                               0.154      0.616 r
+  U3439/Q (XNOR2_X0_18_SVT)                              0.166      0.782 r
+  U3437/Q (INV_A_NAND3_X2_18_SVT)                        0.124      0.906 r
+  U2806/Q (INV_A_NOR2_X2_18_SVT)                         0.042      0.948 f
+  U2073/Q (NAND3_X2_18_SVT)                              0.095      1.043 r
+  U1331/Q (INV_X1_18_SVT)                                0.063      1.106 f
+  U1020/Q (NAND2_X2_18_SVT)                              0.105      1.211 r
+  writetop/monitor/add_x_771/A[78] (top_DW01_inc_0)      0.000      1.211 r
+  writetop/monitor/add_x_771/U2300/Q (NAND2_X0_18_SVT)
+                                                         0.054      1.265 f
+  writetop/monitor/add_x_771/U2160/Q (NOR2_X0_18_SVT)    0.133      1.398 r
+  writetop/monitor/add_x_771/U2325/Q (NAND2_X0_18_SVT)
+                                                         0.077      1.475 f
+  writetop/monitor/add_x_771/U2326/Q (NOR2_X2_18_SVT)    0.160      1.635 r
+  writetop/monitor/add_x_771/U2339/Q (NAND2_X2_18_SVT)
+                                                         0.089      1.723 f
+  writetop/monitor/add_x_771/U2364/Q (NOR2_X2_18_SVT)    0.111      1.834 r
+  writetop/monitor/add_x_771/U2397/Q (NAND2T_X2_18_SVT)
+                                                         0.102      1.936 f
+  writetop/monitor/add_x_771/U2398/Q (BUF_X12_18_SVT)    0.177      2.113 f
+  writetop/monitor/add_x_771/U3185/Q (NOR2_X0_18_SVT)    0.168      2.281 r
+  writetop/monitor/add_x_771/U3187/Q (XNOR2_X0_18_SVT)
+                                                         0.169      2.450 r
+  writetop/monitor/add_x_771/SUM[159] (top_DW01_inc_0)
+                                                         0.000      2.450 r
+  U14959/Q (AND2_X1_18_SVT)                              0.167      2.618 r
+  U3563/Q (NOR2_X2_18_SVT)                               0.041      2.659 f
+  U3562/Q (NOR2_X1_18_SVT)                               0.106      2.765 r
+  U3603/Q (NOR2_X1_18_SVT)                               0.048      2.813 f
+  U14960/Q (NAND4T_X0_18_SVT)                            0.157      2.971 r
+  U14961/Q (NOR2P3_X2_18_SVT)                            0.088      3.059 f
+  U15026/Q (INV_A_NAND4_X2_18_SVT)                       0.097      3.156 r
+  U15027/Q (OAI12P2_X1_18_SVT)                           0.089      3.245 f
+  U15028/Q (NAND2_X2_18_SVT)                             0.095      3.340 r
+  writetop/monitor/clk_gate_base_q_reg/EN (SNPS_CLOCK_GATE_HIGH_process_mem_3)
+                                                         0.000      3.340 r
+  writetop/monitor/clk_gate_base_q_reg/latch/E (TLATNTSCA_X2_18_SVT)
+                                                         0.000      3.340 r
+  data arrival time                                                 3.340
+
+  clock clk (rise edge)                                  3.500      3.500
+  clock network delay (ideal)                            0.000      3.500
+  writetop/monitor/clk_gate_base_q_reg/latch/CK (TLATNTSCA_X2_18_SVT)
+                                                         0.000      3.500 r
+  clock gating setup time                               -0.159      3.341
+  data required time                                                3.341
+  --------------------------------------------------------------------------
+  data required time                                                3.341
+  data arrival time                                                -3.340
+  --------------------------------------------------------------------------
+  slack (MET)                                                       0.000
+
+
+  Startpoint: m_data_fifo_meta/U1/U2_1/rd_addr_int_reg[1]
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: writetop/spec_mem/wr_data_pipe/data_q_reg[9]
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: max
+
+  Point                                                   Incr       Path
+  --------------------------------------------------------------------------
+  clock clk (rise edge)                                  0.000      0.000
+  clock network delay (ideal)                            0.000      0.000
+  m_data_fifo_meta/U1/U2_1/rd_addr_int_reg[1]/CK (DFFQ_X2_18_SVT)
+                                                         0.000      0.000 r
+  m_data_fifo_meta/U1/U2_1/rd_addr_int_reg[1]/Q (DFFQ_X2_18_SVT)
+                                                         0.278      0.278 r
+  m_data_fifo_meta/U31/Q (INV_X4_18_SVT)                 0.042      0.320 f
+  m_data_fifo_meta/U19/Q (INV_X8_18_SVT)                 0.067      0.387 r
+  m_data_fifo_meta/U2/rd_addr[1] (top_DW_ram_r_w_s_dff_5)
+                                                         0.000      0.387 r
+  m_data_fifo_meta/U2/U24/Q (INV_X14_18_SVT)             0.042      0.429 f
+  m_data_fifo_meta/U2/U62/Q (INV_X24_18_SVT)             0.083      0.512 r
+  m_data_fifo_meta/U2/U121/Q (INV_A_NAND3_X2_18_SVT)     0.105      0.617 r
+  m_data_fifo_meta/U2/U123/Q (MUXI2_X1_18_SVT)           0.075      0.692 f
+  m_data_fifo_meta/U2/U126/Q (OR4_X4_18_SVT)             0.418      1.110 f
+  m_data_fifo_meta/U2/data_out[46] (top_DW_ram_r_w_s_dff_5)
+                                                         0.000      1.110 f
+  m_data_fifo_meta/data_out[46] (top_DW_asymfifo_s1_sf_J3_5)
+                                                         0.000      1.110 f
+  U3054/Q (INVP2_X5_18_SVT)                              0.079      1.190 r
+  U3523/Q (INV_X12_18_SVT)                               0.044      1.234 f
+  U598/Q (INV_X24_18_SVT)                                0.080      1.313 r
+  U3707/Q (INV_X32_18_SVT)                               0.060      1.373 f
+  writetop/spec_mem/s_data.wid[5] (special_memory_I_s_add_axi_if_slave_add_I_s_data_axi_if_slave_data_I_m_add_axi_if_master_add_I_m_data_axi_if_master_data_)
+                                                         0.000      1.373 f
+  writetop/spec_mem/U468/Q (XNOR2_X1_18_SVT)             0.139      1.513 f
+  writetop/spec_mem/U579/Q (AND2_X2_18_SVT)              0.129      1.642 f
+  writetop/spec_mem/U1008/Q (INV_A_NAND3_X4_18_SVT)      0.118      1.760 r
+  writetop/spec_mem/U1006/Q (NOR2_X12_18_SVT)            0.048      1.808 f
+  writetop/spec_mem/U1571/Q (AOI22_X2_18_SVT)            0.151      1.959 r
+  writetop/spec_mem/U1572/Q (INV_B_AOI21_X0_18_SVT)      0.230      2.188 r
+  writetop/spec_mem/U1574/Q (INV_A_NAND4_X1_18_SVT)      0.150      2.339 f
+  writetop/spec_mem/U1611/Q (OAI31_X2_18_SVT)            0.265      2.604 r
+  writetop/spec_mem/U1088/Q (OA21_X4_18_SVT)             0.172      2.776 r
+  writetop/spec_mem/U1012/Q (OAI12P2_X10_18_SVT)         0.104      2.880 f
+  writetop/spec_mem/U1020/Q (AND2_X8_18_SVT)             0.146      3.026 f
+  writetop/spec_mem/U988/Q (AOI22_X0_18_SVT)             0.163      3.189 r
+  writetop/spec_mem/U2331/Q (AOI21_X1_18_SVT)            0.075      3.263 f
+  writetop/spec_mem/U102/Q (INV_A_NAND4_X1_18_SVT)       0.164      3.427 f
+  writetop/spec_mem/wr_data_pipe/data_q_reg[9]/D (DFFRQ_X1_18_SVT)
+                                                         0.000      3.427 f
+  data arrival time                                                 3.427
+
+  clock clk (rise edge)                                  3.500      3.500
+  clock network delay (ideal)                            0.000      3.500
+  writetop/spec_mem/wr_data_pipe/data_q_reg[9]/CK (DFFRQ_X1_18_SVT)
+                                                         0.000      3.500 r
+  library setup time                                    -0.072      3.428
+  data required time                                                3.428
+  --------------------------------------------------------------------------
+  data required time                                                3.428
+  data arrival time                                                -3.427
+  --------------------------------------------------------------------------
+  slack (MET)                                                       0.000
+
+
+  Startpoint: m_data_fifo_meta/U1/U2_1/rd_addr_int_reg[1]
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: writetop/spec_mem/wr_data_pipe/data_q_reg[9]
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: max
+
+  Point                                                   Incr       Path
+  --------------------------------------------------------------------------
+  clock clk (rise edge)                                  0.000      0.000
+  clock network delay (ideal)                            0.000      0.000
+  m_data_fifo_meta/U1/U2_1/rd_addr_int_reg[1]/CK (DFFQ_X2_18_SVT)
+                                                         0.000      0.000 r
+  m_data_fifo_meta/U1/U2_1/rd_addr_int_reg[1]/Q (DFFQ_X2_18_SVT)
+                                                         0.278      0.278 r
+  m_data_fifo_meta/U31/Q (INV_X4_18_SVT)                 0.042      0.320 f
+  m_data_fifo_meta/U19/Q (INV_X8_18_SVT)                 0.067      0.387 r
+  m_data_fifo_meta/U2/rd_addr[1] (top_DW_ram_r_w_s_dff_5)
+                                                         0.000      0.387 r
+  m_data_fifo_meta/U2/U24/Q (INV_X14_18_SVT)             0.042      0.429 f
+  m_data_fifo_meta/U2/U62/Q (INV_X24_18_SVT)             0.083      0.512 r
+  m_data_fifo_meta/U2/U121/Q (INV_A_NAND3_X2_18_SVT)     0.105      0.617 r
+  m_data_fifo_meta/U2/U123/Q (MUXI2_X1_18_SVT)           0.075      0.692 f
+  m_data_fifo_meta/U2/U126/Q (OR4_X4_18_SVT)             0.418      1.110 f
+  m_data_fifo_meta/U2/data_out[46] (top_DW_ram_r_w_s_dff_5)
+                                                         0.000      1.110 f
+  m_data_fifo_meta/data_out[46] (top_DW_asymfifo_s1_sf_J3_5)
+                                                         0.000      1.110 f
+  U3054/Q (INVP2_X5_18_SVT)                              0.079      1.190 r
+  U3523/Q (INV_X12_18_SVT)                               0.044      1.234 f
+  U598/Q (INV_X24_18_SVT)                                0.080      1.313 r
+  U3707/Q (INV_X32_18_SVT)                               0.060      1.373 f
+  writetop/spec_mem/s_data.wid[5] (special_memory_I_s_add_axi_if_slave_add_I_s_data_axi_if_slave_data_I_m_add_axi_if_master_add_I_m_data_axi_if_master_data_)
+                                                         0.000      1.373 f
+  writetop/spec_mem/U468/Q (XNOR2_X1_18_SVT)             0.139      1.513 f
+  writetop/spec_mem/U579/Q (AND2_X2_18_SVT)              0.129      1.641 f
+  writetop/spec_mem/U1008/Q (INV_A_NAND3_X4_18_SVT)      0.118      1.759 r
+  writetop/spec_mem/U1006/Q (NOR2_X12_18_SVT)            0.048      1.808 f
+  writetop/spec_mem/U1571/Q (AOI22_X2_18_SVT)            0.151      1.959 r
+  writetop/spec_mem/U1572/Q (INV_B_AOI21_X0_18_SVT)      0.230      2.188 r
+  writetop/spec_mem/U1574/Q (INV_A_NAND4_X1_18_SVT)      0.150      2.339 f
+  writetop/spec_mem/U1611/Q (OAI31_X2_18_SVT)            0.265      2.603 r
+  writetop/spec_mem/U1088/Q (OA21_X4_18_SVT)             0.172      2.776 r
+  writetop/spec_mem/U1012/Q (OAI12P2_X10_18_SVT)         0.104      2.880 f
+  writetop/spec_mem/U1020/Q (AND2_X8_18_SVT)             0.146      3.026 f
+  writetop/spec_mem/U988/Q (AOI22_X0_18_SVT)             0.163      3.189 r
+  writetop/spec_mem/U2331/Q (AOI21_X1_18_SVT)            0.075      3.263 f
+  writetop/spec_mem/U102/Q (INV_A_NAND4_X1_18_SVT)       0.164      3.427 f
+  writetop/spec_mem/wr_data_pipe/data_q_reg[9]/D (DFFRQ_X1_18_SVT)
+                                                         0.000      3.427 f
+  data arrival time                                                 3.427
+
+  clock clk (rise edge)                                  3.500      3.500
+  clock network delay (ideal)                            0.000      3.500
+  writetop/spec_mem/wr_data_pipe/data_q_reg[9]/CK (DFFRQ_X1_18_SVT)
+                                                         0.000      3.500 r
+  library setup time                                    -0.072      3.428
+  data required time                                                3.428
+  --------------------------------------------------------------------------
+  data required time                                                3.428
+  data arrival time                                                -3.427
+  --------------------------------------------------------------------------
+  slack (MET)                                                       0.000
+
+
+  Startpoint: writetop/monitor/bid_q_reg[2]
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: writetop/monitor/clk_gate_base_q_reg/latch
+            (gating element for clock clk)
+  Path Group: clk
+  Path Type: max
+
+  Point                                                   Incr       Path
+  --------------------------------------------------------------------------
+  clock clk (rise edge)                                  0.000      0.000
+  clock network delay (ideal)                            0.000      0.000
+  writetop/monitor/bid_q_reg[2]/CK (DFFRQ_X8_18_SVT)     0.000      0.000 r
+  writetop/monitor/bid_q_reg[2]/Q (DFFRQ_X8_18_SVT)      0.306      0.306 f
+  U7317/Q (BUF_X6_18_SVT)                                0.170      0.476 f
+  U3723/Q (BUF_X8_18_SVT)                                0.135      0.611 f
+  U8455/Q (XNOR2_X0_18_SVT)                              0.148      0.759 f
+  U2282/Q (AND4_X0_18_SVT)                               0.171      0.930 f
+  U3457/Q (AND2_X2_18_SVT)                               0.139      1.070 f
+  U3456/Q (INV_X1_18_SVT)                                0.094      1.164 r
+  writetop/monitor/add_x_772/A[156] (top_DW01_inc_1)     0.000      1.164 r
+  writetop/monitor/add_x_772/U3050/Q (NAND2_X0_18_SVT)
+                                                         0.071      1.235 f
+  writetop/monitor/add_x_772/U3063/Q (NOR2_X0_18_SVT)    0.129      1.364 r
+  writetop/monitor/add_x_772/U2160/Q (NAND2_X1_18_SVT)
+                                                         0.055      1.419 f
+  writetop/monitor/add_x_772/U2198/Q (INV_X1_18_SVT)     0.163      1.582 r
+  writetop/monitor/add_x_772/U2134/Q (NAND3T_X4_18_SVT)
+                                                         0.061      1.643 f
+  writetop/monitor/add_x_772/U2124/Q (INV_X2_18_SVT)     0.071      1.714 r
+  writetop/monitor/add_x_772/U2197/Q (NAND3_X3_18_SVT)
+                                                         0.104      1.818 f
+  writetop/monitor/add_x_772/U2123/Q (INV_X6_18_SVT)     0.182      2.000 r
+  writetop/monitor/add_x_772/U3658/Q (NAND2_X0_18_SVT)
+                                                         0.063      2.063 f
+  writetop/monitor/add_x_772/U3659/Q (NOR2_X0_18_SVT)    0.166      2.229 r
+  writetop/monitor/add_x_772/U2180/Q (XNOR2_X0_18_SVT)
+                                                         0.170      2.399 r
+  writetop/monitor/add_x_772/SUM[250] (top_DW01_inc_1)
+                                                         0.000      2.399 r
+  U14996/Q (AND3_X1_18_SVT)                              0.175      2.574 r
+  U14997/Q (NOR2_X2_18_SVT)                              0.042      2.617 f
+  U14998/Q (NOR2_X1_18_SVT)                              0.126      2.742 r
+  U14999/Q (NOR2P3_X2_18_SVT)                            0.074      2.816 f
+  U15000/Q (NAND4T_X0_18_SVT)                            0.162      2.978 r
+  U15025/Q (NOR2P3_X2_18_SVT)                            0.074      3.052 f
+  U15026/Q (INV_A_NAND4_X2_18_SVT)                       0.104      3.156 r
+  U15027/Q (OAI12P2_X1_18_SVT)                           0.089      3.245 f
+  U15028/Q (NAND2_X2_18_SVT)                             0.095      3.340 r
+  writetop/monitor/clk_gate_base_q_reg/EN (SNPS_CLOCK_GATE_HIGH_process_mem_3)
+                                                         0.000      3.340 r
+  writetop/monitor/clk_gate_base_q_reg/latch/E (TLATNTSCA_X2_18_SVT)
+                                                         0.000      3.340 r
+  data arrival time                                                 3.340
+
+  clock clk (rise edge)                                  3.500      3.500
+  clock network delay (ideal)                            0.000      3.500
+  writetop/monitor/clk_gate_base_q_reg/latch/CK (TLATNTSCA_X2_18_SVT)
+                                                         0.000      3.500 r
+  clock gating setup time                               -0.159      3.341
+  data required time                                                3.341
+  --------------------------------------------------------------------------
+  data required time                                                3.341
+  data arrival time                                                -3.340
+  --------------------------------------------------------------------------
+  slack (MET)                                                       0.001
+
+
+  Startpoint: m_data_fifo_meta/U1/U2_1/rd_addr_int_reg[1]
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: writetop/spec_mem/spec_mem_reg[4][cur_len][1]
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: max
+
+  Point                                                   Incr       Path
+  --------------------------------------------------------------------------
+  clock clk (rise edge)                                  0.000      0.000
+  clock network delay (ideal)                            0.000      0.000
+  m_data_fifo_meta/U1/U2_1/rd_addr_int_reg[1]/CK (DFFQ_X2_18_SVT)
+                                                         0.000      0.000 r
+  m_data_fifo_meta/U1/U2_1/rd_addr_int_reg[1]/Q (DFFQ_X2_18_SVT)
+                                                         0.278      0.278 r
+  m_data_fifo_meta/U31/Q (INV_X4_18_SVT)                 0.042      0.320 f
+  m_data_fifo_meta/U19/Q (INV_X8_18_SVT)                 0.067      0.387 r
+  m_data_fifo_meta/U2/rd_addr[1] (top_DW_ram_r_w_s_dff_5)
+                                                         0.000      0.387 r
+  m_data_fifo_meta/U2/U24/Q (INV_X14_18_SVT)             0.042      0.429 f
+  m_data_fifo_meta/U2/U62/Q (INV_X24_18_SVT)             0.083      0.512 r
+  m_data_fifo_meta/U2/U121/Q (INV_A_NAND3_X2_18_SVT)     0.105      0.617 r
+  m_data_fifo_meta/U2/U123/Q (MUXI2_X1_18_SVT)           0.075      0.692 f
+  m_data_fifo_meta/U2/U126/Q (OR4_X4_18_SVT)             0.418      1.110 f
+  m_data_fifo_meta/U2/data_out[46] (top_DW_ram_r_w_s_dff_5)
+                                                         0.000      1.110 f
+  m_data_fifo_meta/data_out[46] (top_DW_asymfifo_s1_sf_J3_5)
+                                                         0.000      1.110 f
+  U3054/Q (INVP2_X5_18_SVT)                              0.079      1.190 r
+  U3523/Q (INV_X12_18_SVT)                               0.044      1.234 f
+  U598/Q (INV_X24_18_SVT)                                0.080      1.313 r
+  U3707/Q (INV_X32_18_SVT)                               0.060      1.373 f
+  writetop/spec_mem/s_data.wid[5] (special_memory_I_s_add_axi_if_slave_add_I_s_data_axi_if_slave_data_I_m_add_axi_if_master_add_I_m_data_axi_if_master_data_)
+                                                         0.000      1.373 f
+  writetop/spec_mem/U468/Q (XNOR2_X1_18_SVT)             0.123      1.497 r
+  writetop/spec_mem/U579/Q (AND2_X2_18_SVT)              0.156      1.652 r
+  writetop/spec_mem/U1008/Q (INV_A_NAND3_X4_18_SVT)      0.102      1.754 f
+  writetop/spec_mem/U1006/Q (NOR2_X12_18_SVT)            0.143      1.897 r
+  writetop/spec_mem/U1005/Q (AND2_X4_18_SVT)             0.112      2.009 r
+  writetop/spec_mem/U1003/Q (INV_A_NAND3_X4_18_SVT)      0.076      2.085 r
+  writetop/spec_mem/U1002/Q (INV_A_NAND3_X1_18_SVT)      0.127      2.212 r
+  writetop/spec_mem/U820/Q (NOR2_X2_18_SVT)              0.050      2.262 f
+  writetop/spec_mem/U1746/Q (NOR2P3_X2_18_SVT)           0.092      2.354 r
+  writetop/spec_mem/U818/Q (INVP2_X1_18_SVT)             0.068      2.422 f
+  writetop/spec_mem/U1053/Q (INV_A_NAND2_X4_18_SVT)      0.148      2.570 f
+  writetop/spec_mem/U208/Q (INV_A_NAND2_X4_18_SVT)       0.162      2.732 f
+  writetop/spec_mem/U200/Q (INV_X5_18_SVT)               0.121      2.852 r
+  writetop/spec_mem/U686/Q (INV_X8_18_SVT)               0.063      2.916 f
+  writetop/spec_mem/U1077/Q (NOR2P3T_X10_18_SVT)         0.087      3.002 r
+  writetop/spec_mem/U1048/Q (INVP2_X1_18_SVT)            0.048      3.051 f
+  writetop/spec_mem/U1046/Q (INV_A_NAND2_X4_18_SVT)      0.140      3.191 f
+  writetop/spec_mem/U1032/Q (NOR2P3T_X2_18_SVT)          0.086      3.277 r
+  writetop/spec_mem/U565/Q (NAND2_X0_18_SVT)             0.069      3.346 f
+  writetop/spec_mem/U2326/Q (OAI31_X2_18_SVT)            0.065      3.412 r
+  writetop/spec_mem/spec_mem_reg[4][cur_len][1]/D (DFFRQ_X1_18_SVT)
+                                                         0.000      3.412 r
+  data arrival time                                                 3.412
+
+  clock clk (rise edge)                                  3.500      3.500
+  clock network delay (ideal)                            0.000      3.500
+  writetop/spec_mem/spec_mem_reg[4][cur_len][1]/CK (DFFRQ_X1_18_SVT)
+                                                         0.000      3.500 r
+  library setup time                                    -0.087      3.413
+  data required time                                                3.413
+  --------------------------------------------------------------------------
+  data required time                                                3.413
+  data arrival time                                                -3.412
+  --------------------------------------------------------------------------
+  slack (MET)                                                       0.001
+
+
