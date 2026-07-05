@@ -44,6 +44,8 @@ The module:
 ## Implementation Details  
 The module behaves like a **highway traffic system** 🚦:  
 
+![Highway Traffic System Analogy](highway_traffic_system.png)  
+
 ### Key Components  
 🔹 **Process Memory ("The Camera")**  
 - FIFO structure for **tracking transactions**.  
