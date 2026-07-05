@@ -9,6 +9,8 @@ Developed across two semesters as a VLSI design project under the supervision of
 - **Project A** (Spring 2024) — baseline design and functional verification by **Bar Arama** and **Barak Ariely**.
 - **Project B** (Spring 2025) — architectural scaling, storage optimization, and PPA improvements by **Barak Ariely**.
 
+📊 **[View the full Project B presentation (PDF)](Project_B_prep.pdf)**
+
 ---
 
 ## Branches
@@ -47,6 +49,8 @@ The module operates like a **highway traffic system** 🚦:
 | **Router** ("Exit & Merge Lanes") | Directs transactions — either passing them through or diverting to special storage. |
 | **Special Memory** ("Pull-off Area") | Stores Special and Unlucky transactions. Manages classification, burst storage, and priority-based release. |
 
+![Architecture Block Diagram](doc/architecture_block_diagram.png)
+
 ---
 
 ## Project A → Project B: What Changed
@@ -60,6 +64,14 @@ Project B scaled the design from 16 to 256 outstanding transactions and from 4 t
 - **Datapath pipelining:** Pipeline registers and skid buffers added to break critical timing paths without introducing data-flow bubbles.
 - **End-to-end parity:** Full parity protection added across the datapath (`wuser`).
 
+#### Bitmap + Age Matrix — O(1) Slot Management
+
+![Bitmap and Age Matrix](doc/bitmap_age_matrix.png)
+
+#### Datapath Pipelining
+
+![Pipelining Datapath](doc/pipelining_datapath.png)
+
 ### Synthesis Results (vs. Project A Baseline)
 
 | Metric | Project A (FF Baseline) | Project B (Final) | Change |
@@ -70,6 +82,15 @@ Project B scaled the design from 16 to 256 outstanding transactions and from 4 t
 | **Dynamic Power** | 168.16 mW | 78.03 mW | **−54%** ¹ |
 
 ¹ Dynamic power figures were measured under different switching activity profiles. A rigorous comparison would require both netlists under the same annotated activity (SAIF/VCD).
+
+![Summary Results](doc/summary_results.png)
+
+### Lessons Learned
+
+- **Tackle constraints before problems** — distill what the hardware actually needs before writing RTL.
+- **Architectural changes first, pipelining last** — restructure logic before adding pipeline stages.
+- **Simplicity wins** — an O(1) bitmap delete replaced an O(log K) comparator chain.
+- **Clock network dominates power** — ~95% of dynamic power is the clock tree; clock gating is essential.
 
 ---
 
