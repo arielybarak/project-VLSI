@@ -11,12 +11,15 @@
  *                 produce simultaneously) target physically different SRAMs
  *                 and do not contend.
  *
- *                 Per slot: 5 spram16x64 instances
- *                   - 4 for the 256-bit data    (4 x 64)
- *                   - 1 for strb(32)+parity(8)+isRuined(8) = 48 bits, padded
- *                 Total: 16 slots * 5 = 80 spram16x64 instances.
+ *                 spram16x64_cb = 16-bit WIDE x 64-deep (lab naming = width x
+ *                 depth, same as dpram72x128_cb in special_mem_dpbank).
  *
- *                 Each SRAM is 16-deep; we use the low 8 entries (one per
+ *                 Per slot: 19 spram16x64_cb instances
+ *                   - 16 for the 256-bit data    (16 x 16)
+ *                   -  3 for strb(32)+parity(8)+isRuined(8) = 48 bits (3 x 16)
+ *                 Total: 16 slots * 19 = 304 spram16x64_cb instances.
+ *
+ *                 Each SRAM is 64-deep; we use the low 8 entries (one per
  *                 transfer in an 8-beat burst, PLENGTH_WIDTH=3).
  *------------------------------------------------------------------------------*/
 
@@ -42,7 +45,9 @@ module special_mem_dpbank_v2 (
 );
 
 	localparam int SLOTS      = 16;
-	localparam int DATA_RAMS  = 4;   // 4 * 64 = 256 bits of data per transfer
+	// spram16x64_cb is 16-bit WIDE x 64-deep (lab naming = width x depth, like dpram72x128_cb).
+	localparam int DATA_RAMS  = 16;  // 16 * 16 = 256 bits of data per transfer
+	localparam int SB_RAMS    = 3;   // 3 * 16 = 48 bits: strb(32)+parity(8)+isRuined(8)
 
 	// Address split
 	logic [3:0] wr_slot_idx;
@@ -80,23 +85,23 @@ module special_mem_dpbank_v2 (
 			// in the same cycle cannot occur by construction).
 			logic        port_en;
 			logic        port_we;
-			logic [3:0]  port_addr;
+			logic [5:0]  port_addr;          // 64-deep -> 6-bit address (use low 8 entries)
 			logic        csb, web, oeb;
 
 			assign port_en   = slot_wr_en[s] | slot_rd_en[s];
 			assign port_we   = slot_wr_en[s];
-			assign port_addr = {1'b0, port_we ? wr_xfer_idx : rd_xfer_idx};
+			assign port_addr = {3'b000, port_we ? wr_xfer_idx : rd_xfer_idx};
 
 			assign csb = ~port_en;     // chip select, active low
 			assign web = ~port_we;     // write enable, active low
 			assign oeb = ~slot_rd_en[s]; // output enable on reads only
 
-			// Data: 4 x spram16x64 -> 256 bits
+			// Data: 16 x spram16x64_cb (16-bit wide) -> 256 bits
 			for (b = 0; b < DATA_RAMS; b++) begin : g_data
-				spram16x64 u_data (
+				spram16x64_cb u_data (
 					.A   (port_addr),
-					.I   (wr_data[b*64 +: 64]),
-					.O   (slot_rd_data[s][b*64 +: 64]),
+					.I   (wr_data[b*16 +: 16]),
+					.O   (slot_rd_data[s][b*16 +: 16]),
 					.CEB (clk),
 					.WEB (web),
 					.CSB (csb),
@@ -104,38 +109,39 @@ module special_mem_dpbank_v2 (
 				);
 			end
 
-			// Sideband: strb(32) + parity(8) + isRuined(8) = 48 bits in one spram16x64
-			logic [63:0] sb_in;
-			logic [63:0] sb_out;
+			// Sideband: strb(32) + parity(8) + isRuined(8) = 48 bits = 3 x spram16x64_cb
+			logic [47:0] sb_in;
+			logic [47:0] sb_out;
 
-			assign sb_in = {16'b0, wr_isRuined, wr_parity, wr_strb};
+			assign sb_in = {wr_isRuined, wr_parity, wr_strb};   // 8 + 8 + 32 = 48
 			assign slot_rd_strb[s]     = sb_out[31:0];
 			assign slot_rd_parity[s]   = sb_out[39:32];
 			assign slot_rd_isRuined[s] = sb_out[47:40];
 
-			spram16x64 u_sbp (
-				.A   (port_addr),
-				.I   (sb_in),
-				.O   (sb_out),
-				.CEB (clk),
-				.WEB (web),
-				.CSB (csb),
-				.OEB (oeb)
-			);
+			for (b = 0; b < SB_RAMS; b++) begin : g_sb
+				spram16x64_cb u_sbp (
+					.A   (port_addr),
+					.I   (sb_in[b*16 +: 16]),
+					.O   (sb_out[b*16 +: 16]),
+					.CEB (clk),
+					.WEB (web),
+					.CSB (csb),
+					.OEB (oeb)
+				);
+			end
 
 		end
 	endgenerate
 
-	// SRAM outputs are registered internally (1-cycle read latency, same
-	// as dpram128x72); delay the read-slot select by one cycle to match.
-	logic [3:0] rd_slot_idx_d;
-	always_ff @(posedge clk) begin
-		if (rd_en) rd_slot_idx_d <= rd_slot_idx;
-	end
-
-	assign rd_data     = slot_rd_data    [rd_slot_idx_d];
-	assign rd_strb     = slot_rd_strb    [rd_slot_idx_d];
-	assign rd_parity   = slot_rd_parity  [rd_slot_idx_d];
-	assign rd_isRuined = slot_rd_isRuined[rd_slot_idx_d];
+	// The spram16x64 macros read on negedge CEB (CEB=clk) and hold their output
+	// for the full cycle -- same model as dpram72x128_cb in special_mem_dpbank (v1).
+	// So, exactly like v1, the bank adds NO internal register: route the read-slot's
+	// SRAM outputs straight out, selected by the CURRENT rd_slot_idx. special_memory's
+	// rd_stg1 registers + half-cycle posedge/negedge crossing own the read timing.
+	// (A delayed select would mux a stale/idle slot on the first beat -> X parity.)
+	assign rd_data     = slot_rd_data    [rd_slot_idx];
+	assign rd_strb     = slot_rd_strb    [rd_slot_idx];
+	assign rd_parity   = slot_rd_parity  [rd_slot_idx];
+	assign rd_isRuined = slot_rd_isRuined[rd_slot_idx];
 
 endmodule

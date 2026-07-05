@@ -69,30 +69,27 @@ package pkg;
 //		logic [PCOMPLETE_DATA-1:0]      strb 	  ;			//256 bits.					
 	} spec_slot ;										//total data channel 2,304
 	
-	// AXI Data Channel metadata (used in pipeline skid buffers)
+	// AXI W-channel beat
 	typedef struct packed {
 		logic [PID_WIDTH-1:0]       wid;
-		logic [(PDATA_WIDTH*8)-1:0] wdata;
+		logic [PDATA_WIDTH-1:0][7:0] wdata;
 		logic [PDATA_WIDTH-1:0]     wstrb;
 		logic [PWUSER_WIDTH-1:0]    wuser;
 		logic                       wlast;
-	} skid_data_t;
+	} w_beat_t;
 
+	// Carried across wr_data_pipe to the SRAM write port.
 	typedef struct packed {
-		logic [PID_WIDTH-1:0]       wid;
-		logic [(PDATA_WIDTH*8)-1:0] wdata;
-		logic [PDATA_WIDTH-1:0]     wstrb;
-		logic [PWUSER_WIDTH-1:0]    wuser;
-		logic                       wlast;
+		w_beat_t                    beat;          // wid / wdata / wstrb / wuser / wlast
 		logic [INDEX_WIDTH-1:0]     wr_idx;
 		logic [PLENGTH_WIDTH-1:0]   cur_len_stg1;
 		logic [PWUSER_WIDTH-1:0]    wr_isRuined;
-	} wr_skid_data_t;
+	} wr_pipe_data_t;
 
-	// Raw SRAM-read payload (pre egress-parity recompute), carried across the read pipe_reg
+	// Raw SRAM-read, carried across the read pipe_reg
 	typedef struct packed {
 		logic [PID_WIDTH-1:0]       wid;
-		logic [(PDATA_WIDTH*8)-1:0] wdata;
+		logic [PDATA_WIDTH-1:0][7:0] wdata;
 		logic [PDATA_WIDTH-1:0]     wstrb;
 		logic [PWUSER_WIDTH-1:0]    origin_parity;
 		logic [PWUSER_WIDTH-1:0]    rd_isRuined;
@@ -121,7 +118,7 @@ package pkg;
 	        oldest[j] = mask[j] & ~|(age[j] & mask);
 	endfunction
 	
-	// One-hot -> binary slot index.
+	// One-hot -> binary slot index (without the "Priority" part).
 	function automatic logic [INDEX_WIDTH-1:0] enc_oh
 	    (input logic [SPEC_SLOT_AMOUNT-1:0] oh);
 	    enc_oh = '0;

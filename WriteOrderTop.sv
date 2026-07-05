@@ -103,8 +103,8 @@ assign axi.wlast   = t_s_data.wlast  ;
 process_mem monitor (
 	.clk          (clk            ),
 	.rst_n        (rst_n          ),
-	.full         (proc_full      ),
-	.empty        (proc_empty     ),
+	.full_q       (proc_full      ),
+	.empty_q      (proc_empty     ),
 	.awvalid      (awvalid_buf    ),
 	.awready      (aw_dn_ready    ),
 	.awid         (s_add_buf.awid ),
@@ -118,7 +118,7 @@ process_mem monitor (
 	.bid          (t_s_resp.bid   ),
 	.block_fin    (block_fin      ),
 	.to_block     (to_block       ),
-	.spec_release (spec_release   ),
+	.spec_release_q(spec_release  ),
 	.release_ready(release_ready  ),
 	.block_data   (block_data     )
 );
@@ -150,6 +150,7 @@ rout router (
 	.s_awvalid     (awvalid_buf     ),
 	.block_fin     (block_fin       ),
 	.s_awuser      (s_add_buf.awuser),
+	.aw_dn_ready   (aw_dn_ready     ),
 	.id_in_spec    (axi.wready     ),
 	.to_block      (to_block       ),
 	.add_cur_state (add_cur_state  ),

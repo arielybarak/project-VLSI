@@ -22,6 +22,7 @@ module rout (
 	
 	input                     s_awvalid,   // s_add.awvalid
 	input [PAWUSER_WIDTH-1:0] s_awuser,
+	input                     aw_dn_ready, // s_add downstream ready -> AW handshake = s_awvalid & aw_dn_ready
 
 	output logic              to_block,
 	output logic              add_cur_state,
@@ -43,19 +44,16 @@ parameter DATA_REG_FLOW = 1'b0 ;
 parameter DATA_MERGE    = 1'b1 ;
 
 assign data_cur_state = (id_in_spec | spec2router | block_data) ? DATA_MERGE : DATA_REG_FLOW ;
-
-/////////block tran identify////////
-logic to_block_d ; 
+wire block_accepted = (~|(s_awuser^BLOCK)) & s_awvalid & aw_dn_ready ;
 
 always_ff @(posedge clk or negedge rst_n) begin
-	if(~rst_n) begin
-		to_block_d 	  <= 1'b0 ;
-	end else begin
-		to_block <= to_block_d;				//cycle delay to transfer the address phase of the block tran itself. 
-		if((~|(s_awuser^BLOCK))&s_awvalid)
-			to_block_d <= 1'b1 ;
-		else if(block_fin)
-			to_block_d <= 1'b0 ;
+	if(~rst_n)
+		to_block <= 1'b0 ;
+	else begin
+		if(block_accepted)        // BLOCK taken -> block every transaction after it
+			to_block <= 1'b1 ;
+		else if(block_fin)        // BLOCK completed (B-response) -> reopen
+			to_block <= 1'b0 ;
 	end
 end
 
