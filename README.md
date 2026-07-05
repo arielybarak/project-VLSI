@@ -63,24 +63,15 @@ Project B scaled the design from 16 to 256 outstanding transactions and from 4 t
 - **Datapath pipelining:** Pipeline registers and skid buffers added to break critical timing paths without introducing data-flow bubbles.
 - **End-to-end parity:** Full parity protection added across the datapath (`wuser`).
 
-### Synthesis Results (vs. Project A Baseline)
-
-| Metric | Project A (FF Baseline) | Project B (Final) | Change |
-|---|---|---|---|
-| **Frequency** | 182 MHz | 294 MHz | **+62%** |
-| **Area** | 1,374,623 µm² | 986,806 µm² | **−28%** |
-| **Combinational Cells** | 62,263 | 32,080 | **−48%** |
-| **Dynamic Power** | 168.16 mW | 78.03 mW | **−54%** ¹ |
-
-¹ Dynamic power figures were measured under different switching activity profiles. A rigorous comparison would require both netlists under the same annotated activity (SAIF/VCD).
-
-### Full 3-Way Comparison
+### Synthesis Results (3-Way Comparison)
 
 | Metric | FF Baseline | SRAM Baseline | Final | vs FF | vs SRAM |
 |---|---|---|---|---|---|
 | **Area** | 1,374,623 µm² | 967,222 µm² | 986,806 µm² | −28% | +2% |
 | **Dynamic Power** | 168.16 mW | 108.89 mW | 78.03 mW | −54% ¹ | −28% ¹ |
 | **Frequency** | ~182 MHz (5.5 ns) | ~169 MHz (5.9 ns) | **~294 MHz (3.4 ns)** | **+62%** | **+74%** |
+
+¹ Dynamic power figures were measured under different switching activity profiles. A rigorous comparison would require both netlists under the same annotated activity (SAIF/VCD).
 
 ### Scalability
 
